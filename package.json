@@ -4,11 +4,13 @@
   "private": true,
   "homepage": "https://github.com/geeksbaek/tesla-model-3-korea-price",
   "dependencies": {
+    "axios": "^0.18.0",
     "gh-pages": "^2.0.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "2.1.8",
-    "semantic-ui-react": "^0.86.0"
+    "semantic-ui-react": "^0.86.0",
+    "yamljs": "^0.3.0"
   },
   "scripts": {
     "start": "react-scripts start",

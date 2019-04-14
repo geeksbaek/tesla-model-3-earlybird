@@ -1,26 +1,31 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { Container, Grid, Segment, Tab, Image } from "semantic-ui-react";
+import "./index.css";
+import Logo from "./assets/img/compare-model3--center.png";
+import Price from "./Price";
+
+const panes = [
+  {
+    menuItem: { key: "price", icon: "won sign", content: "가격 비교" },
+    render: () => <Price />
+  }
+];
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Container className="container">
+        <Grid centered verticalAlign="middle">
+          {/* <Grid.Row>
+            <Segment basic>
+              <Image src={Logo} size="big" centered />
+            </Segment>
+          </Grid.Row> */}
+          <Grid.Row verticalAlign="middle">
+            <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
+          </Grid.Row>
+        </Grid>
+      </Container>
     );
   }
 }
