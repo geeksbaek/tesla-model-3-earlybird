@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/geeksbaek/tesla-model-3-korea-price/precache-manifest.ba908869e3989342f48ddedc1429bdb2.js"
+  "/geeksbaek/tesla-model-3-korea/precache-manifest.039bc58a5668e3c376eb3338624c5c66.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/geeksbaek/tesla-model-3-korea-price/index.html", {
+workbox.routing.registerNavigationRoute("/geeksbaek/tesla-model-3-korea/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
