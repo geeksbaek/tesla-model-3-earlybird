@@ -1,0 +1,48 @@
+---
+trims:
+  - 이름: Standard Range Plus
+    주행거리(km): 386
+    0-60: 5.3
+    차체 제어: RWD
+    인테리어: 준 프리미엄
+    가격: 39500
+  - 이름: Long Range
+    주행거리(km): 499
+    0-60: 4.5
+    차체 제어: AWD
+    인테리어: 프리미엄
+    가격: 50500
+  - 이름: Performance
+    주행거리(km): 499
+    0-60: 3.2
+    차체 제어: RWD
+    인테리어: 프리미엄
+    가격: 61500
+options:
+  색상:
+    - 이름: Solid Black
+      가격: 0
+    - 이름: Midnight Silver Metallic
+      가격: 1500
+    - 이름: Deep Blue Metallic
+      가격: 1500
+    - 이름: Pearl White Multi-Coat
+      가격: 2000
+    - 이름: Red Multi-Coat
+      가격: 2500
+  wheals:
+    - 이름: 에어로
+      사이즈: 18인치
+      가격: 0
+      _only: "!Performance"
+    - 이름: 스포츠
+      사이즈: 19인치
+      가격: 1500
+      _only: "!Performance"
+    - 이름: 퍼포먼스
+      사이즈: 20인치
+      가격: 0
+      _only: Performance
+  autopilot:
+    - 이름: Full Self Driving
+      가격: 5000
