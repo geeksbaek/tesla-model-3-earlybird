@@ -3,22 +3,25 @@ trims:
   - 이름: Standard Plus
     배터리: Standard Plus
     주행거리(km): 386
-    0-60: 5.3
-    차체 제어: Rear-Wheel Drive
+    0-100: 5.3
+    구동방식: Rear-Wheel Drive
+    승차인원: 5
     인테리어: 준 프리미엄
     가격: 39500
   - 이름: Long Range AWD
     배터리: Long Range
     주행거리(km): 499
-    0-60: 4.5
-    차체 제어: Dual Motor All-Wheel Drive
+    0-100: 4.5
+    구동방식: Dual Motor All-Wheel Drive
+    승차인원: 5
     인테리어: 프리미엄
     가격: 50500
   - 이름: Performance
     배터리: Long Range
     주행거리(km): 499
-    0-60: 3.2
-    차체 제어: Dual Motor All-Wheel Drive
+    0-100: 3.2
+    구동방식: Dual Motor All-Wheel Drive
+    승차인원: 5
     인테리어: 프리미엄
     가격: 61500
 options:
