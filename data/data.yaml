@@ -25,7 +25,7 @@ trims:
     인테리어: 프리미엄
     가격: 61500
 options:
-  색상:
+  color:
     - 이름: Solid Black
       가격: 0
     - 이름: Midnight Silver Metallic
@@ -36,7 +36,7 @@ options:
       가격: 2000
     - 이름: Red Multi-Coat
       가격: 2500
-  wheals:
+  wheal:
     - 이름: 에어로
       사이즈: 18인치
       가격: 0
