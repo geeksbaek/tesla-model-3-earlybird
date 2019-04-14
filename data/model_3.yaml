@@ -55,5 +55,5 @@ options:
       가격: 0
       _only: Performance
   autopilot:
-    - 이름: Full Self Driving
+    - 이름: 완전 자율 주행 기능
       가격: 5000
