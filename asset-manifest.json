@@ -1,14 +1,14 @@
 {
-  "main.css": "/geeksbaek/tesla-model-3-korea/static/css/main.1fe8cbe0.chunk.css",
-  "main.js": "/geeksbaek/tesla-model-3-korea/static/js/main.60d5539a.chunk.js",
-  "main.js.map": "/geeksbaek/tesla-model-3-korea/static/js/main.60d5539a.chunk.js.map",
-  "runtime~main.js": "/geeksbaek/tesla-model-3-korea/static/js/runtime~main.3720c257.js",
-  "runtime~main.js.map": "/geeksbaek/tesla-model-3-korea/static/js/runtime~main.3720c257.js.map",
-  "static/js/2.d6b65333.chunk.js": "/geeksbaek/tesla-model-3-korea/static/js/2.d6b65333.chunk.js",
-  "static/js/2.d6b65333.chunk.js.map": "/geeksbaek/tesla-model-3-korea/static/js/2.d6b65333.chunk.js.map",
-  "index.html": "/geeksbaek/tesla-model-3-korea/index.html",
-  "precache-manifest.039bc58a5668e3c376eb3338624c5c66.js": "/geeksbaek/tesla-model-3-korea/precache-manifest.039bc58a5668e3c376eb3338624c5c66.js",
-  "service-worker.js": "/geeksbaek/tesla-model-3-korea/service-worker.js",
-  "static/css/main.1fe8cbe0.chunk.css.map": "/geeksbaek/tesla-model-3-korea/static/css/main.1fe8cbe0.chunk.css.map",
-  "static/media/compare-model3--center.png": "/geeksbaek/tesla-model-3-korea/static/media/compare-model3--center.2d32f04f.png"
+  "main.css": "/tesla-model-3-korea/static/css/main.1fe8cbe0.chunk.css",
+  "main.js": "/tesla-model-3-korea/static/js/main.ee8a8e02.chunk.js",
+  "main.js.map": "/tesla-model-3-korea/static/js/main.ee8a8e02.chunk.js.map",
+  "runtime~main.js": "/tesla-model-3-korea/static/js/runtime~main.6de470a6.js",
+  "runtime~main.js.map": "/tesla-model-3-korea/static/js/runtime~main.6de470a6.js.map",
+  "static/js/2.d6b65333.chunk.js": "/tesla-model-3-korea/static/js/2.d6b65333.chunk.js",
+  "static/js/2.d6b65333.chunk.js.map": "/tesla-model-3-korea/static/js/2.d6b65333.chunk.js.map",
+  "index.html": "/tesla-model-3-korea/index.html",
+  "precache-manifest.41f5b1e56b7b38fa88d7df19a34cb40f.js": "/tesla-model-3-korea/precache-manifest.41f5b1e56b7b38fa88d7df19a34cb40f.js",
+  "service-worker.js": "/tesla-model-3-korea/service-worker.js",
+  "static/css/main.1fe8cbe0.chunk.css.map": "/tesla-model-3-korea/static/css/main.1fe8cbe0.chunk.css.map",
+  "static/media/compare-model3--center.png": "/tesla-model-3-korea/static/media/compare-model3--center.2d32f04f.png"
 }
