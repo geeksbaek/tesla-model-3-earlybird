@@ -8,19 +8,19 @@ self.__precacheManifest = [
     "url": "/tesla-model-3-korea/static/js/runtime~main.6de470a6.js"
   },
   {
-    "revision": "ef884e18d003cfac1f42",
-    "url": "/tesla-model-3-korea/static/js/main.6e5a02c1.chunk.js"
+    "revision": "aaa9d994e38726f621bd",
+    "url": "/tesla-model-3-korea/static/js/main.117328a6.chunk.js"
   },
   {
-    "revision": "162b761fbbb92f1c2b83",
-    "url": "/tesla-model-3-korea/static/js/2.e64e6a39.chunk.js"
+    "revision": "8f6479e0550f8e71c4c5",
+    "url": "/tesla-model-3-korea/static/js/2.a8004401.chunk.js"
   },
   {
-    "revision": "ef884e18d003cfac1f42",
+    "revision": "aaa9d994e38726f621bd",
     "url": "/tesla-model-3-korea/static/css/main.29a9335d.chunk.css"
   },
   {
-    "revision": "cec2d49974d55fdc654ae38d4d25b3b8",
+    "revision": "3d840a24c3dc1f1b4b186158311b3053",
     "url": "/tesla-model-3-korea/index.html"
   }
 ];
