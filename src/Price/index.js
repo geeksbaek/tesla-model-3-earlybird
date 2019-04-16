@@ -10,6 +10,7 @@ import {
   Card,
   Header,
   List,
+  Input,
   Dropdown,
   Table
 } from "semantic-ui-react";
@@ -80,6 +81,7 @@ export default class Price extends Component {
   취득세_감면 = () =>
     Math.min(this.취득세_과세(), this.state.saletex.취득세.감면);
   전기차_보조금 = () => this.state.gov_subsidy + this.state.local_subsidy;
+  할부원금 = () => Math.max(this.state.total_price + this.부가가치세_과세(), 0);
   최종가격 = () =>
     Math.max(
       this.state.total_price +
@@ -93,6 +95,11 @@ export default class Price extends Component {
         this.전기차_보조금(),
       0
     );
+  원리금균등상환_월납입금 = (대출원금, 연이자율, 할부개월) => {
+    let 월이자율 = (연이자율 / 12) * 0.01;
+    let x = Math.pow(1 + 월이자율, 할부개월);
+    return (대출원금 * 월이자율 * x) / (x - 1);
+  };
 
   componentDidMount() {
     axios
@@ -434,9 +441,7 @@ export default class Price extends Component {
             <Grid.Column>
               <Card fluid>
                 <Card.Content>
-                  <Card.Header textAlign="center">
-                    Model 3 가격 예상
-                  </Card.Header>
+                  <Card.Header textAlign="center">예상 가격</Card.Header>
                 </Card.Content>
                 <Card.Content>
                   <List>
@@ -567,6 +572,78 @@ export default class Price extends Component {
                   >
                     사전 예약
                   </Button>
+                </Card.Content>
+              </Card>
+
+              <Card fluid>
+                <Card.Content>
+                  <Card.Header textAlign="center">예상 할부 결제액</Card.Header>
+                </Card.Content>
+                <Card.Content>
+                  <List>
+                    <List.Item>
+                      <List.Icon name="car" />
+                      <List.Content>
+                        <List.Header style={{ color: "grey" }}>
+                          {this.comma(this.할부원금()) + " 원"}
+                        </List.Header>
+                        <List.Description>
+                          할부원금 (개별소비세·교육세·취득세 제외)
+                        </List.Description>
+                      </List.Content>
+                    </List.Item>
+                    <Divider />
+                    <List.Item>
+                      <List.Icon name="minus" />
+                      <List.Content>
+                        <List.Header style={{ color: "green" }}>
+                          {this.comma(this.전기차_보조금()) + " 원"}
+                        </List.Header>
+                        <List.Description>
+                          선납금1 (정부 보조금 + 지방자치단체 보조금)
+                        </List.Description>
+                      </List.Content>
+                    </List.Item>
+                    <List.Item>
+                      <List.Icon name="minus" />
+                      <List.Content>
+                        <List.Header style={{ color: "green" }}>
+                          10,000,000 원
+                        </List.Header>
+                        <List.Description>선납금2</List.Description>
+                      </List.Content>
+                    </List.Item>
+                    <Divider />
+                    <List.Item>
+                      <List.Icon name="won sign" />
+                      <List.Content>
+                        <List.Header>
+                          {this.comma(
+                            this.할부원금() - this.전기차_보조금() - 10000000
+                          ) + " 원"}
+                        </List.Header>
+                        <List.Description>대출원금</List.Description>
+                      </List.Content>
+                    </List.Item>
+                    <Divider />
+                    <List.Item>
+                      <List.Icon name="won sign" />
+                      <List.Content>
+                        <List.Header>
+                          {this.comma(
+                            this.원리금균등상환_월납입금(
+                              this.할부원금() - this.전기차_보조금() - 10000000,
+                              4,
+                              60
+                            )
+                          ) + " 원"}
+                        </List.Header>
+                        <List.Description>
+                          월상환금 (연이율 4%, 5년 할부 기준)
+                        </List.Description>
+                      </List.Content>
+                    </List.Item>
+                  </List>
                 </Card.Content>
               </Card>
             </Grid.Column>
