@@ -1,6 +1,7 @@
 {
   "gov": 9000000,
   "local": [
+    { "name": "해당없음", "subsidy": 0 },
     { "name": "서울특별시", "subsidy": 4500000 },
     { "name": "부산광역시", "subsidy": 5000000 },
     { "name": "대구광역시", "subsidy": 6000000 },
