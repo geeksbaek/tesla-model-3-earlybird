@@ -6,7 +6,7 @@ import Price from "./Price";
 
 const panes = [
   {
-    menuItem: { key: "price", icon: "won sign", content: "가격 비교" },
+    menuItem: { key: "price", icon: "calculator", content: "가격 계산" },
     render: () => <Price />
   }
 ];
