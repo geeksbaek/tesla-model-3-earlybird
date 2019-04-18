@@ -20,7 +20,7 @@ self.__precacheManifest = [
     "url": "/tesla-model-3-korea/static/css/main.b6bbbb3a.chunk.css"
   },
   {
-    "revision": "f636e4f532fce295d8827e603c2693dc",
+    "revision": "10b7d982a1df8dadc8a7eed5f56a2fa0",
     "url": "/tesla-model-3-korea/index.html"
   }
 ];
