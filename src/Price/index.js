@@ -13,12 +13,18 @@ import {
   Tab,
   Input,
   Popup,
-  Icon,
   Dropdown,
   Table
 } from "semantic-ui-react";
 import axios from "axios";
 import YAML from "yamljs";
+
+import { Common } from "./Common";
+import Trim from "./Trim";
+import Color from "./Color";
+import Wheal from "./Wheal";
+import Interior from "./Interior";
+import AutoPilot from "./AutoPilot";
 
 import "./index.css";
 
@@ -52,6 +58,47 @@ export default class Price extends Component {
     prepay: 0,
     annual_loan_interest_rate: 3.5,
     installment_months: 60
+  };
+
+  onTrimChange = (i, v) => {
+    this.setState({
+      base_price: Common.usdTokrw(v["가격"]),
+      base_selected: i,
+      wheal_price: 0,
+      wheal_selected:
+        v["이름"] === "Performance"
+          ? 2
+          : this.state.wheal_selected === 2
+          ? 0
+          : this.state.wheal_selected
+    });
+  };
+
+  onColorChange = (i, v) => {
+    this.setState({
+      color_price: Common.usdTokrw(v["가격"]),
+      color_selected: i
+    });
+  };
+
+  onWhealChange = (i, v) => {
+    this.setState({
+      wheal_price: Common.usdTokrw(v["가격"]),
+      wheal_selected: i
+    });
+  };
+
+  onInteriorChange = (i, v) => {
+    this.setState({
+      interior_price: Common.usdTokrw(v["가격"]),
+      interior_selected: i
+    });
+  };
+
+  onAutoPilotChange = (v, checked) => {
+    this.setState({
+      autopilot_price: checked ? Common.usdTokrw(v["가격"]) : 0
+    });
   };
 
   usdTokrw = usd => (usd * 1134.72).toFixed(0);
@@ -205,225 +252,56 @@ export default class Price extends Component {
           </Message.List>
         </Message>
 
-        <Table compact="very" celled selectable>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>모델명</Table.HeaderCell>
-              <Table.HeaderCell>가격</Table.HeaderCell>
-              <Table.HeaderCell>주행거리</Table.HeaderCell>
-              <Table.HeaderCell>0-60mph</Table.HeaderCell>
-              <Table.HeaderCell>구동방식</Table.HeaderCell>
-              <Table.HeaderCell />
-            </Table.Row>
-          </Table.Header>
+        <Trim
+          base_selected={this.state.base_selected}
+          trims={this.state.trims}
+          calcTotalPrice={this.calcTotalPrice}
+          onChange={this.onTrimChange}
+        />
 
-          <Table.Body>
-            {this.state.trims.map((v, i) => (
-              <Table.Row key={i} active={this.state.base_selected === i}>
-                <Table.Cell>{v["이름"]}</Table.Cell>
-                <Table.Cell>
-                  {this.comma(this.usdTokrw(v["가격"])) + " 원"}
-                </Table.Cell>
-                <Table.Cell>{v["주행거리(km)"] + " km"}</Table.Cell>
-                <Table.Cell>{v["0-60"] + " 초"}</Table.Cell>
-                <Table.Cell>{v["구동방식"]}</Table.Cell>
-                <Table.Cell collapsing>
-                  <Checkbox
-                    radio
-                    checked={this.state.base_selected === i}
-                    onClick={() => {
-                      this.setState({
-                        base_price: this.usdTokrw(v["가격"]),
-                        base_selected: i
-                      });
-                      if (v["이름"] === "Performance") {
-                        this.setState({
-                          wheal_price: 0,
-                          wheal_selected: 2
-                        });
-                      } else {
-                        this.setState({
-                          wheal_price: 0,
-                          wheal_selected: 0
-                        });
-                      }
-                    }}
-                    onChange={this.calcTotalPrice}
-                  />
-                </Table.Cell>
-              </Table.Row>
-            ))}
-          </Table.Body>
-        </Table>
         <Segment basic>
           <Grid columns={2} relaxed="very">
             <Grid.Column>
               <Form>
                 <Form.Group>
-                  <Table compact="very" celled selectable>
-                    <Table.Header>
-                      <Table.Row>
-                        <Table.HeaderCell>색상</Table.HeaderCell>
-                        <Table.HeaderCell>가격</Table.HeaderCell>
-                        <Table.HeaderCell />
-                      </Table.Row>
-                    </Table.Header>
-
-                    <Table.Body>
-                      {this.state.options["color"].map((v, i) => (
-                        <Table.Row
-                          key={i}
-                          active={this.state.color_selected === i}
-                        >
-                          <Table.Cell>{v["이름"]}</Table.Cell>
-                          <Table.Cell>
-                            {this.comma(this.usdTokrw(v["가격"])) + " 원"}
-                          </Table.Cell>
-                          <Table.Cell collapsing>
-                            <Checkbox
-                              radio
-                              checked={this.state.color_selected === i}
-                              onClick={() => {
-                                this.setState({
-                                  color_price: this.usdTokrw(v["가격"]),
-                                  color_selected: i
-                                });
-                              }}
-                              onChange={this.calcTotalPrice}
-                            />
-                          </Table.Cell>
-                        </Table.Row>
-                      ))}
-                    </Table.Body>
-                  </Table>
+                  <Color
+                    color_selected={this.state.color_selected}
+                    options={this.state.options}
+                    calcTotalPrice={this.calcTotalPrice}
+                    onChange={this.onColorChange}
+                  />
                 </Form.Group>
 
                 <Form.Group>
-                  <Table compact="very" celled selectable>
-                    <Table.Header>
-                      <Table.Row>
-                        <Table.HeaderCell>휠</Table.HeaderCell>
-                        <Table.HeaderCell>사이즈</Table.HeaderCell>
-                        <Table.HeaderCell>가격</Table.HeaderCell>
-                        <Table.HeaderCell />
-                      </Table.Row>
-                    </Table.Header>
-
-                    <Table.Body>
-                      {this.state.options["wheal"].map((v, i) => (
-                        <Table.Row
-                          key={i}
-                          active={this.state.wheal_selected === i}
-                          hidden={
-                            (this.state.base_selected !==
-                              this.state.performance_index &&
-                              v["_only"] === "Performance") ||
-                            (this.state.base_selected ===
-                              this.state.performance_index &&
-                              v["_only"] === "!Performance")
-                          }
-                        >
-                          <Table.Cell>{v["이름"]}</Table.Cell>
-                          <Table.Cell>{v["사이즈"]}</Table.Cell>
-                          <Table.Cell>
-                            {this.comma(this.usdTokrw(v["가격"])) + " 원"}
-                          </Table.Cell>
-                          <Table.Cell collapsing>
-                            <Checkbox
-                              radio
-                              checked={this.state.wheal_selected === i}
-                              onClick={() => {
-                                this.setState({
-                                  wheal_price: this.usdTokrw(v["가격"]),
-                                  wheal_selected: i
-                                });
-                              }}
-                              onChange={this.calcTotalPrice}
-                            />
-                          </Table.Cell>
-                        </Table.Row>
-                      ))}
-                    </Table.Body>
-                  </Table>
+                  <Wheal
+                    performance={
+                      this.state.base_selected === this.state.performance_index
+                    }
+                    wheal_selected={this.state.wheal_selected}
+                    options={this.state.options}
+                    calcTotalPrice={this.calcTotalPrice}
+                    onChange={this.onWhealChange}
+                  />
                 </Form.Group>
 
                 <Form.Group>
-                  <Table compact="very" celled selectable>
-                    <Table.Header>
-                      <Table.Row>
-                        <Table.HeaderCell>인테리어</Table.HeaderCell>
-                        <Table.HeaderCell>가격</Table.HeaderCell>
-                        <Table.HeaderCell />
-                      </Table.Row>
-                    </Table.Header>
-
-                    <Table.Body>
-                      {this.state.options["interior"].map((v, i) => (
-                        <Table.Row
-                          key={i}
-                          active={this.state.interior_selected === i}
-                        >
-                          <Table.Cell>{v["이름"]}</Table.Cell>
-                          <Table.Cell>
-                            {this.comma(this.usdTokrw(v["가격"])) + " 원"}
-                          </Table.Cell>
-                          <Table.Cell collapsing>
-                            <Checkbox
-                              radio
-                              checked={this.state.interior_selected === i}
-                              onClick={() => {
-                                this.setState({
-                                  interior_price: this.usdTokrw(v["가격"]),
-                                  interior_selected: i
-                                });
-                              }}
-                              onChange={this.calcTotalPrice}
-                            />
-                          </Table.Cell>
-                        </Table.Row>
-                      ))}
-                    </Table.Body>
-                  </Table>
+                  <Interior
+                    interior_selected={this.state.interior_selected}
+                    options={this.state.options}
+                    calcTotalPrice={this.calcTotalPrice}
+                    onChange={this.onInteriorChange}
+                  />
                 </Form.Group>
 
                 <Form.Group>
-                  <Table compact="very" celled selectable>
-                    <Table.Header>
-                      <Table.Row>
-                        <Table.HeaderCell>오토파일럿</Table.HeaderCell>
-                        <Table.HeaderCell>가격</Table.HeaderCell>
-                        <Table.HeaderCell />
-                      </Table.Row>
-                    </Table.Header>
-
-                    <Table.Body>
-                      {this.state.options["autopilot"].map((v, i) => (
-                        <Table.Row key={i}>
-                          <Table.Cell>{v["이름"]}</Table.Cell>
-                          <Table.Cell>
-                            {this.comma(this.usdTokrw(v["가격"])) + " 원"}
-                          </Table.Cell>
-                          <Table.Cell collapsing>
-                            <Checkbox
-                              onClick={(e, value) => {
-                                if (value.checked) {
-                                  this.setState({
-                                    autopilot_price: this.usdTokrw(v["가격"])
-                                  });
-                                } else {
-                                  this.setState({
-                                    autopilot_price: 0
-                                  });
-                                }
-                              }}
-                              onChange={this.calcTotalPrice}
-                            />
-                          </Table.Cell>
-                        </Table.Row>
-                      ))}
-                    </Table.Body>
-                  </Table>
+                  <AutoPilot
+                    autopilot_selected={this.state.autopilot_selected}
+                    options={this.state.options}
+                    calcTotalPrice={this.calcTotalPrice}
+                    onChange={this.onAutoPilotChange}
+                  />
                 </Form.Group>
+
                 <Divider hidden />
                 <Form.Group>
                   <div style={{ width: "100%" }}>
