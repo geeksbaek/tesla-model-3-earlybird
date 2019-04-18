@@ -11,6 +11,8 @@ import {
   Header,
   List,
   Input,
+  Popup,
+  Icon,
   Dropdown,
   Table
 } from "semantic-ui-react";
@@ -461,9 +463,13 @@ export default class Price extends Component {
                         <List.Header style={{ color: "orange" }}>
                           {this.comma(this.부가가치세_과세()) + " 원"}
                         </List.Header>
-                        <List.Description>
-                          부가가치세 (취득 당시 가액의 10%)
-                        </List.Description>
+                        <Popup
+                          trigger={
+                            <List.Description>부가가치세</List.Description>
+                          }
+                          content="취득 당시 가액의 10%"
+                          size="small"
+                        />
                       </List.Content>
                     </List.Item>
                     <List.Item>
@@ -472,9 +478,13 @@ export default class Price extends Component {
                         <List.Header style={{ color: "orange" }}>
                           {this.comma(this.개별소비세_과세()) + " 원"}
                         </List.Header>
-                        <List.Description>
-                          개별소비세 (공장도 가격의 5%)
-                        </List.Description>
+                        <Popup
+                          trigger={
+                            <List.Description>개별소비세</List.Description>
+                          }
+                          content="공장도 가격의 5%"
+                          size="small"
+                        />
                       </List.Content>
                     </List.Item>
                     <List.Item>
@@ -483,9 +493,13 @@ export default class Price extends Component {
                         <List.Header style={{ color: "green" }}>
                           {this.comma(this.개별소비세_감면()) + " 원"}
                         </List.Header>
-                        <List.Description>
-                          개별소비세 감면 (최대 300만원 감면)
-                        </List.Description>
+                        <Popup
+                          trigger={
+                            <List.Description>개별소비세 감면</List.Description>
+                          }
+                          content="최대 300만원 감면"
+                          size="small"
+                        />
                       </List.Content>
                     </List.Item>
                     <List.Item>
@@ -494,9 +508,11 @@ export default class Price extends Component {
                         <List.Header style={{ color: "orange" }}>
                           {this.comma(this.교육세_과세()) + " 원"}
                         </List.Header>
-                        <List.Description>
-                          교육세 (개별소비세의 30%)
-                        </List.Description>
+                        <Popup
+                          trigger={<List.Description>교육세</List.Description>}
+                          content="개별소비세의 30%"
+                          size="small"
+                        />
                       </List.Content>
                     </List.Item>
                     <List.Item>
@@ -505,9 +521,13 @@ export default class Price extends Component {
                         <List.Header style={{ color: "green" }}>
                           {this.comma(this.교육세_감면()) + " 원"}
                         </List.Header>
-                        <List.Description>
-                          교육세 감면 (최대 90만원 감면)
-                        </List.Description>
+                        <Popup
+                          trigger={
+                            <List.Description>교육세 감면</List.Description>
+                          }
+                          content="최대 90만원 감면"
+                          size="small"
+                        />
                       </List.Content>
                     </List.Item>
                     <List.Item>
@@ -516,9 +536,11 @@ export default class Price extends Component {
                         <List.Header style={{ color: "orange" }}>
                           {this.comma(this.취득세_과세()) + " 원"}
                         </List.Header>
-                        <List.Description>
-                          취득세 (공장도 가격+개별소비세+교육세의 7%)
-                        </List.Description>
+                        <Popup
+                          trigger={<List.Description>취득세</List.Description>}
+                          content="(공장도 가격 + 개별소비세 + 교육세)의 7%"
+                          size="small"
+                        />
                       </List.Content>
                     </List.Item>
                     <List.Item>
@@ -527,9 +549,13 @@ export default class Price extends Component {
                         <List.Header style={{ color: "green" }}>
                           {this.comma(this.취득세_감면()) + " 원"}
                         </List.Header>
-                        <List.Description>
-                          취득세 감면 (최대 140만원 감면)
-                        </List.Description>
+                        <Popup
+                          trigger={
+                            <List.Description>취득세 감면</List.Description>
+                          }
+                          content="최대 140만원 감면"
+                          size="small"
+                        />
                       </List.Content>
                     </List.Item>
                     <Divider />
@@ -587,9 +613,13 @@ export default class Price extends Component {
                         <List.Header style={{ color: "grey" }}>
                           {this.comma(this.할부원금()) + " 원"}
                         </List.Header>
-                        <List.Description>
-                          할부원금 (개별소비세·교육세·취득세 제외)
-                        </List.Description>
+                        <Popup
+                          trigger={
+                            <List.Description>할부원금</List.Description>
+                          }
+                          content="개별소비세·교육세·취득세 제외"
+                          size="small"
+                        />
                       </List.Content>
                     </List.Item>
                     <Divider />
