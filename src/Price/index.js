@@ -572,6 +572,7 @@ export default class Price extends Component {
                 trims={this.state.trims}
                 calcTotalPrice={this.calcTotalPrice}
                 onChange={this.onTrimChange}
+                usdTokrw={this.usdTokrw}
               />
             </Accordion.Content>
 
@@ -589,6 +590,7 @@ export default class Price extends Component {
                 options={this.state.options}
                 calcTotalPrice={this.calcTotalPrice}
                 onChange={this.onColorChange}
+                usdTokrw={this.usdTokrw}
               />
             </Accordion.Content>
 
@@ -608,6 +610,7 @@ export default class Price extends Component {
                 options={this.state.options}
                 calcTotalPrice={this.calcTotalPrice}
                 onChange={this.onWheelsChange}
+                usdTokrw={this.usdTokrw}
               />
             </Accordion.Content>
 
@@ -625,6 +628,7 @@ export default class Price extends Component {
                 options={this.state.options}
                 calcTotalPrice={this.calcTotalPrice}
                 onChange={this.onInteriorChange}
+                usdTokrw={this.usdTokrw}
               />
             </Accordion.Content>
 
@@ -642,6 +646,7 @@ export default class Price extends Component {
                 options={this.state.options}
                 calcTotalPrice={this.calcTotalPrice}
                 onChange={this.onAutoPilotChange}
+                usdTokrw={this.usdTokrw}
               />
             </Accordion.Content>
 
