@@ -42,16 +42,13 @@ options:
     - 이름: Black & White Interior
       가격: 1000
   wheels:
-    - 이름: Aero Wheels
-      사이즈: 18"
+    - 이름: 18" Aero Wheels
       가격: 0
       _only: "!Performance"
-    - 이름: Sport Wheels
-      사이즈: 19"
+    - 이름: 19" Sport Wheels
       가격: 1500
       _only: "!Performance"
-    - 이름: Performance Wheels
-      사이즈: 20"
+    - 이름: 20" Performance Wheels
       가격: 0
       _only: Performance
   autopilot:
