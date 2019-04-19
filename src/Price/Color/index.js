@@ -10,7 +10,7 @@ export default class Color extends Component {
 
   render() {
     return (
-      <Table compact="very" celled selectable>
+      <Table compact="very" celled selectable fixed>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>색상</Table.HeaderCell>

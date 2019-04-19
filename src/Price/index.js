@@ -47,7 +47,7 @@ export default class Price extends Component {
     wheels_price: 0,
     interior_selected: 0,
     interior_price: 0,
-    autopilot_selected: false,
+    autopilot_selected: 0,
     autopilot_price: 0,
     total_price: 0,
     gov_subsidy: 0,
@@ -102,25 +102,22 @@ export default class Price extends Component {
     });
   };
 
-  onAutoPilotChange = (v, checked) => {
+  onAutoPilotChange = (i, v) => {
     this.setState({
-      autopilot_selected: checked,
-      autopilot_price: checked ? Common.usdTokrw(v["가격"]) : 0
+      autopilot_price: Common.usdTokrw(v["가격"]),
+      autopilot_selected: i
     });
   };
 
   selectedOptions = () => {
     if (this.state.trims.length === 0) return [];
-    let ret = [
+    return [
       this.state.trims[this.state.base_selected],
       this.state.options["color"][this.state.color_selected],
       this.state.options["wheels"][this.state.wheels_selected],
-      this.state.options["interior"][this.state.interior_selected]
+      this.state.options["interior"][this.state.interior_selected],
+      this.state.options["autopilot"][this.state.autopilot_selected]
     ];
-    if (this.state.autopilot_selected) {
-      ret.push(this.state.options["autopilot"][0]);
-    }
-    return ret;
   };
 
   usdTokrw = usd => (usd * 1134.72).toFixed(0);

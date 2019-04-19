@@ -9,12 +9,12 @@ export default class Trim extends Component {
 
   render() {
     return (
-      <Table compact="very" celled selectable>
+      <Table compact="very" celled selectable fixed>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>모델명</Table.HeaderCell>
             <Table.HeaderCell>가격</Table.HeaderCell>
-            <Table.HeaderCell>주행거리</Table.HeaderCell>
+            <Table.HeaderCell>주행거리(EPA)</Table.HeaderCell>
             <Table.HeaderCell>0-60mph</Table.HeaderCell>
             <Table.HeaderCell>구동방식</Table.HeaderCell>
           </Table.Row>
