@@ -10,11 +10,10 @@ export default class Wheels extends Component {
 
   render() {
     return (
-      <Table compact="very" celled selectable>
+      <Table compact="very" celled selectable fixed>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>휠</Table.HeaderCell>
-            <Table.HeaderCell>사이즈</Table.HeaderCell>
             <Table.HeaderCell>가격</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
@@ -28,15 +27,10 @@ export default class Wheels extends Component {
                 (!this.props.performance && v["_only"] === "Performance") ||
                 (this.props.performance && v["_only"] === "!Performance")
               }
-              hidden={
-                (!this.props.performance && v["_only"] === "Performance") ||
-                (this.props.performance && v["_only"] === "!Performance")
-              }
               onClick={() => this.onClick(i, v)}
               style={{ cursor: "pointer" }}
             >
               <Table.Cell>{v["이름"]}</Table.Cell>
-              <Table.Cell>{v["사이즈"]}</Table.Cell>
               <Table.Cell>
                 {Common.comma(Common.usdTokrw(v["가격"])) + " 원"}
               </Table.Cell>
