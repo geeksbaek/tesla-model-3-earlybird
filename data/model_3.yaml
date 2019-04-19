@@ -59,5 +59,5 @@ options:
       설명: Enables your car to steer, accelerate and brake automatically for other vehicles and pedestrians within its lane.
       가격: 0
     - 이름: Full Self-Driving Capability
-      설명: "Navigate on Autopilot: automatic driving from highway on-ramp to off-ramp including interchanges and overtaking slower cars.\nAuto lane Change: automatic lane changes while driving on the highway.\nAutopark: both parallel and perpendicular spaces.\nSummon: your parked car will come find you anywhere in a parking lot. Really.\n\n(Coming later this year)\nRecognize and respond to traffic lights and stop signs.\nAutomatic driving on city streets."
+      설명: "Navigate on Autopilot: automatic driving from highway on-ramp to off-ramp including interchanges and overtaking slower cars.\nAuto lane Change: automatic lane changes while driving on the highway.\nAutopark: both parallel and perpendicular spaces.\nSummon: your parked car will come find you anywhere in a parking lot. Really.\n(Coming later this year) Recognize and respond to traffic lights and stop signs.\n(Coming later this year) Automatic driving on city streets."
       가격: 5000
