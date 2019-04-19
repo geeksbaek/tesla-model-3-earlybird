@@ -124,7 +124,7 @@ export default class Loan extends Component {
               <List.Item>
                 <List.Icon name="won sign" />
                 <List.Content>
-                  <List.Header>
+                  <List.Header style={{ color: "grey" }}>
                     {Common.comma(
                       this.props.calcFuncs()["할부원금"]() -
                         this.props.calcFuncs()["전기차_보조금"]() -

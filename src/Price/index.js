@@ -382,22 +382,21 @@ export default class Price extends Component {
         </Message>
 
         <Responsive
-          as={Trim}
-          base_selected={this.state.base_selected}
-          trims={this.state.trims}
-          calcTotalPrice={this.calcTotalPrice}
-          onChange={this.onTrimChange}
-          minWidth={Responsive.onlyTablet.minWidth}
-        />
-
-        <Responsive
           as={Segment}
           basic
           minWidth={Responsive.onlyTablet.minWidth}
         >
-          <Grid columns={2} relaxed="very">
+          <Grid columns={2}>
             <Grid.Column>
               <Form>
+                <Form.Group>
+                  <Trim
+                    base_selected={this.state.base_selected}
+                    trims={this.state.trims}
+                    calcTotalPrice={this.calcTotalPrice}
+                    onChange={this.onTrimChange}
+                  />
+                </Form.Group>
                 <Form.Group>
                   <Color
                     color_selected={this.state.color_selected}
@@ -499,7 +498,6 @@ export default class Price extends Component {
               />
             </Grid.Column>
           </Grid>
-          <Divider vertical>Calc</Divider>
         </Responsive>
 
         <Responsive {...Responsive.onlyMobile}>

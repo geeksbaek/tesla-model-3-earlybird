@@ -1,12 +1,14 @@
 import React, { Component } from "react";
-import { Header, Dropdown } from "semantic-ui-react";
+import { Header, Dropdown, Divider } from "semantic-ui-react";
 import { Common } from "../Common";
 
 export default class Subsidy extends Component {
   render() {
     return (
       <div style={{ width: "100%" }}>
-        <Header sub>전기차 보조금</Header>
+        <Header sub>지방자치단체 보조금</Header>
+        <Divider hidden fitted />
+        <Divider hidden fitted />
         <Dropdown
           fluid
           deburr
