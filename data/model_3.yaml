@@ -37,23 +37,23 @@ options:
     - 이름: Red Multi-Coat
       가격: 2500
   interior:
-    - 이름: 블랙
+    - 이름: Black
       가격: 0
-    - 이름: 블랙 & 화이트
+    - 이름: Black & White
       가격: 1000
   wheal:
-    - 이름: 에어로
-      사이즈: 18인치
+    - 이름: Aero Wheal
+      사이즈: 18"
       가격: 0
       _only: "!Performance"
-    - 이름: 스포츠
-      사이즈: 19인치
+    - 이름: Sport Wheal
+      사이즈: 19"
       가격: 1500
       _only: "!Performance"
-    - 이름: 퍼포먼스
-      사이즈: 20인치
+    - 이름: Performance Wheal
+      사이즈: 20"
       가격: 0
       _only: Performance
   autopilot:
-    - 이름: 완전 자율 주행 기능
+    - 이름: Full Self-Driving
       가격: 5000
