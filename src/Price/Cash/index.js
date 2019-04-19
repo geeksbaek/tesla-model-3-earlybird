@@ -191,8 +191,7 @@ export default class Cash extends Component {
         </Card.Content>
         <Card.Content extra textAlign="right">
           <Button
-            primary
-            as="a"
+            color="red"
             href="https://www.tesla.com/ko_KR/model3/reserve"
             target="_blank"
           >
