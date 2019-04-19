@@ -30,7 +30,7 @@ export default class Trim extends Component {
             >
               <Table.Cell>{v["이름"]}</Table.Cell>
               <Table.Cell>
-                {Common.comma(Common.usdTokrw(v["가격"])) + " 원"}
+                {Common.comma(this.props.usdTokrw(v["가격"])) + " 원"}
               </Table.Cell>
               <Table.Cell>{v["주행거리(km)"] + " km"}</Table.Cell>
               <Table.Cell>{v["0-60"] + " 초"}</Table.Cell>

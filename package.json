@@ -10,6 +10,7 @@
     "react-dom": "^16.8.6",
     "react-scripts": "2.1.8",
     "semantic-ui-react": "^0.86.0",
+    "yahoo-exchange": "^2.1.2",
     "yamljs": "^0.3.0"
   },
   "scripts": {

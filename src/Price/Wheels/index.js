@@ -32,7 +32,7 @@ export default class Wheels extends Component {
             >
               <Table.Cell>{v["이름"]}</Table.Cell>
               <Table.Cell>
-                {Common.comma(Common.usdTokrw(v["가격"])) + " 원"}
+                {Common.comma(this.props.usdTokrw(v["가격"])) + " 원"}
               </Table.Cell>
             </Table.Row>
           ))}

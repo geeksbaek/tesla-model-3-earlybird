@@ -70,7 +70,7 @@ export default class Price extends Component {
 
   onTrimChange = (i, v) => {
     this.setState({
-      base_price: Common.usdTokrw(v["가격"]),
+      base_price: this.usdTokrw(v["가격"]),
       base_selected: i,
       wheels_price: 0,
       wheels_selected:
@@ -84,28 +84,28 @@ export default class Price extends Component {
 
   onColorChange = (i, v) => {
     this.setState({
-      color_price: Common.usdTokrw(v["가격"]),
+      color_price: this.usdTokrw(v["가격"]),
       color_selected: i
     });
   };
 
   onWheelsChange = (i, v) => {
     this.setState({
-      wheels_price: Common.usdTokrw(v["가격"]),
+      wheels_price: this.usdTokrw(v["가격"]),
       wheels_selected: i
     });
   };
 
   onInteriorChange = (i, v) => {
     this.setState({
-      interior_price: Common.usdTokrw(v["가격"]),
+      interior_price: this.usdTokrw(v["가격"]),
       interior_selected: i
     });
   };
 
   onAutoPilotChange = (i, v) => {
     this.setState({
-      autopilot_price: Common.usdTokrw(v["가격"]),
+      autopilot_price: this.usdTokrw(v["가격"]),
       autopilot_selected: i
     });
   };
@@ -121,6 +121,7 @@ export default class Price extends Component {
     ];
   };
 
+  usdTokrw = usd => (usd * this.state.exchange).toFixed(0);
   calcTotalPrice = () =>
     this.setState(prev => {
       return {
@@ -295,62 +296,66 @@ export default class Price extends Component {
   // };
 
   componentDidMount() {
-    axios
-      .get(
-        "https://raw.githubusercontent.com/geeksbaek/tesla-model-3-korea/master/data/model_3.yaml"
-      )
-      .then(res => {
-        let data = YAML.parse(res.data);
-        this.setState({
-          trims: data.trims,
-          options: data.options,
-          base_price: Common.usdTokrw(data.trims[0]["가격"]),
-          base_selected: 0,
-          loadingA: false
-        });
-        data.trims.forEach((v, i) => {
-          if (v["이름"] === "Performance") {
-            this.setState({ performance_index: i });
-          }
-        });
-        this.calcTotalPrice();
-      });
+    axios.get("https://api.exchangeratesapi.io/latest?base=USD").then(res => {
+      this.setState({ exchange: res.data.rates.KRW });
 
-    axios
-      .get(
-        "https://raw.githubusercontent.com/geeksbaek/tesla-model-3-korea/master/data/saletex.yaml"
-      )
-      .then(res => {
-        let data = YAML.parse(res.data);
-        this.setState({
-          saletex: {
-            개별소비세: {
-              과세: data["개별소비세"]["과세"],
-              감면: data["개별소비세"]["감면"]
-            },
-            교육세: {
-              과세: data["교육세"]["과세"],
-              감면: data["교육세"]["감면"]
-            },
-            취득세: {
-              과세: data["취득세"]["과세"],
-              감면: data["취득세"]["감면"]
+      axios
+        .get(
+          "https://raw.githubusercontent.com/geeksbaek/tesla-model-3-korea/master/data/model_3.yaml"
+        )
+        .then(res => {
+          let data = YAML.parse(res.data);
+          this.setState({
+            trims: data.trims,
+            options: data.options,
+            base_price: this.usdTokrw(data.trims[0]["가격"]),
+            base_selected: 0,
+            loadingA: false
+          });
+          data.trims.forEach((v, i) => {
+            if (v["이름"] === "Performance") {
+              this.setState({ performance_index: i });
             }
-          },
-          loadingB: false
+          });
+          this.calcTotalPrice();
         });
-      });
 
-    axios
-      .get(
-        "https://raw.githubusercontent.com/geeksbaek/tesla-model-3-korea/master/data/subsidy.json"
-      )
-      .then(res => {
-        this.setState({
-          gov_subsidy: res.data.gov,
-          local_subsidy: res.data.local
+      axios
+        .get(
+          "https://raw.githubusercontent.com/geeksbaek/tesla-model-3-korea/master/data/saletex.yaml"
+        )
+        .then(res => {
+          let data = YAML.parse(res.data);
+          this.setState({
+            saletex: {
+              개별소비세: {
+                과세: data["개별소비세"]["과세"],
+                감면: data["개별소비세"]["감면"]
+              },
+              교육세: {
+                과세: data["교육세"]["과세"],
+                감면: data["교육세"]["감면"]
+              },
+              취득세: {
+                과세: data["취득세"]["과세"],
+                감면: data["취득세"]["감면"]
+              }
+            },
+            loadingB: false
+          });
         });
-      });
+
+      axios
+        .get(
+          "https://raw.githubusercontent.com/geeksbaek/tesla-model-3-korea/master/data/subsidy.json"
+        )
+        .then(res => {
+          this.setState({
+            gov_subsidy: res.data.gov,
+            local_subsidy: res.data.local
+          });
+        });
+    });
   }
 
   render() {
@@ -399,6 +404,7 @@ export default class Price extends Component {
                     trims={this.state.trims}
                     calcTotalPrice={this.calcTotalPrice}
                     onChange={this.onTrimChange}
+                    usdTokrw={this.usdTokrw}
                   />
                 </Form.Group>
                 <Form.Group>
@@ -407,6 +413,7 @@ export default class Price extends Component {
                     options={this.state.options}
                     calcTotalPrice={this.calcTotalPrice}
                     onChange={this.onColorChange}
+                    usdTokrw={this.usdTokrw}
                   />
                 </Form.Group>
                 <Form.Group>
@@ -418,6 +425,7 @@ export default class Price extends Component {
                     options={this.state.options}
                     calcTotalPrice={this.calcTotalPrice}
                     onChange={this.onWheelsChange}
+                    usdTokrw={this.usdTokrw}
                   />
                 </Form.Group>
                 <Form.Group>
@@ -426,6 +434,7 @@ export default class Price extends Component {
                     options={this.state.options}
                     calcTotalPrice={this.calcTotalPrice}
                     onChange={this.onInteriorChange}
+                    usdTokrw={this.usdTokrw}
                   />
                 </Form.Group>
                 <Form.Group>
@@ -434,6 +443,7 @@ export default class Price extends Component {
                     options={this.state.options}
                     calcTotalPrice={this.calcTotalPrice}
                     onChange={this.onAutoPilotChange}
+                    usdTokrw={this.usdTokrw}
                   />
                 </Form.Group>
 
@@ -477,6 +487,7 @@ export default class Price extends Component {
                         }
                         calcFuncs={this.calcFuncs}
                         selectedOptions={this.selectedOptions}
+                        usdTokrw={this.usdTokrw}
                       />
                     )
                   },
@@ -509,6 +520,7 @@ export default class Price extends Component {
                         }}
                         calcFuncs={this.calcFuncs}
                         selectedOptions={this.selectedOptions}
+                        usdTokrw={this.usdTokrw}
                       />
                     )
                   }
@@ -653,6 +665,7 @@ export default class Price extends Component {
                     }
                     calcFuncs={this.calcFuncs}
                     selectedOptions={this.selectedOptions}
+                    usdTokrw={this.usdTokrw}
                   />
                 )
               },
@@ -685,6 +698,7 @@ export default class Price extends Component {
                     }}
                     calcFuncs={this.calcFuncs}
                     selectedOptions={this.selectedOptions}
+                    usdTokrw={this.usdTokrw}
                   />
                 )
               }

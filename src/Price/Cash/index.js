@@ -20,7 +20,8 @@ export default class Cash extends Component {
                         <Label as="a" horizontal>
                           {v["이름"]}
                           <Label.Detail>
-                            {Common.comma(Common.usdTokrw(v["가격"])) + "원"}
+                            {Common.comma(this.props.usdTokrw(v["가격"])) +
+                              "원"}
                           </Label.Detail>
                         </Label>
                       </List.Item>

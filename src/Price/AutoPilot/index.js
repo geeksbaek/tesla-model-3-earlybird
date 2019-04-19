@@ -46,7 +46,7 @@ export default class AutoPilot extends Component {
                 </Popup>
               </Table.Cell>
               <Table.Cell>
-                {Common.comma(Common.usdTokrw(v["가격"])) + " 원"}
+                {Common.comma(this.props.usdTokrw(v["가격"])) + " 원"}
               </Table.Cell>
             </Table.Row>
           ))}
