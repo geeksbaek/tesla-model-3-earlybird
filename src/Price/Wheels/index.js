@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { Table, Checkbox } from "semantic-ui-react";
+import { Table } from "semantic-ui-react";
 import { Common } from "../Common";
 
-export default class Wheel extends Component {
+export default class Wheels extends Component {
   onClick = (i, v) => {
     this.props.onChange(i, v);
+    this.props.calcTotalPrice();
   };
 
   render() {
@@ -15,15 +16,14 @@ export default class Wheel extends Component {
             <Table.HeaderCell>휠</Table.HeaderCell>
             <Table.HeaderCell>사이즈</Table.HeaderCell>
             <Table.HeaderCell>가격</Table.HeaderCell>
-            <Table.HeaderCell />
           </Table.Row>
         </Table.Header>
 
         <Table.Body>
-          {this.props.options["wheel"].map((v, i) => (
+          {this.props.options["wheels"].map((v, i) => (
             <Table.Row
               key={i}
-              active={this.props.wheel_selected === i}
+              active={this.props.wheels_selected === i}
               disabled={
                 (!this.props.performance && v["_only"] === "Performance") ||
                 (this.props.performance && v["_only"] === "!Performance")
@@ -32,19 +32,13 @@ export default class Wheel extends Component {
                 (!this.props.performance && v["_only"] === "Performance") ||
                 (this.props.performance && v["_only"] === "!Performance")
               }
+              onClick={() => this.onClick(i, v)}
+              style={{ cursor: "pointer" }}
             >
               <Table.Cell>{v["이름"]}</Table.Cell>
               <Table.Cell>{v["사이즈"]}</Table.Cell>
               <Table.Cell>
                 {Common.comma(Common.usdTokrw(v["가격"])) + " 원"}
-              </Table.Cell>
-              <Table.Cell collapsing>
-                <Checkbox
-                  radio
-                  checked={this.props.wheel_selected === i}
-                  onClick={() => this.onClick(i, v)}
-                  onChange={this.props.calcTotalPrice}
-                />
               </Table.Cell>
             </Table.Row>
           ))}
