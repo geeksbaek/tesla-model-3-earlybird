@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Table, Checkbox } from "semantic-ui-react";
 import { Common } from "../Common";
 
-export default class Wheal extends Component {
+export default class Wheel extends Component {
   onClick = (i, v) => {
     this.props.onChange(i, v);
   };
@@ -20,10 +20,10 @@ export default class Wheal extends Component {
         </Table.Header>
 
         <Table.Body>
-          {this.props.options["wheal"].map((v, i) => (
+          {this.props.options["wheel"].map((v, i) => (
             <Table.Row
               key={i}
-              active={this.props.wheal_selected === i}
+              active={this.props.wheel_selected === i}
               disabled={
                 (!this.props.performance && v["_only"] === "Performance") ||
                 (this.props.performance && v["_only"] === "!Performance")
@@ -41,7 +41,7 @@ export default class Wheal extends Component {
               <Table.Cell collapsing>
                 <Checkbox
                   radio
-                  checked={this.props.wheal_selected === i}
+                  checked={this.props.wheel_selected === i}
                   onClick={() => this.onClick(i, v)}
                   onChange={this.props.calcTotalPrice}
                 />

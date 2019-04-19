@@ -41,16 +41,16 @@ options:
       가격: 0
     - 이름: Black & White
       가격: 1000
-  wheal:
-    - 이름: Aero Wheal
+  wheel:
+    - 이름: Aero Wheel
       사이즈: 18"
       가격: 0
       _only: "!Performance"
-    - 이름: Sport Wheal
+    - 이름: Sport Wheel
       사이즈: 19"
       가격: 1500
       _only: "!Performance"
-    - 이름: Performance Wheal
+    - 이름: Performance Wheel
       사이즈: 20"
       가격: 0
       _only: Performance

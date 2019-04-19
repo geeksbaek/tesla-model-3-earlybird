@@ -16,7 +16,7 @@ import YAML from "yamljs";
 import { Common } from "./Common";
 import Trim from "./Trim";
 import Color from "./Color";
-import Wheal from "./Wheal";
+import Wheel from "./Wheel";
 import Interior from "./Interior";
 import AutoPilot from "./AutoPilot";
 import Subsidy from "./Subsidy";
@@ -28,7 +28,7 @@ import "./index.css";
 export default class Price extends Component {
   state = {
     trims: [],
-    options: { color: [], interior: [], wheal: [], autopilot: [] },
+    options: { color: [], interior: [], wheel: [], autopilot: [] },
     saletex: {
       개별소비세: { 과세: 0, 감면: 0 },
       교육세: { 과세: 0, 감면: 0 },
@@ -43,8 +43,8 @@ export default class Price extends Component {
     base_price: 0,
     color_selected: 0,
     color_price: 0,
-    wheal_selected: 0,
-    wheal_price: 0,
+    wheel_selected: 0,
+    wheel_price: 0,
     interior_selected: 0,
     interior_price: 0,
     autopilot_price: 0,
@@ -70,13 +70,13 @@ export default class Price extends Component {
     this.setState({
       base_price: Common.usdTokrw(v["가격"]),
       base_selected: i,
-      wheal_price: 0,
-      wheal_selected:
+      wheel_price: 0,
+      wheel_selected:
         v["이름"] === "Performance"
           ? 2
-          : this.state.wheal_selected === 2
+          : this.state.wheel_selected === 2
           ? 0
-          : this.state.wheal_selected
+          : this.state.wheel_selected
     });
   };
 
@@ -87,10 +87,10 @@ export default class Price extends Component {
     });
   };
 
-  onWhealChange = (i, v) => {
+  onWheelChange = (i, v) => {
     this.setState({
-      wheal_price: Common.usdTokrw(v["가격"]),
-      wheal_selected: i
+      wheel_price: Common.usdTokrw(v["가격"]),
+      wheel_selected: i
     });
   };
 
@@ -119,7 +119,7 @@ export default class Price extends Component {
         total_price:
           Number(prev.base_price) +
           Number(prev.color_price) +
-          Number(prev.wheal_price) +
+          Number(prev.wheel_price) +
           Number(prev.interior_price) +
           Number(prev.autopilot_price)
       };
@@ -391,14 +391,14 @@ export default class Price extends Component {
                   />
                 </Form.Group>
                 <Form.Group>
-                  <Wheal
+                  <Wheel
                     performance={
                       this.state.base_selected === this.state.performance_index
                     }
-                    wheal_selected={this.state.wheal_selected}
+                    wheel_selected={this.state.wheel_selected}
                     options={this.state.options}
                     calcTotalPrice={this.calcTotalPrice}
-                    onChange={this.onWhealChange}
+                    onChange={this.onWheelChange}
                   />
                 </Form.Group>
                 <Form.Group>
@@ -528,14 +528,14 @@ export default class Price extends Component {
               <Icon name="dropdown" />휠
             </Accordion.Title>
             <Accordion.Content active={this.state.activeIndex === 2}>
-              <Wheal
+              <Wheel
                 performance={
                   this.state.base_selected === this.state.performance_index
                 }
-                wheal_selected={this.state.wheal_selected}
+                wheel_selected={this.state.wheel_selected}
                 options={this.state.options}
                 calcTotalPrice={this.calcTotalPrice}
-                onChange={this.onWhealChange}
+                onChange={this.onWheelChange}
               />
             </Accordion.Content>
 
