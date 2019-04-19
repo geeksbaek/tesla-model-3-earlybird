@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Divider, Card, List, Popup } from "semantic-ui-react";
+import { Button, Divider, Card, List, Popup, Label } from "semantic-ui-react";
 import { Common } from "../Common";
 
 export default class Cash extends Component {
@@ -11,6 +11,25 @@ export default class Cash extends Component {
         </Card.Content>
         <Card.Content>
           <List>
+            <List.Item>
+              <List.Content>
+                <List.Description>
+                  <List>
+                    {this.props.selectedOptions().map((v, i) => (
+                      <List.Item key={i}>
+                        <Label as="a" horizontal>
+                          {v["이름"]}
+                          <Label.Detail>
+                            {Common.comma(Common.usdTokrw(v["가격"])) + "원"}
+                          </Label.Detail>
+                        </Label>
+                      </List.Item>
+                    ))}
+                  </List>
+                </List.Description>
+              </List.Content>
+            </List.Item>
+            <Divider />
             <List.Item>
               <List.Icon name="car" />
               <List.Content>

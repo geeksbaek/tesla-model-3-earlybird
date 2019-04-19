@@ -47,6 +47,7 @@ export default class Price extends Component {
     wheel_price: 0,
     interior_selected: 0,
     interior_price: 0,
+    autopilot_selected: false,
     autopilot_price: 0,
     total_price: 0,
     gov_subsidy: 0,
@@ -103,8 +104,23 @@ export default class Price extends Component {
 
   onAutoPilotChange = (v, checked) => {
     this.setState({
+      autopilot_selected: checked,
       autopilot_price: checked ? Common.usdTokrw(v["가격"]) : 0
     });
+  };
+
+  selectedOptions = () => {
+    if (this.state.trims.length === 0) return [];
+    let ret = [
+      this.state.trims[this.state.base_selected],
+      this.state.options["color"][this.state.color_selected],
+      this.state.options["wheel"][this.state.wheel_selected],
+      this.state.options["interior"][this.state.interior_selected]
+    ];
+    if (this.state.autopilot_selected) {
+      ret.push(this.state.options["autopilot"][0]);
+    }
+    return ret;
   };
 
   usdTokrw = usd => (usd * 1134.72).toFixed(0);
@@ -443,6 +459,7 @@ export default class Price extends Component {
                         gov_subsidy={this.state.gov_subsidy}
                         local_subsidy={this.state.local_subsidy}
                         calcFuncs={this.calcFuncs}
+                        selectedOptions={this.selectedOptions}
                       />
                     )
                   },
@@ -474,6 +491,7 @@ export default class Price extends Component {
                           });
                         }}
                         calcFuncs={this.calcFuncs}
+                        selectedOptions={this.selectedOptions}
                       />
                     )
                   }
@@ -606,6 +624,7 @@ export default class Price extends Component {
                     gov_subsidy={this.state.gov_subsidy}
                     local_subsidy={this.state.local_subsidy}
                     calcFuncs={this.calcFuncs}
+                    selectedOptions={this.selectedOptions}
                   />
                 )
               },
@@ -637,6 +656,7 @@ export default class Price extends Component {
                       });
                     }}
                     calcFuncs={this.calcFuncs}
+                    selectedOptions={this.selectedOptions}
                   />
                 )
               }
