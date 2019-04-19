@@ -55,5 +55,7 @@ options:
       가격: 0
       _only: Performance
   autopilot:
-    - 이름: Full Self-Driving
+    - 이름: Autopilot Included
+      가격: 0
+    - 이름: Full Self-Driving Capability
       가격: 5000
