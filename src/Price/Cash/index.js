@@ -143,7 +143,9 @@ export default class Cash extends Component {
               <List.Icon name="minus" />
               <List.Content>
                 <List.Header style={{ color: "green" }}>
-                  {Common.comma(this.props.gov_subsidy) + " 원"}
+                  {Common.comma(
+                    this.props.gov_subsidy ? this.props.gov_subsidy.subsidy : 0
+                  ) + " 원"}
                 </List.Header>
                 <List.Description>정부 보조금</List.Description>
               </List.Content>
@@ -152,7 +154,11 @@ export default class Cash extends Component {
               <List.Icon name="minus" />
               <List.Content>
                 <List.Header style={{ color: "green" }}>
-                  {Common.comma(this.props.local_subsidy) + " 원"}
+                  {Common.comma(
+                    this.props.local_subsidy
+                      ? this.props.local_subsidy.subsidy
+                      : 0
+                  ) + " 원"}
                 </List.Header>
                 <List.Description>지방자치단체 보조금</List.Description>
               </List.Content>

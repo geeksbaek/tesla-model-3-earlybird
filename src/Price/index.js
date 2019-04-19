@@ -34,7 +34,10 @@ export default class Price extends Component {
       교육세: { 과세: 0, 감면: 0 },
       취득세: { 과세: 0, 감면: 0 }
     },
-    subsidy_list: [],
+    gov_subsidy: [],
+    selected_gov_subsidy: 0,
+    local_subsidy: [],
+    selected_local_subsidy: 0,
     loadingA: true,
     loadingB: true,
     performance_index: -1,
@@ -50,8 +53,6 @@ export default class Price extends Component {
     autopilot_selected: 0,
     autopilot_price: 0,
     total_price: 0,
-    gov_subsidy: 0,
-    local_subsidy: 0,
     final_price: 0,
     prepay: 0,
     annual_loan_interest_rate: 3.5,
@@ -120,12 +121,6 @@ export default class Price extends Component {
     ];
   };
 
-  usdTokrw = usd => (usd * 1134.72).toFixed(0);
-  comma = x =>
-    Number(x)
-      .toFixed(0)
-      .toString()
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   calcTotalPrice = () =>
     this.setState(prev => {
       return {
@@ -195,7 +190,13 @@ export default class Price extends Component {
             this.state.saletex.취득세.과세,
           this.state.saletex.취득세.감면
         ),
-      전기차_보조금: () => this.state.gov_subsidy + this.state.local_subsidy,
+      전기차_보조금: () =>
+        (this.state.gov_subsidy[this.state.selected_gov_subsidy]
+          ? this.state.gov_subsidy[this.state.selected_gov_subsidy].subsidy
+          : 0) +
+        (this.state.local_subsidy[this.state.selected_local_subsidy]
+          ? this.state.local_subsidy[this.state.selected_local_subsidy].subsidy
+          : 0),
       할부원금: () =>
         Math.max(
           this.state.total_price +
@@ -234,7 +235,13 @@ export default class Price extends Component {
                 this.state.saletex.교육세.과세,
               this.state.saletex.교육세.감면
             ) -
-            (this.state.gov_subsidy + this.state.local_subsidy),
+            ((this.state.gov_subsidy[this.state.selected_gov_subsidy]
+              ? this.state.gov_subsidy[this.state.selected_gov_subsidy].subsidy
+              : 0) +
+              (this.state.local_subsidy[this.state.selected_local_subsidy]
+                ? this.state.local_subsidy[this.state.selected_local_subsidy]
+                    .subsidy
+                : 0)),
           0
         ),
       원리금균등상환_월납입금: (대출원금, 연이자율, 할부개월) => {
@@ -297,7 +304,7 @@ export default class Price extends Component {
         this.setState({
           trims: data.trims,
           options: data.options,
-          base_price: this.usdTokrw(data.trims[0]["가격"]),
+          base_price: Common.usdTokrw(data.trims[0]["가격"]),
           base_selected: 0,
           loadingA: false
         });
@@ -341,7 +348,7 @@ export default class Price extends Component {
       .then(res => {
         this.setState({
           gov_subsidy: res.data.gov,
-          subsidy_list: res.data.local
+          local_subsidy: res.data.local
         });
       });
   }
@@ -384,7 +391,7 @@ export default class Price extends Component {
           minWidth={Responsive.onlyTablet.minWidth}
         >
           <Grid columns={2}>
-            <Grid.Column>
+            <Grid.Column width={10}>
               <Form>
                 <Form.Group>
                   <Trim
@@ -433,17 +440,23 @@ export default class Price extends Component {
                 <Divider hidden />
                 <Form.Group>
                   <Subsidy
-                    onChange={(e, { value }) => {
+                    onGovSubsidyChange={(e, { value }) => {
                       this.setState({
-                        local_subsidy: this.state.subsidy_list[value].subsidy
+                        selected_gov_subsidy: value
                       });
                     }}
-                    subsidy_list={this.state.subsidy_list}
+                    onLocalSubsidyChange={(e, { value }) => {
+                      this.setState({
+                        selected_local_subsidy: value
+                      });
+                    }}
+                    gov_subsidy={this.state.gov_subsidy}
+                    local_subsidy={this.state.local_subsidy}
                   />
                 </Form.Group>
               </Form>
             </Grid.Column>
-            <Grid.Column>
+            <Grid.Column width={6}>
               <Tab
                 menu={{ secondary: true, pointing: true }}
                 panes={[
@@ -452,8 +465,16 @@ export default class Price extends Component {
                     render: () => (
                       <Cash
                         total_price={this.state.total_price}
-                        gov_subsidy={this.state.gov_subsidy}
-                        local_subsidy={this.state.local_subsidy}
+                        gov_subsidy={
+                          this.state.gov_subsidy[
+                            this.state.selected_gov_subsidy
+                          ]
+                        }
+                        local_subsidy={
+                          this.state.local_subsidy[
+                            this.state.selected_local_subsidy
+                          ]
+                        }
                         calcFuncs={this.calcFuncs}
                         selectedOptions={this.selectedOptions}
                       />
@@ -596,12 +617,18 @@ export default class Price extends Component {
             </Accordion.Title>
             <Accordion.Content active={this.state.activeIndex === 5}>
               <Subsidy
-                onChange={(e, { value }) => {
+                onGovSubsidyChange={(e, { value }) => {
                   this.setState({
-                    local_subsidy: this.state.subsidy_list[value].subsidy
+                    selected_gov_subsidy: value
                   });
                 }}
-                subsidy_list={this.state.subsidy_list}
+                onLocalSubsidyChange={(e, { value }) => {
+                  this.setState({
+                    selected_local_subsidy: value
+                  });
+                }}
+                gov_subsidy={this.state.gov_subsidy}
+                local_subsidy={this.state.local_subsidy}
               />
             </Accordion.Content>
           </Accordion>
@@ -616,8 +643,14 @@ export default class Price extends Component {
                 render: () => (
                   <Cash
                     total_price={this.state.total_price}
-                    gov_subsidy={this.state.gov_subsidy}
-                    local_subsidy={this.state.local_subsidy}
+                    gov_subsidy={
+                      this.state.gov_subsidy[this.state.selected_gov_subsidy]
+                    }
+                    local_subsidy={
+                      this.state.local_subsidy[
+                        this.state.selected_local_subsidy
+                      ]
+                    }
                     calcFuncs={this.calcFuncs}
                     selectedOptions={this.selectedOptions}
                   />
