@@ -24,6 +24,10 @@ export default class Wheal extends Component {
             <Table.Row
               key={i}
               active={this.props.wheal_selected === i}
+              disabled={
+                (!this.props.performance && v["_only"] === "Performance") ||
+                (this.props.performance && v["_only"] === "!Performance")
+              }
               hidden={
                 (!this.props.performance && v["_only"] === "Performance") ||
                 (this.props.performance && v["_only"] === "!Performance")
