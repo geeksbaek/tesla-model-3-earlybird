@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/tesla-model-3-korea/precache-manifest.f131af1b66fd5f25ccf45de337b79039.js"
+  "/tesla-model-3-korea/precache-manifest.580b1e060a22d0709aacca2fd09d1fb7.js"
 );
 
 workbox.clientsClaim();
