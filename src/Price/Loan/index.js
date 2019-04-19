@@ -12,8 +12,6 @@ import {
 import { Common } from "../Common";
 
 export default class Loan extends Component {
-  state = { prepay: 0, annual_loan_interest_rate: 4, installment_months: 60 };
-
   render() {
     return (
       <div>
@@ -33,15 +31,8 @@ export default class Loan extends Component {
                 control={Input}
                 label="선납금2 (그 외)"
                 placeholder="선납금2"
-                value={Common.comma(this.state.prepay || "")}
-                onChange={(e, { value }) => {
-                  if (value.match(/[^\d,]/g)) {
-                    return;
-                  }
-                  this.setState({
-                    prepay: Number(value.replace(/[,.]/g, ""))
-                  });
-                }}
+                value={Common.comma(this.props.prepay || "")}
+                onChange={this.props.onPrepayChange}
               />
             </Form.Group>
             <Form.Group widths="equal">
@@ -50,26 +41,18 @@ export default class Loan extends Component {
                 type="number"
                 control={Input}
                 label="할부 연이율 (%)"
-                error={this.state.annual_loan_interest_rate === 0}
-                value={this.state.annual_loan_interest_rate || ""}
-                onChange={(e, { value }) => {
-                  this.setState({
-                    annual_loan_interest_rate: Number(value)
-                  });
-                }}
+                error={this.props.annual_loan_interest_rate === 0}
+                value={this.props.annual_loan_interest_rate || ""}
+                onChange={this.props.onLoanRateChange}
               />
               <Form.Field
                 width={1}
                 type="number"
                 control={Input}
                 label="할부 개월 수"
-                error={this.state.installment_months === 0}
-                value={this.state.installment_months || ""}
-                onChange={(e, { value }) => {
-                  this.setState({
-                    installment_months: Number(value)
-                  });
-                }}
+                error={this.props.installment_months === 0}
+                value={this.props.installment_months || ""}
+                onChange={this.props.onMonthsChange}
               />
             </Form.Group>
           </Form>
@@ -112,7 +95,7 @@ export default class Loan extends Component {
                 <List.Icon name="minus" />
                 <List.Content>
                   <List.Header style={{ color: "green" }}>
-                    {Common.comma(this.state.prepay) + " 원"}
+                    {Common.comma(this.props.prepay) + " 원"}
                   </List.Header>
                   <List.Description>선납금2</List.Description>
                 </List.Content>
@@ -125,7 +108,7 @@ export default class Loan extends Component {
                     {Common.comma(
                       this.props.calcFuncs()["할부원금"]() -
                         this.props.calcFuncs()["전기차_보조금"]() -
-                        this.state.prepay
+                        this.props.prepay
                     ) + " 원"}
                   </List.Header>
                   <Popup
@@ -162,9 +145,9 @@ export default class Loan extends Component {
                         ["원리금균등상환_월납입금"](
                           this.props.calcFuncs()["할부원금"]() -
                             this.props.calcFuncs()["전기차_보조금"]() -
-                            this.state.prepay,
-                          this.state.annual_loan_interest_rate,
-                          this.state.installment_months
+                            this.props.prepay,
+                          this.props.annual_loan_interest_rate,
+                          this.props.installment_months
                         )
                     ) + " 원"}
                   </List.Header>

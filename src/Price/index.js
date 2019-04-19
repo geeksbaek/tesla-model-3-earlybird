@@ -6,9 +6,9 @@ import {
   Responsive,
   Divider,
   Message,
-  Header,
-  Tab,
-  Dropdown
+  Accordion,
+  Icon,
+  Tab
 } from "semantic-ui-react";
 import axios from "axios";
 import YAML from "yamljs";
@@ -19,6 +19,7 @@ import Color from "./Color";
 import Wheal from "./Wheal";
 import Interior from "./Interior";
 import AutoPilot from "./AutoPilot";
+import Subsidy from "./Subsidy";
 import Cash from "./Cash";
 import Loan from "./Loan";
 
@@ -53,7 +54,16 @@ export default class Price extends Component {
     final_price: 0,
     prepay: 0,
     annual_loan_interest_rate: 3.5,
-    installment_months: 60
+    installment_months: 60,
+    activeIndex: -1
+  };
+
+  onAccordionClick = (e, titleProps) => {
+    const { index } = titleProps;
+    const { activeIndex } = this.state;
+    const newIndex = activeIndex === index ? -1 : index;
+
+    this.setState({ activeIndex: newIndex });
   };
 
   onTrimChange = (i, v) => {
@@ -355,11 +365,13 @@ export default class Price extends Component {
           </Message.List>
         </Message>
 
-        <Trim
+        <Responsive
+          as={Trim}
           base_selected={this.state.base_selected}
           trims={this.state.trims}
           calcTotalPrice={this.calcTotalPrice}
           onChange={this.onTrimChange}
+          minWidth={Responsive.onlyTablet.minWidth}
         />
 
         <Responsive
@@ -408,28 +420,14 @@ export default class Price extends Component {
 
                 <Divider hidden />
                 <Form.Group>
-                  <div style={{ width: "100%" }}>
-                    <Header sub>전기차 보조금</Header>
-                    <Dropdown
-                      fluid
-                      deburr
-                      options={this.state.subsidy_list.map((v, i) => {
-                        return {
-                          key: i,
-                          value: i,
-                          text: `${v.name} (${this.comma(v.subsidy)}원)`
-                        };
-                      })}
-                      placeholder="보조금 계산을 위해 거주지를 선택하세요"
-                      selection
-                      search
-                      onChange={(e, { value }) => {
-                        this.setState({
-                          local_subsidy: this.state.subsidy_list[value].subsidy
-                        });
-                      }}
-                    />
-                  </div>
+                  <Subsidy
+                    onChange={(e, { value }) => {
+                      this.setState({
+                        local_subsidy: this.state.subsidy_list[value].subsidy
+                      });
+                    }}
+                    subsidy_list={this.state.subsidy_list}
+                  />
                 </Form.Group>
               </Form>
             </Grid.Column>
@@ -450,7 +448,34 @@ export default class Price extends Component {
                   },
                   {
                     menuItem: "할부",
-                    render: () => <Loan calcFuncs={this.calcFuncs} />
+                    render: () => (
+                      <Loan
+                        prepay={this.state.prepay}
+                        annual_loan_interest_rate={
+                          this.state.annual_loan_interest_rate
+                        }
+                        installment_months={this.state.installment_months}
+                        onPrepayChange={(e, { value }) => {
+                          if (value.match(/[^\d,]/g)) {
+                            return;
+                          }
+                          this.setState({
+                            prepay: Number(value.replace(/[,.]/g, ""))
+                          });
+                        }}
+                        onLoanRateChange={(e, { value }) => {
+                          this.setState({
+                            annual_loan_interest_rate: Number(value)
+                          });
+                        }}
+                        onMonthsChange={(e, { value }) => {
+                          this.setState({
+                            installment_months: Number(value)
+                          });
+                        }}
+                        calcFuncs={this.calcFuncs}
+                      />
+                    )
                   }
                 ]}
               />
@@ -460,60 +485,115 @@ export default class Price extends Component {
         </Responsive>
 
         <Responsive {...Responsive.onlyMobile}>
-          <Color
-            color_selected={this.state.color_selected}
-            options={this.state.options}
-            calcTotalPrice={this.calcTotalPrice}
-            onChange={this.onColorChange}
-          />
-          <Wheal
-            performance={
-              this.state.base_selected === this.state.performance_index
-            }
-            wheal_selected={this.state.wheal_selected}
-            options={this.state.options}
-            calcTotalPrice={this.calcTotalPrice}
-            onChange={this.onWhealChange}
-          />
-          <Interior
-            interior_selected={this.state.interior_selected}
-            options={this.state.options}
-            calcTotalPrice={this.calcTotalPrice}
-            onChange={this.onInteriorChange}
-          />
-          <AutoPilot
-            autopilot_selected={this.state.autopilot_selected}
-            options={this.state.options}
-            calcTotalPrice={this.calcTotalPrice}
-            onChange={this.onAutoPilotChange}
-          />
+          <Accordion>
+            <Accordion.Title
+              active={this.state.activeIndex === 0}
+              index={0}
+              onClick={this.onAccordionClick}
+            >
+              <Icon name="dropdown" />
+              트림
+            </Accordion.Title>
+            <Accordion.Content active={this.state.activeIndex === 0}>
+              <Trim
+                base_selected={this.state.base_selected}
+                trims={this.state.trims}
+                calcTotalPrice={this.calcTotalPrice}
+                onChange={this.onTrimChange}
+              />
+            </Accordion.Content>
 
-          <Divider hidden />
+            <Accordion.Title
+              active={this.state.activeIndex === 1}
+              index={1}
+              onClick={this.onAccordionClick}
+            >
+              <Icon name="dropdown" />
+              색상
+            </Accordion.Title>
+            <Accordion.Content active={this.state.activeIndex === 1}>
+              <Color
+                color_selected={this.state.color_selected}
+                options={this.state.options}
+                calcTotalPrice={this.calcTotalPrice}
+                onChange={this.onColorChange}
+              />
+            </Accordion.Content>
 
-          <div style={{ width: "100%" }}>
-            <Header sub>전기차 보조금</Header>
-            <Dropdown
-              fluid
-              deburr
-              options={this.state.subsidy_list.map((v, i) => {
-                return {
-                  key: i,
-                  value: i,
-                  text: `${v.name} (${this.comma(v.subsidy)}원)`
-                };
-              })}
-              placeholder="보조금 계산을 위해 거주지를 선택하세요"
-              selection
-              search
-              onChange={(e, { value }) => {
-                this.setState({
-                  local_subsidy: this.state.subsidy_list[value].subsidy
-                });
-              }}
-            />
-          </div>
+            <Accordion.Title
+              active={this.state.activeIndex === 2}
+              index={2}
+              onClick={this.onAccordionClick}
+            >
+              <Icon name="dropdown" />휠
+            </Accordion.Title>
+            <Accordion.Content active={this.state.activeIndex === 2}>
+              <Wheal
+                performance={
+                  this.state.base_selected === this.state.performance_index
+                }
+                wheal_selected={this.state.wheal_selected}
+                options={this.state.options}
+                calcTotalPrice={this.calcTotalPrice}
+                onChange={this.onWhealChange}
+              />
+            </Accordion.Content>
 
-          <Divider hidden />
+            <Accordion.Title
+              active={this.state.activeIndex === 3}
+              index={3}
+              onClick={this.onAccordionClick}
+            >
+              <Icon name="dropdown" />
+              인테리어
+            </Accordion.Title>
+            <Accordion.Content active={this.state.activeIndex === 3}>
+              <Interior
+                interior_selected={this.state.interior_selected}
+                options={this.state.options}
+                calcTotalPrice={this.calcTotalPrice}
+                onChange={this.onInteriorChange}
+              />
+            </Accordion.Content>
+
+            <Accordion.Title
+              active={this.state.activeIndex === 4}
+              index={4}
+              onClick={this.onAccordionClick}
+            >
+              <Icon name="dropdown" />
+              오토파일럿
+            </Accordion.Title>
+            <Accordion.Content active={this.state.activeIndex === 4}>
+              <AutoPilot
+                autopilot_selected={this.state.autopilot_selected}
+                options={this.state.options}
+                calcTotalPrice={this.calcTotalPrice}
+                onChange={this.onAutoPilotChange}
+              />
+            </Accordion.Content>
+
+            <Accordion.Title
+              active={this.state.activeIndex === 5}
+              index={5}
+              onClick={this.onAccordionClick}
+            >
+              <Icon name="dropdown" />
+              전기차 보조금
+            </Accordion.Title>
+            <Accordion.Content active={this.state.activeIndex === 5}>
+              <Subsidy
+                onChange={(e, { value }) => {
+                  this.setState({
+                    local_subsidy: this.state.subsidy_list[value].subsidy
+                  });
+                }}
+                subsidy_list={this.state.subsidy_list}
+              />
+            </Accordion.Content>
+          </Accordion>
+
+          <Divider />
 
           <Tab
             menu={{ secondary: true, pointing: true }}
@@ -531,7 +611,34 @@ export default class Price extends Component {
               },
               {
                 menuItem: "할부",
-                render: () => <Loan calcFuncs={this.calcFuncs} />
+                render: () => (
+                  <Loan
+                    prepay={this.state.prepay}
+                    annual_loan_interest_rate={
+                      this.state.annual_loan_interest_rate
+                    }
+                    installment_months={this.state.installment_months}
+                    onPrepayChange={(e, { value }) => {
+                      if (value.match(/[^\d,]/g)) {
+                        return;
+                      }
+                      this.setState({
+                        prepay: Number(value.replace(/[,.]/g, ""))
+                      });
+                    }}
+                    onLoanRateChange={(e, { value }) => {
+                      this.setState({
+                        annual_loan_interest_rate: Number(value)
+                      });
+                    }}
+                    onMonthsChange={(e, { value }) => {
+                      this.setState({
+                        installment_months: Number(value)
+                      });
+                    }}
+                    calcFuncs={this.calcFuncs}
+                  />
+                )
               }
             ]}
           />
