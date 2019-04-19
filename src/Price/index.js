@@ -296,66 +296,71 @@ export default class Price extends Component {
   // };
 
   componentDidMount() {
-    axios.get("https://api.exchangeratesapi.io/latest?base=USD").then(res => {
-      this.setState({ exchange: res.data.rates.KRW });
-
-      axios
-        .get(
-          "https://raw.githubusercontent.com/geeksbaek/tesla-model-3-korea/master/data/model_3.yaml"
-        )
-        .then(res => {
-          let data = YAML.parse(res.data);
-          this.setState({
-            trims: data.trims,
-            options: data.options,
-            base_price: this.usdTokrw(data.trims[0]["가격"]),
-            base_selected: 0,
-            loadingA: false
-          });
-          data.trims.forEach((v, i) => {
-            if (v["이름"] === "Performance") {
-              this.setState({ performance_index: i });
-            }
-          });
-          this.calcTotalPrice();
+    axios
+      .get("https://api.exchangeratesapi.io/latest?base=USD&symbols=KRW")
+      .then(res => {
+        this.setState({
+          exchange: res.data.rates.KRW,
+          exchange_date: res.data.date
         });
 
-      axios
-        .get(
-          "https://raw.githubusercontent.com/geeksbaek/tesla-model-3-korea/master/data/saletex.yaml"
-        )
-        .then(res => {
-          let data = YAML.parse(res.data);
-          this.setState({
-            saletex: {
-              개별소비세: {
-                과세: data["개별소비세"]["과세"],
-                감면: data["개별소비세"]["감면"]
-              },
-              교육세: {
-                과세: data["교육세"]["과세"],
-                감면: data["교육세"]["감면"]
-              },
-              취득세: {
-                과세: data["취득세"]["과세"],
-                감면: data["취득세"]["감면"]
+        axios
+          .get(
+            "https://raw.githubusercontent.com/geeksbaek/tesla-model-3-korea/master/data/model_3.yaml"
+          )
+          .then(res => {
+            let data = YAML.parse(res.data);
+            this.setState({
+              trims: data.trims,
+              options: data.options,
+              base_price: this.usdTokrw(data.trims[0]["가격"]),
+              base_selected: 0,
+              loadingA: false
+            });
+            data.trims.forEach((v, i) => {
+              if (v["이름"] === "Performance") {
+                this.setState({ performance_index: i });
               }
-            },
-            loadingB: false
+            });
+            this.calcTotalPrice();
           });
-        });
 
-      axios
-        .get(
-          "https://raw.githubusercontent.com/geeksbaek/tesla-model-3-korea/master/data/subsidy.json"
-        )
-        .then(res => {
-          this.setState({
-            gov_subsidy: res.data.gov,
-            local_subsidy: res.data.local
+        axios
+          .get(
+            "https://raw.githubusercontent.com/geeksbaek/tesla-model-3-korea/master/data/saletex.yaml"
+          )
+          .then(res => {
+            let data = YAML.parse(res.data);
+            this.setState({
+              saletex: {
+                개별소비세: {
+                  과세: data["개별소비세"]["과세"],
+                  감면: data["개별소비세"]["감면"]
+                },
+                교육세: {
+                  과세: data["교육세"]["과세"],
+                  감면: data["교육세"]["감면"]
+                },
+                취득세: {
+                  과세: data["취득세"]["과세"],
+                  감면: data["취득세"]["감면"]
+                }
+              },
+              loadingB: false
+            });
           });
-        });
-    });
+
+        axios
+          .get(
+            "https://raw.githubusercontent.com/geeksbaek/tesla-model-3-korea/master/data/subsidy.json"
+          )
+          .then(res => {
+            this.setState({
+              gov_subsidy: res.data.gov,
+              local_subsidy: res.data.local
+            });
+          });
+      });
   }
 
   render() {
@@ -373,15 +378,36 @@ export default class Price extends Component {
             <Divider hidden fitted />
             <Divider hidden fitted />
             <Message.Item>
-              여기에서 표기되는 모든 가격은 USD를 현재 시간 기준의 환율을
-              적용하여 KRW으로 나타낸 것입니다.
+              여기에서 표기되는 모든 가격은 미국 달러에서{" "}
+              <strong>{this.state.exchange_date}</strong> 기준 환율 (1USD=
+              <strong>
+                {this.state.exchange ? this.state.exchange.toFixed(2) : 0}
+              </strong>
+              KRW)을 적용하여 원화로 변환된 값입니다.
             </Message.Item>
             <Message.Item>
               구입에 필요한 최소한의 옵션이 미리 선택되어 있습니다.
             </Message.Item>
             <Message.Item>
-              거주지를 선택하면 해당 지자체에서 지급하는 승용 전기차 보조금과
-              정부에서 지급하는 전기차 보조금이 최종 가격에 반영됩니다.
+              이 페이지는{" "}
+              <strong>
+                <a
+                  href="https://github.com/geeksbaek/tesla-model-3-korea"
+                  target="_blank"
+                >
+                  Github
+                </a>
+              </strong>
+              에서 오픈소스로 관리되며, 변경사항은{" "}
+              <strong>
+                <a
+                  href="https://github.com/geeksbaek/tesla-model-3-korea/blob/master/CHANGELOG.md"
+                  target="_blank"
+                >
+                  여기
+                </a>
+              </strong>
+              에서 확인할 수 있습니다.
             </Message.Item>
             <Message.Item>
               계산된 가격과 실제 가격은 차이가 발생할 수 있으며 이로 인해
