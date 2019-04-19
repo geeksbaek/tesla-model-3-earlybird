@@ -37,9 +37,9 @@ options:
     - 이름: Red Multi-Coat
       가격: 2500
   interior:
-    - 이름: Black
+    - 이름: Black Interior
       가격: 0
-    - 이름: Black & White
+    - 이름: Black & White Interior
       가격: 1000
   wheel:
     - 이름: Aero Wheel
