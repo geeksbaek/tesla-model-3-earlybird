@@ -105,7 +105,9 @@ export default class Loan extends Component {
                       " 원"}
                   </List.Header>
                   <Popup
-                    trigger={<List.Description>선납금1</List.Description>}
+                    trigger={
+                      <List.Description>선납금1 (보조금)</List.Description>
+                    }
                     content="정부 보조금 + 지방자치단체 보조금"
                     size="small"
                   />
@@ -117,7 +119,7 @@ export default class Loan extends Component {
                   <List.Header style={{ color: "green" }}>
                     {Common.comma(this.props.prepay) + " 원"}
                   </List.Header>
-                  <List.Description>선납금2</List.Description>
+                  <List.Description>선납금2 (그 외)</List.Description>
                 </List.Content>
               </List.Item>
               <Divider />
