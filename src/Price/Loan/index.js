@@ -90,7 +90,7 @@ export default class Loan extends Component {
                     {Common.comma(this.props.calcFuncs()["할부원금"]()) + " 원"}
                   </List.Header>
                   <Popup
-                    trigger={<List.Description>할부원금</List.Description>}
+                    trigger={<List.Description>차량 가격</List.Description>}
                     content="공장도 가격 + 부가가치세 + 개별소비세 + 교육세"
                     size="small"
                   />
@@ -133,7 +133,7 @@ export default class Loan extends Component {
                   </List.Header>
                   <Popup
                     trigger={<List.Description>대출원금</List.Description>}
-                    content="할부원금 - 선납금"
+                    content="차량 가격 - 선납금"
                     size="small"
                   />
                 </List.Content>
