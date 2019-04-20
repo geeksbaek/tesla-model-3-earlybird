@@ -8,7 +8,7 @@ import {
   Form,
   Input,
   Label,
-  Segment
+  Icon
 } from "semantic-ui-react";
 import { Common } from "../Common";
 
@@ -72,7 +72,11 @@ export default class Loan extends Component {
                   <List>
                     {this.props.selectedOptions().map((v, i) => (
                       <List.Item key={i}>
-                        <Label as="a" horizontal>
+                        <Label
+                          as="a"
+                          horizontal
+                          color={v["가격"] > 0 ? "red" : null}
+                        >
                           {v["이름"]}
                           <Label.Detail>
                             {Common.comma(this.props.usdTokrw(v["가격"])) +
@@ -187,11 +191,12 @@ export default class Loan extends Component {
         </Card.Content>
         <Card.Content extra textAlign="right">
           <Button
-            color="red"
             href="https://www.tesla.com/ko_KR/model3/reserve"
             target="_blank"
+            compact
+            fluid
           >
-            사전 예약
+            Model 3 사전 예약
           </Button>
         </Card.Content>
       </Card>

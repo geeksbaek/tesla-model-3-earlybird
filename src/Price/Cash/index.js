@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { Button, Divider, Card, List, Popup, Label } from "semantic-ui-react";
+import {
+  Button,
+  Divider,
+  Card,
+  List,
+  Popup,
+  Label,
+  Icon
+} from "semantic-ui-react";
 import { Common } from "../Common";
 
 export default class Cash extends Component {
@@ -17,7 +25,11 @@ export default class Cash extends Component {
                   <List>
                     {this.props.selectedOptions().map((v, i) => (
                       <List.Item key={i}>
-                        <Label as="a" horizontal>
+                        <Label
+                          as="a"
+                          horizontal
+                          color={v["가격"] > 0 ? "red" : null}
+                        >
                           {v["이름"]}
                           <Label.Detail>
                             {Common.comma(this.props.usdTokrw(v["가격"])) +
@@ -198,11 +210,12 @@ export default class Cash extends Component {
         </Card.Content>
         <Card.Content extra textAlign="right">
           <Button
-            color="red"
             href="https://www.tesla.com/ko_KR/model3/reserve"
             target="_blank"
+            compact
+            fluid
           >
-            사전 예약
+            Model 3 사전 예약
           </Button>
         </Card.Content>
       </Card>

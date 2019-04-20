@@ -10,7 +10,7 @@ export default class AutoPilot extends Component {
 
   render() {
     return (
-      <Table compact="very" celled selectable fixed>
+      <Table compact="very" singleLine size="small" celled selectable fixed>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>오토파일럿</Table.HeaderCell>

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { Container, Segment, Tab, Image } from "semantic-ui-react";
 import "./App.css";
-import { HashRouter, Route, Router, Switch } from "react-router-dom";
-import Timeline from "./Timeline";
+import { HashRouter, Route } from "react-router-dom";
+import { Container } from "semantic-ui-react";
+import Feeds from "./Feeds";
 import Price from "./Price";
 import Comments from "./Comments";
 import TabMenu from "./TabMenu";
@@ -10,12 +10,12 @@ import TabMenu from "./TabMenu";
 const panes = [
   {
     menuItem: {
-      key: "timeline",
+      key: "feed",
       path: "/",
       icon: "newspaper",
-      content: "뉴스"
+      content: "소식"
     },
-    render: () => <Timeline />
+    render: () => <Feeds />
   },
   {
     menuItem: {
@@ -31,7 +31,7 @@ const panes = [
       key: "comments",
       path: "/comments",
       icon: "talk",
-      content: "댓글"
+      content: "의견"
     },
     render: () => <Comments />
   }

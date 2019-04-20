@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class Timeline extends React.Component {
+export default class Feeds extends React.Component {
   render() {
     return null;
   }
