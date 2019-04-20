@@ -3,6 +3,7 @@ import { Container, Grid, Segment, Tab, Image } from "semantic-ui-react";
 import "./index.css";
 import Logo from "./assets/img/compare-model3--center.png";
 import Price from "./Price";
+import Comments from "./Comments";
 
 const panes = [
   {
@@ -25,6 +26,7 @@ class App extends Component {
             <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
           </Grid.Row>
         </Grid>
+        <Comments />
       </Container>
     );
   }
