@@ -34,6 +34,10 @@ const SUBSIDY_URL =
 
 export default class Price extends Component {
   state = {
+    loading_a: true,
+    loading_b: true,
+    loading_c: true,
+
     trims: [],
     options: { color: [], interior: [], wheels: [], autopilot: [] },
     saletex: {
@@ -46,8 +50,8 @@ export default class Price extends Component {
     selected_gov_subsidy: 1,
     local_subsidy: [],
     selected_local_subsidy: 1,
-    loading_a: true,
-    loading_b: true,
+    exchange: 1,
+    exchange_date: null,
     performance_index: -1,
 
     base_selected: 0,
@@ -253,19 +257,51 @@ export default class Price extends Component {
       axios.get(SUBSIDY_URL).then(res => {
         this.setState({
           gov_subsidy: res.data.gov,
-          local_subsidy: res.data.local
+          local_subsidy: res.data.local,
+          loading_c: false
         });
       });
     });
   }
 
   render() {
+    const {
+      loading_a,
+      loading_b,
+      loading_c,
+      trims,
+      options,
+      // saletex,
+      gov_subsidy,
+      selected_gov_subsidy,
+      local_subsidy,
+      selected_local_subsidy,
+      exchange,
+      exchange_date,
+      performance_index,
+      base_selected,
+      // base_price,
+      color_selected,
+      // color_price,
+      wheels_selected,
+      // wheels_price,
+      interior_selected,
+      // interior_price,
+      autopilot_selected,
+      // autopilot_price,
+      total_price,
+      prepay,
+      loan_rate,
+      installment_months,
+      active_index
+    } = this.state;
+
     return (
       <Segment
         basic
         textAlign="left"
         className="SegmentGroup"
-        loading={this.state.loading_a && this.state.loading_b}
+        loading={loading_a && loading_b && loading_c}
       >
         <Message info>
           <Message.List>
@@ -276,11 +312,9 @@ export default class Price extends Component {
             <Divider hidden fitted />
             <Message.Item>
               여기에서 표기되는 모든 가격은 미국 달러에서{" "}
-              <strong>{this.state.exchange_date}</strong> 기준 환율 (1 USD=
-              <strong>
-                {this.state.exchange ? this.state.exchange.toFixed(2) : 0}
-              </strong>{" "}
-              KRW)을 적용하여 원화로 변환된 값입니다.
+              <strong>{exchange_date}</strong> 기준 환율 (1 USD=
+              <strong>{exchange ? exchange.toFixed(2) : 0}</strong> KRW)을
+              적용하여 원화로 변환된 값입니다.
             </Message.Item>
             <Message.Item>
               Model 3 구매에 필요한 최소한의 옵션이 미리 선택되어 있습니다.
@@ -329,8 +363,8 @@ export default class Price extends Component {
               <Form>
                 <Form.Group>
                   <Trim
-                    base_selected={this.state.base_selected}
-                    trims={this.state.trims}
+                    base_selected={base_selected}
+                    trims={trims}
                     calcTotalPrice={this.calcTotalPrice}
                     onChange={this.onTrimChange}
                     usdTokrw={this.usdTokrw}
@@ -338,8 +372,8 @@ export default class Price extends Component {
                 </Form.Group>
                 <Form.Group>
                   <Color
-                    color_selected={this.state.color_selected}
-                    options={this.state.options}
+                    color_selected={color_selected}
+                    options={options}
                     calcTotalPrice={this.calcTotalPrice}
                     onChange={this.onColorChange}
                     usdTokrw={this.usdTokrw}
@@ -347,11 +381,9 @@ export default class Price extends Component {
                 </Form.Group>
                 <Form.Group>
                   <Wheels
-                    performance={
-                      this.state.base_selected === this.state.performance_index
-                    }
-                    wheels_selected={this.state.wheels_selected}
-                    options={this.state.options}
+                    performance={base_selected === performance_index}
+                    wheels_selected={wheels_selected}
+                    options={options}
                     calcTotalPrice={this.calcTotalPrice}
                     onChange={this.onWheelsChange}
                     usdTokrw={this.usdTokrw}
@@ -359,8 +391,8 @@ export default class Price extends Component {
                 </Form.Group>
                 <Form.Group>
                   <Interior
-                    interior_selected={this.state.interior_selected}
-                    options={this.state.options}
+                    interior_selected={interior_selected}
+                    options={options}
                     calcTotalPrice={this.calcTotalPrice}
                     onChange={this.onInteriorChange}
                     usdTokrw={this.usdTokrw}
@@ -368,8 +400,8 @@ export default class Price extends Component {
                 </Form.Group>
                 <Form.Group>
                   <AutoPilot
-                    autopilot_selected={this.state.autopilot_selected}
-                    options={this.state.options}
+                    autopilot_selected={autopilot_selected}
+                    options={options}
                     calcTotalPrice={this.calcTotalPrice}
                     onChange={this.onAutoPilotChange}
                     usdTokrw={this.usdTokrw}
@@ -389,10 +421,10 @@ export default class Price extends Component {
                         selected_local_subsidy: value
                       });
                     }}
-                    gov_subsidy={this.state.gov_subsidy}
-                    selected_gov_subsidy={this.state.selected_gov_subsidy}
-                    local_subsidy={this.state.local_subsidy}
-                    selected_local_subsidy={this.state.selected_local_subsidy}
+                    gov_subsidy={gov_subsidy}
+                    selected_gov_subsidy={selected_gov_subsidy}
+                    local_subsidy={local_subsidy}
+                    selected_local_subsidy={selected_local_subsidy}
                   />
                 </Form.Group>
               </Form>
@@ -410,17 +442,9 @@ export default class Price extends Component {
                     render: () => (
                       <Tab.Pane>
                         <Cash
-                          total_price={this.state.total_price}
-                          gov_subsidy={
-                            this.state.gov_subsidy[
-                              this.state.selected_gov_subsidy
-                            ]
-                          }
-                          local_subsidy={
-                            this.state.local_subsidy[
-                              this.state.selected_local_subsidy
-                            ]
-                          }
+                          total_price={total_price}
+                          gov_subsidy={gov_subsidy[selected_gov_subsidy]}
+                          local_subsidy={local_subsidy[selected_local_subsidy]}
                           calcFuncs={this.calcFuncs}
                           selectedOptions={this.selectedOptions}
                           usdTokrw={this.usdTokrw}
@@ -437,9 +461,9 @@ export default class Price extends Component {
                     render: () => (
                       <Tab.Pane>
                         <Loan
-                          prepay={this.state.prepay}
-                          loan_rate={this.state.loan_rate}
-                          installment_months={this.state.installment_months}
+                          prepay={prepay}
+                          loan_rate={loan_rate}
+                          installment_months={installment_months}
                           onPrepayChange={(e, { value }) => {
                             if (value.match(/[^\d,]/g)) {
                               return;
@@ -474,17 +498,17 @@ export default class Price extends Component {
         <Responsive {...Responsive.onlyMobile}>
           <Accordion>
             <Accordion.Title
-              active={this.state.active_index === 0}
+              active={active_index === 0}
               index={0}
               onClick={this.onAccordionClick}
             >
               <Icon name="dropdown" />
               트림
             </Accordion.Title>
-            <Accordion.Content active={this.state.active_index === 0}>
+            <Accordion.Content active={active_index === 0}>
               <Trim
-                base_selected={this.state.base_selected}
-                trims={this.state.trims}
+                base_selected={base_selected}
+                trims={trims}
                 calcTotalPrice={this.calcTotalPrice}
                 onChange={this.onTrimChange}
                 usdTokrw={this.usdTokrw}
@@ -492,17 +516,17 @@ export default class Price extends Component {
             </Accordion.Content>
 
             <Accordion.Title
-              active={this.state.active_index === 1}
+              active={active_index === 1}
               index={1}
               onClick={this.onAccordionClick}
             >
               <Icon name="dropdown" />
               색상
             </Accordion.Title>
-            <Accordion.Content active={this.state.active_index === 1}>
+            <Accordion.Content active={active_index === 1}>
               <Color
-                color_selected={this.state.color_selected}
-                options={this.state.options}
+                color_selected={color_selected}
+                options={options}
                 calcTotalPrice={this.calcTotalPrice}
                 onChange={this.onColorChange}
                 usdTokrw={this.usdTokrw}
@@ -510,19 +534,17 @@ export default class Price extends Component {
             </Accordion.Content>
 
             <Accordion.Title
-              active={this.state.active_index === 2}
+              active={active_index === 2}
               index={2}
               onClick={this.onAccordionClick}
             >
               <Icon name="dropdown" />휠
             </Accordion.Title>
-            <Accordion.Content active={this.state.active_index === 2}>
+            <Accordion.Content active={active_index === 2}>
               <Wheels
-                performance={
-                  this.state.base_selected === this.state.performance_index
-                }
-                wheels_selected={this.state.wheels_selected}
-                options={this.state.options}
+                performance={base_selected === performance_index}
+                wheels_selected={wheels_selected}
+                options={options}
                 calcTotalPrice={this.calcTotalPrice}
                 onChange={this.onWheelsChange}
                 usdTokrw={this.usdTokrw}
@@ -530,17 +552,17 @@ export default class Price extends Component {
             </Accordion.Content>
 
             <Accordion.Title
-              active={this.state.active_index === 3}
+              active={active_index === 3}
               index={3}
               onClick={this.onAccordionClick}
             >
               <Icon name="dropdown" />
               인테리어
             </Accordion.Title>
-            <Accordion.Content active={this.state.active_index === 3}>
+            <Accordion.Content active={active_index === 3}>
               <Interior
-                interior_selected={this.state.interior_selected}
-                options={this.state.options}
+                interior_selected={interior_selected}
+                options={options}
                 calcTotalPrice={this.calcTotalPrice}
                 onChange={this.onInteriorChange}
                 usdTokrw={this.usdTokrw}
@@ -548,17 +570,17 @@ export default class Price extends Component {
             </Accordion.Content>
 
             <Accordion.Title
-              active={this.state.active_index === 4}
+              active={active_index === 4}
               index={4}
               onClick={this.onAccordionClick}
             >
               <Icon name="dropdown" />
               오토파일럿
             </Accordion.Title>
-            <Accordion.Content active={this.state.active_index === 4}>
+            <Accordion.Content active={active_index === 4}>
               <AutoPilot
-                autopilot_selected={this.state.autopilot_selected}
-                options={this.state.options}
+                autopilot_selected={autopilot_selected}
+                options={options}
                 calcTotalPrice={this.calcTotalPrice}
                 onChange={this.onAutoPilotChange}
                 usdTokrw={this.usdTokrw}
@@ -566,14 +588,14 @@ export default class Price extends Component {
             </Accordion.Content>
 
             <Accordion.Title
-              active={this.state.active_index === 5}
+              active={active_index === 5}
               index={5}
               onClick={this.onAccordionClick}
             >
               <Icon name="dropdown" />
               전기차 보조금
             </Accordion.Title>
-            <Accordion.Content active={this.state.active_index === 5}>
+            <Accordion.Content active={active_index === 5}>
               <Subsidy
                 onGovSubsidyChange={(e, { value }) => {
                   this.setState({
@@ -585,10 +607,10 @@ export default class Price extends Component {
                     selected_local_subsidy: value
                   });
                 }}
-                gov_subsidy={this.state.gov_subsidy}
-                selected_gov_subsidy={this.state.selected_gov_subsidy}
-                local_subsidy={this.state.local_subsidy}
-                selected_local_subsidy={this.state.selected_local_subsidy}
+                gov_subsidy={gov_subsidy}
+                selected_gov_subsidy={selected_gov_subsidy}
+                local_subsidy={local_subsidy}
+                selected_local_subsidy={selected_local_subsidy}
               />
             </Accordion.Content>
           </Accordion>
@@ -602,15 +624,9 @@ export default class Price extends Component {
                 menuItem: "현금",
                 render: () => (
                   <Cash
-                    total_price={this.state.total_price}
-                    gov_subsidy={
-                      this.state.gov_subsidy[this.state.selected_gov_subsidy]
-                    }
-                    local_subsidy={
-                      this.state.local_subsidy[
-                        this.state.selected_local_subsidy
-                      ]
-                    }
+                    total_price={total_price}
+                    gov_subsidy={gov_subsidy[selected_gov_subsidy]}
+                    local_subsidy={local_subsidy[selected_local_subsidy]}
                     calcFuncs={this.calcFuncs}
                     selectedOptions={this.selectedOptions}
                     usdTokrw={this.usdTokrw}
@@ -621,9 +637,9 @@ export default class Price extends Component {
                 menuItem: "할부",
                 render: () => (
                   <Loan
-                    prepay={this.state.prepay}
-                    loan_rate={this.state.loan_rate}
-                    installment_months={this.state.installment_months}
+                    prepay={prepay}
+                    loan_rate={loan_rate}
+                    installment_months={installment_months}
                     onPrepayChange={(e, { value }) => {
                       if (value.match(/[^\d,]/g)) {
                         return;
