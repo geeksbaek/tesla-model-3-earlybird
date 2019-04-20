@@ -26,7 +26,7 @@ export default class Subsidy extends Component {
             <Divider hidden fitted />
             <Divider hidden fitted />
             <Dropdown
-              defaultValue={govOpt[0] ? govOpt[0].value : 0}
+              defaultValue={this.props.selected_gov_subsidy}
               fluid
               deburr
               options={govOpt}
@@ -48,7 +48,7 @@ export default class Subsidy extends Component {
             <Divider hidden fitted />
             <Divider hidden fitted />
             <Dropdown
-              defaultValue={localOpt[0] ? localOpt[0].value : 0}
+              defaultValue={this.props.selected_local_subsidy}
               fluid
               deburr
               options={localOpt}

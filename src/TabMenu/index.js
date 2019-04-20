@@ -3,9 +3,10 @@ import { Link, withRouter } from "react-router-dom";
 import { Menu } from "semantic-ui-react";
 
 class TabMenu extends Component {
+  contextRef = React.createRef();
   render() {
     return (
-      <Menu borderless pointing secondary>
+      <Menu borderless pointing secondary style={{ backgroundColor: "white" }}>
         {this.props.panes.map((v, i) => (
           <Menu.Item
             as={Link}

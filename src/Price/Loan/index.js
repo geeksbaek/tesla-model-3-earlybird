@@ -30,9 +30,7 @@ export default class Loan extends Component {
                     control={Input}
                     label="선납금1 (보조금)"
                     placeholder="선납금1"
-                    value={Common.comma(
-                      this.props.calcFuncs()["전기차_보조금"]()
-                    )}
+                    value={Common.comma(this.props.calcFuncs["보조금"]())}
                   />
                   <Form.Field
                     width={1}
@@ -49,8 +47,8 @@ export default class Loan extends Component {
                     type="number"
                     control={Input}
                     label="할부 연이율 (%)"
-                    error={this.props.annual_loan_interest_rate === 0}
-                    value={this.props.annual_loan_interest_rate || ""}
+                    error={this.props.loan_rate === 0}
+                    value={this.props.loan_rate || ""}
                     onChange={this.props.onLoanRateChange}
                   />
                   <Form.Field
@@ -92,33 +90,36 @@ export default class Loan extends Component {
             <Divider />
             <List.Item>
               <List.Icon name="car" />
-              <List.Content>
-                <List.Header style={{ color: "grey" }}>
-                  {Common.comma(this.props.calcFuncs()["할부원금"]()) + " 원"}
-                </List.Header>
-                <Popup
-                  trigger={<List.Description>차량 가격</List.Description>}
-                  content="공장도 가격 + 부가가치세 + 개별소비세 + 교육세"
-                  size="small"
-                />
-              </List.Content>
+              <Popup
+                trigger={
+                  <List.Content>
+                    <List.Header style={{ color: "grey" }}>
+                      {Common.comma(
+                        this.props.calcFuncs["보조금_감면_전_차량가격"]()
+                      ) + " 원"}
+                    </List.Header>
+                    <List.Description>차량 가격</List.Description>
+                  </List.Content>
+                }
+                content="공장도 가격 + 부가가치세 + 개별소비세 + 교육세"
+                size="small"
+              />
             </List.Item>
             <Divider />
             <List.Item>
               <List.Icon name="minus" />
-              <List.Content>
-                <List.Header style={{ color: "green" }}>
-                  {Common.comma(this.props.calcFuncs()["전기차_보조금"]()) +
-                    " 원"}
-                </List.Header>
-                <Popup
-                  trigger={
+              <Popup
+                trigger={
+                  <List.Content>
+                    <List.Header style={{ color: "green" }}>
+                      {Common.comma(this.props.calcFuncs["보조금"]()) + " 원"}
+                    </List.Header>
                     <List.Description>선납금1 (보조금)</List.Description>
-                  }
-                  content="정부 보조금 + 지방자치단체 보조금"
-                  size="small"
-                />
-              </List.Content>
+                  </List.Content>
+                }
+                content="정부 보조금 + 지방자치단체 보조금"
+                size="small"
+              />
             </List.Item>
             <List.Item>
               <List.Icon name="minus" />
@@ -132,60 +133,85 @@ export default class Loan extends Component {
             <Divider />
             <List.Item>
               <List.Icon name="won sign" />
-              <List.Content>
-                <List.Header style={{ color: "grey" }}>
-                  {Common.comma(
-                    this.props.calcFuncs()["할부원금"]() -
-                      this.props.calcFuncs()["전기차_보조금"]() -
-                      this.props.prepay
-                  ) + " 원"}
-                </List.Header>
-                <Popup
-                  trigger={<List.Description>대출원금</List.Description>}
-                  content="차량 가격 - 선납금"
-                  size="small"
-                />
-              </List.Content>
+              <Popup
+                trigger={
+                  <List.Content>
+                    <List.Header style={{ color: "grey" }}>
+                      {Common.comma(
+                        this.props.calcFuncs["보조금_감면_후_차량가격"]() -
+                          this.props.prepay
+                      ) + " 원"}
+                    </List.Header>
+                    <List.Description>대출원금</List.Description>
+                  </List.Content>
+                }
+                content="차량 가격 - 선납금"
+                size="small"
+              />
             </List.Item>
             <Divider />
             <List.Item>
               <List.Icon name="plus" />
-              <List.Content>
-                <List.Header style={{ color: "orange" }}>
-                  {Common.comma(
-                    this.props.calcFuncs()["취득세_과세"]() -
-                      this.props.calcFuncs()["취득세_감면"]()
-                  ) + " 원"}
-                </List.Header>
-                <Popup
-                  trigger={<List.Description>취득세</List.Description>}
-                  content="감면 후 금액"
-                  size="small"
-                />
-              </List.Content>
+              <Popup
+                trigger={
+                  <List.Content>
+                    <List.Header
+                      style={
+                        this.props.calcFuncs["취득세"]() > 0
+                          ? { color: "orange" }
+                          : { color: "green" }
+                      }
+                    >
+                      {Common.comma(this.props.calcFuncs["취득세"]()) + " 원"}
+                    </List.Header>
+                    <List.Description>취득세</List.Description>
+                  </List.Content>
+                }
+                content={
+                  Common.comma(this.props.calcFuncs["취득세_과세"]()) +
+                  "원 중 " +
+                  Common.comma(this.props.calcFuncs["취득세_감면"]()) +
+                  "원 감면됨"
+                }
+                size="small"
+              />
+            </List.Item>
+            <List.Item>
+              <List.Icon name="plus" />
+              <Popup
+                trigger={
+                  <List.Content>
+                    <List.Header style={{ color: "orange" }}>
+                      {Common.comma(this.props.calcFuncs["자동차세"]()) + " 원"}
+                    </List.Header>
+                    <List.Description>자동차세</List.Description>
+                  </List.Content>
+                }
+                content="비영업용 기준"
+                size="small"
+              />
             </List.Item>
             <List.Item>
               <List.Icon name="calculator" />
-              <List.Content>
-                <List.Header>
-                  {Common.comma(
-                    this.props
-                      .calcFuncs()
-                      ["원리금균등상환_월납입금"](
-                        this.props.calcFuncs()["할부원금"]() -
-                          this.props.calcFuncs()["전기차_보조금"]() -
-                          this.props.prepay,
-                        this.props.annual_loan_interest_rate,
-                        this.props.installment_months
-                      )
-                  ) + " 원"}
-                </List.Header>
-                <Popup
-                  trigger={<List.Description>월상환금</List.Description>}
-                  content="원리금 균등상환방식 (취득세 별도)"
-                  size="small"
-                />
-              </List.Content>
+              <Popup
+                trigger={
+                  <List.Content>
+                    <List.Header>
+                      {Common.comma(
+                        this.props.calcFuncs["원리금균등상환_월납입금"](
+                          this.props.calcFuncs["보조금_감면_후_차량가격"]() -
+                            this.props.prepay,
+                          this.props.loan_rate,
+                          this.props.installment_months
+                        )
+                      ) + " 원"}
+                    </List.Header>
+                    <List.Description>월상환금</List.Description>
+                  </List.Content>
+                }
+                content="원리금 균등상환방식 (취득세 별도)"
+                size="small"
+              />
             </List.Item>
           </List>
         </Card.Content>

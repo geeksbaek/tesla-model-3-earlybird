@@ -22,8 +22,16 @@ import AutoPilot from "./AutoPilot";
 import Subsidy from "./Subsidy";
 import Cash from "./Cash";
 import Loan from "./Loan";
-
 import "./index.css";
+
+const EXCHANGE_URL =
+  "https://api.exchangeratesapi.io/latest?base=USD&symbols=KRW";
+const MODEL_3_OPTIONS_URL =
+  "https://raw.githubusercontent.com/geeksbaek/tesla-model-3-korea/master/data/model_3.yaml";
+const SALETEX_URL =
+  "https://raw.githubusercontent.com/geeksbaek/tesla-model-3-korea/master/data/saletex.yaml";
+const SUBSIDY_URL =
+  "https://raw.githubusercontent.com/geeksbaek/tesla-model-3-korea/master/data/subsidy.json";
 
 export default class Price extends Component {
   state = {
@@ -32,14 +40,15 @@ export default class Price extends Component {
     saletex: {
       개별소비세: { 과세: 0, 감면: 0 },
       교육세: { 과세: 0, 감면: 0 },
-      취득세: { 과세: 0, 감면: 0 }
+      취득세: { 과세: 0, 감면: 0 },
+      자동차세: { 과세: 0, 감면: 0 }
     },
     gov_subsidy: [],
-    selected_gov_subsidy: 0,
+    selected_gov_subsidy: 1,
     local_subsidy: [],
-    selected_local_subsidy: 0,
-    loadingA: true,
-    loadingB: true,
+    selected_local_subsidy: 1,
+    loading_a: true,
+    loading_b: true,
     performance_index: -1,
 
     base_selected: 0,
@@ -53,19 +62,18 @@ export default class Price extends Component {
     autopilot_selected: 0,
     autopilot_price: 0,
     total_price: 0,
-    final_price: 0,
     prepay: 0,
-    annual_loan_interest_rate: 3.5,
+    loan_rate: 3.5,
     installment_months: 60,
-    activeIndex: -1
+    active_index: -1
   };
 
   onAccordionClick = (e, titleProps) => {
     const { index } = titleProps;
-    const { activeIndex } = this.state;
-    const newIndex = activeIndex === index ? -1 : index;
+    const { active_index } = this.state;
+    const newIndex = active_index === index ? -1 : index;
 
-    this.setState({ activeIndex: newIndex });
+    this.setState({ active_index: newIndex });
   };
 
   onTrimChange = (i, v) => {
@@ -133,234 +141,123 @@ export default class Price extends Component {
           Number(prev.autopilot_price)
       };
     });
-  calcFuncs = () => {
-    return {
-      부가가치세_과세: () => this.state.total_price * 0.1,
-      개별소비세_과세: () =>
-        this.state.total_price * this.state.saletex.개별소비세.과세,
-      개별소비세_감면: () =>
-        Math.min(
-          this.state.total_price * this.state.saletex.개별소비세.과세,
-          this.state.saletex.개별소비세.감면
-        ),
-      교육세_과세: () =>
-        this.state.total_price *
-        this.state.saletex.개별소비세.과세 *
-        this.state.saletex.교육세.과세,
-      교육세_감면: () =>
-        Math.min(
-          this.state.total_price *
-            this.state.saletex.개별소비세.과세 *
-            this.state.saletex.교육세.과세,
-          this.state.saletex.교육세.감면
-        ),
-      취득세_과세: () =>
-        (this.state.total_price +
-          (this.state.total_price * this.state.saletex.개별소비세.과세 -
-            Math.min(
-              this.state.total_price * this.state.saletex.개별소비세.과세,
-              this.state.saletex.개별소비세.감면
-            )) +
-          (this.state.total_price *
-            this.state.saletex.개별소비세.과세 *
-            this.state.saletex.교육세.과세 -
-            Math.min(
-              this.state.total_price *
-                this.state.saletex.개별소비세.과세 *
-                this.state.saletex.교육세.과세,
-              this.state.saletex.교육세.감면
-            ))) *
-        this.state.saletex.취득세.과세,
-      취득세_감면: () =>
-        Math.min(
-          (this.state.total_price +
-            (this.state.total_price * this.state.saletex.개별소비세.과세 -
-              Math.min(
-                this.state.total_price * this.state.saletex.개별소비세.과세,
-                this.state.saletex.개별소비세.감면
-              )) +
-            (this.state.total_price *
-              this.state.saletex.개별소비세.과세 *
-              this.state.saletex.교육세.과세 -
-              Math.min(
-                this.state.total_price *
-                  this.state.saletex.개별소비세.과세 *
-                  this.state.saletex.교육세.과세,
-                this.state.saletex.교육세.감면
-              ))) *
-            this.state.saletex.취득세.과세,
-          this.state.saletex.취득세.감면
-        ),
-      전기차_보조금: () =>
-        (this.state.gov_subsidy[this.state.selected_gov_subsidy]
-          ? this.state.gov_subsidy[this.state.selected_gov_subsidy].subsidy
-          : 0) +
-        (this.state.local_subsidy[this.state.selected_local_subsidy]
-          ? this.state.local_subsidy[this.state.selected_local_subsidy].subsidy
-          : 0),
-      할부원금: () =>
-        Math.max(
-          this.state.total_price +
-            this.state.total_price * 0.1 +
-            this.state.total_price * this.state.saletex.개별소비세.과세 -
-            Math.min(
-              this.state.total_price * this.state.saletex.개별소비세.과세,
-              this.state.saletex.개별소비세.감면
-            ) +
-            this.state.total_price *
-              this.state.saletex.개별소비세.과세 *
-              this.state.saletex.교육세.과세 -
-            Math.min(
-              this.state.total_price *
-                this.state.saletex.개별소비세.과세 *
-                this.state.saletex.교육세.과세,
-              this.state.saletex.교육세.감면
-            ),
-          0
-        ),
-      최종가격: () =>
-        Math.max(
-          this.state.total_price +
-            this.state.total_price * 0.1 +
-            this.state.total_price * this.state.saletex.개별소비세.과세 -
-            Math.min(
-              this.state.total_price * this.state.saletex.개별소비세.과세,
-              this.state.saletex.개별소비세.감면
-            ) +
-            this.state.total_price *
-              this.state.saletex.개별소비세.과세 *
-              this.state.saletex.교육세.과세 -
-            Math.min(
-              this.state.total_price *
-                this.state.saletex.개별소비세.과세 *
-                this.state.saletex.교육세.과세,
-              this.state.saletex.교육세.감면
-            ) -
-            ((this.state.gov_subsidy[this.state.selected_gov_subsidy]
-              ? this.state.gov_subsidy[this.state.selected_gov_subsidy].subsidy
-              : 0) +
-              (this.state.local_subsidy[this.state.selected_local_subsidy]
-                ? this.state.local_subsidy[this.state.selected_local_subsidy]
-                    .subsidy
-                : 0)),
-          0
-        ),
-      원리금균등상환_월납입금: (대출원금, 연이자율, 할부개월) => {
-        let 월이자율 = (연이자율 / 12) * 0.01;
-        let x = Math.pow(1 + 월이자율, 할부개월);
-        return (대출원금 * 월이자율 * x) / (x - 1);
-      }
-    };
+
+  부가가치세 = () => this.state.total_price * 0.1;
+  자동차세 = () => this.state.saletex.자동차세.과세;
+
+  개별소비세_과세 = () =>
+    this.state.total_price * this.state.saletex.개별소비세.과세;
+  개별소비세_감면 = () =>
+    Math.min(this.개별소비세_과세(), this.state.saletex.개별소비세.감면);
+  개별소비세 = () => this.개별소비세_과세() - this.개별소비세_감면();
+
+  교육세_과세 = () => this.개별소비세_과세() * this.state.saletex.교육세.과세;
+  교육세_감면 = () =>
+    Math.min(this.교육세_과세(), this.state.saletex.교육세.감면);
+  교육세 = () => this.교육세_과세() - this.교육세_감면();
+
+  취득세_과세 = () =>
+    (this.state.total_price + this.개별소비세() + this.교육세()) *
+    this.state.saletex.취득세.과세;
+  취득세_감면 = () =>
+    Math.min(this.취득세_과세(), this.state.saletex.취득세.감면);
+  취득세 = () => this.취득세_과세() - this.취득세_감면();
+
+  보조금 = () =>
+    (this.state.gov_subsidy[this.state.selected_gov_subsidy]
+      ? this.state.gov_subsidy[this.state.selected_gov_subsidy].subsidy
+      : 0) +
+    (this.state.local_subsidy[this.state.selected_local_subsidy]
+      ? this.state.local_subsidy[this.state.selected_local_subsidy].subsidy
+      : 0);
+  보조금_감면_전_차량가격 = () =>
+    this.state.total_price +
+    this.부가가치세() +
+    this.개별소비세() +
+    this.교육세();
+  보조금_감면_후_차량가격 = () =>
+    this.보조금_감면_전_차량가격() - this.보조금();
+
+  원리금균등상환_월납입금 = (대출원금, 연이자율, 할부개월) => {
+    let 월이자율 = (연이자율 / 12) * 0.01;
+    let x = Math.pow(1 + 월이자율, 할부개월);
+    return (대출원금 * 월이자율 * x) / (x - 1);
   };
-  // 부가가치세_과세 = () => this.state.total_price * 0.1;
-  // 개별소비세_과세 = () =>
-  //   this.state.total_price * this.state.saletex.개별소비세.과세;
-  // 개별소비세_감면 = () =>
-  //   Math.min(this.개별소비세_과세(), this.state.saletex.개별소비세.감면);
-  // 교육세_과세 = () => this.개별소비세_과세() * this.state.saletex.교육세.과세;
-  // 교육세_감면 = () =>
-  //   Math.min(this.교육세_과세(), this.state.saletex.교육세.감면);
-  // 취득세_과세 = () =>
-  //   (this.state.total_price +
-  //     (this.개별소비세_과세() - this.개별소비세_감면()) +
-  //     (this.교육세_과세() - this.교육세_감면())) *
-  //   this.state.saletex.취득세.과세;
-  // 취득세_감면 = () =>
-  //   Math.min(this.취득세_과세(), this.state.saletex.취득세.감면);
-  // 전기차_보조금 = () => this.state.gov_subsidy + this.state.local_subsidy;
-  // 할부원금 = () =>
-  //   Math.max(
-  //     this.state.total_price +
-  //       this.부가가치세_과세() +
-  //       this.개별소비세_과세() -
-  //       this.개별소비세_감면() +
-  //       this.교육세_과세() -
-  //       this.교육세_감면(),
-  //     0
-  //   );
-  // 최종가격 = () =>
-  //   Math.max(
-  //     this.state.total_price +
-  //       this.부가가치세_과세() +
-  //       this.개별소비세_과세() -
-  //       this.개별소비세_감면() +
-  //       this.교육세_과세() -
-  //       this.교육세_감면() -
-  //       this.전기차_보조금(),
-  //     0
-  //   );
-  // 원리금균등상환_월납입금 = (대출원금, 연이자율, 할부개월) => {
-  //   let 월이자율 = (연이자율 / 12) * 0.01;
-  //   let x = Math.pow(1 + 월이자율, 할부개월);
-  //   return (대출원금 * 월이자율 * x) / (x - 1);
-  // };
+
+  calcFuncs = {
+    부가가치세: this.부가가치세,
+    자동차세: this.자동차세,
+    개별소비세_과세: this.개별소비세_과세,
+    개별소비세_감면: this.개별소비세_감면,
+    개별소비세: this.개별소비세,
+    교육세_과세: this.교육세_과세,
+    교육세_감면: this.교육세_감면,
+    교육세: this.교육세,
+    취득세_과세: this.취득세_과세,
+    취득세_감면: this.취득세_감면,
+    취득세: this.취득세,
+    보조금: this.보조금,
+    보조금_감면_전_차량가격: this.보조금_감면_전_차량가격,
+    보조금_감면_후_차량가격: this.보조금_감면_후_차량가격,
+    원리금균등상환_월납입금: this.원리금균등상환_월납입금
+  };
 
   componentDidMount() {
-    axios
-      .get("https://api.exchangeratesapi.io/latest?base=USD&symbols=KRW")
-      .then(res => {
-        this.setState({
-          exchange: res.data.rates.KRW,
-          exchange_date: res.data.date
-        });
-
-        axios
-          .get(
-            "https://raw.githubusercontent.com/geeksbaek/tesla-model-3-korea/master/data/model_3.yaml"
-          )
-          .then(res => {
-            let data = YAML.parse(res.data);
-            this.setState({
-              trims: data.trims,
-              options: data.options,
-              base_price: this.usdTokrw(data.trims[0]["가격"]),
-              base_selected: 0,
-              loadingA: false
-            });
-            data.trims.forEach((v, i) => {
-              if (v["이름"] === "Performance") {
-                this.setState({ performance_index: i });
-              }
-            });
-            this.calcTotalPrice();
-          });
-
-        axios
-          .get(
-            "https://raw.githubusercontent.com/geeksbaek/tesla-model-3-korea/master/data/saletex.yaml"
-          )
-          .then(res => {
-            let data = YAML.parse(res.data);
-            this.setState({
-              saletex: {
-                개별소비세: {
-                  과세: data["개별소비세"]["과세"],
-                  감면: data["개별소비세"]["감면"]
-                },
-                교육세: {
-                  과세: data["교육세"]["과세"],
-                  감면: data["교육세"]["감면"]
-                },
-                취득세: {
-                  과세: data["취득세"]["과세"],
-                  감면: data["취득세"]["감면"]
-                }
-              },
-              loadingB: false
-            });
-          });
-
-        axios
-          .get(
-            "https://raw.githubusercontent.com/geeksbaek/tesla-model-3-korea/master/data/subsidy.json"
-          )
-          .then(res => {
-            this.setState({
-              gov_subsidy: res.data.gov,
-              local_subsidy: res.data.local
-            });
-          });
+    axios.get(EXCHANGE_URL).then(res => {
+      this.setState({
+        exchange: res.data.rates.KRW,
+        exchange_date: res.data.date
       });
+
+      axios.get(MODEL_3_OPTIONS_URL).then(res => {
+        let data = YAML.parse(res.data);
+        this.setState({
+          trims: data.trims,
+          options: data.options,
+          base_price: this.usdTokrw(data.trims[0]["가격"]),
+          base_selected: 0,
+          loading_a: false
+        });
+        data.trims.forEach((v, i) => {
+          if (v["이름"] === "Performance") {
+            this.setState({ performance_index: i });
+          }
+        });
+        this.calcTotalPrice();
+      });
+
+      axios.get(SALETEX_URL).then(res => {
+        let data = YAML.parse(res.data);
+        this.setState({
+          saletex: {
+            개별소비세: {
+              과세: data["개별소비세"]["과세"],
+              감면: data["개별소비세"]["감면"]
+            },
+            교육세: {
+              과세: data["교육세"]["과세"],
+              감면: data["교육세"]["감면"]
+            },
+            취득세: {
+              과세: data["취득세"]["과세"],
+              감면: data["취득세"]["감면"]
+            },
+            자동차세: {
+              과세: data["자동차세"]["과세"],
+              감면: data["자동차세"]["감면"]
+            }
+          },
+          loading_b: false
+        });
+      });
+
+      axios.get(SUBSIDY_URL).then(res => {
+        this.setState({
+          gov_subsidy: res.data.gov,
+          local_subsidy: res.data.local
+        });
+      });
+    });
   }
 
   render() {
@@ -369,7 +266,7 @@ export default class Price extends Component {
         basic
         textAlign="left"
         className="SegmentGroup"
-        loading={this.state.loadingA && this.state.loadingB}
+        loading={this.state.loading_a && this.state.loading_b}
       >
         <Message info>
           <Message.List>
@@ -388,6 +285,10 @@ export default class Price extends Component {
             </Message.Item>
             <Message.Item>
               구입에 필요한 최소한의 옵션이 미리 선택되어 있습니다.
+            </Message.Item>
+            <Message.Item>
+              현재 탁송비, 공채 관련 비용, 부대비용 등은 계산하지 않으며, 세금과
+              보조금만을 계산합니다.
             </Message.Item>
             <Message.Item>
               이 페이지는{" "}
@@ -488,7 +389,9 @@ export default class Price extends Component {
                       });
                     }}
                     gov_subsidy={this.state.gov_subsidy}
+                    selected_gov_subsidy={this.state.selected_gov_subsidy}
                     local_subsidy={this.state.local_subsidy}
+                    selected_local_subsidy={this.state.selected_local_subsidy}
                   />
                 </Form.Group>
               </Form>
@@ -523,9 +426,7 @@ export default class Price extends Component {
                     render: () => (
                       <Loan
                         prepay={this.state.prepay}
-                        annual_loan_interest_rate={
-                          this.state.annual_loan_interest_rate
-                        }
+                        loan_rate={this.state.loan_rate}
                         installment_months={this.state.installment_months}
                         onPrepayChange={(e, { value }) => {
                           if (value.match(/[^\d,]/g)) {
@@ -537,7 +438,7 @@ export default class Price extends Component {
                         }}
                         onLoanRateChange={(e, { value }) => {
                           this.setState({
-                            annual_loan_interest_rate: Number(value)
+                            loan_rate: Number(value)
                           });
                         }}
                         onMonthsChange={(e, { value }) => {
@@ -560,14 +461,14 @@ export default class Price extends Component {
         <Responsive {...Responsive.onlyMobile}>
           <Accordion>
             <Accordion.Title
-              active={this.state.activeIndex === 0}
+              active={this.state.active_index === 0}
               index={0}
               onClick={this.onAccordionClick}
             >
               <Icon name="dropdown" />
               트림
             </Accordion.Title>
-            <Accordion.Content active={this.state.activeIndex === 0}>
+            <Accordion.Content active={this.state.active_index === 0}>
               <Trim
                 base_selected={this.state.base_selected}
                 trims={this.state.trims}
@@ -578,14 +479,14 @@ export default class Price extends Component {
             </Accordion.Content>
 
             <Accordion.Title
-              active={this.state.activeIndex === 1}
+              active={this.state.active_index === 1}
               index={1}
               onClick={this.onAccordionClick}
             >
               <Icon name="dropdown" />
               색상
             </Accordion.Title>
-            <Accordion.Content active={this.state.activeIndex === 1}>
+            <Accordion.Content active={this.state.active_index === 1}>
               <Color
                 color_selected={this.state.color_selected}
                 options={this.state.options}
@@ -596,13 +497,13 @@ export default class Price extends Component {
             </Accordion.Content>
 
             <Accordion.Title
-              active={this.state.activeIndex === 2}
+              active={this.state.active_index === 2}
               index={2}
               onClick={this.onAccordionClick}
             >
               <Icon name="dropdown" />휠
             </Accordion.Title>
-            <Accordion.Content active={this.state.activeIndex === 2}>
+            <Accordion.Content active={this.state.active_index === 2}>
               <Wheels
                 performance={
                   this.state.base_selected === this.state.performance_index
@@ -616,14 +517,14 @@ export default class Price extends Component {
             </Accordion.Content>
 
             <Accordion.Title
-              active={this.state.activeIndex === 3}
+              active={this.state.active_index === 3}
               index={3}
               onClick={this.onAccordionClick}
             >
               <Icon name="dropdown" />
               인테리어
             </Accordion.Title>
-            <Accordion.Content active={this.state.activeIndex === 3}>
+            <Accordion.Content active={this.state.active_index === 3}>
               <Interior
                 interior_selected={this.state.interior_selected}
                 options={this.state.options}
@@ -634,14 +535,14 @@ export default class Price extends Component {
             </Accordion.Content>
 
             <Accordion.Title
-              active={this.state.activeIndex === 4}
+              active={this.state.active_index === 4}
               index={4}
               onClick={this.onAccordionClick}
             >
               <Icon name="dropdown" />
               오토파일럿
             </Accordion.Title>
-            <Accordion.Content active={this.state.activeIndex === 4}>
+            <Accordion.Content active={this.state.active_index === 4}>
               <AutoPilot
                 autopilot_selected={this.state.autopilot_selected}
                 options={this.state.options}
@@ -652,14 +553,14 @@ export default class Price extends Component {
             </Accordion.Content>
 
             <Accordion.Title
-              active={this.state.activeIndex === 5}
+              active={this.state.active_index === 5}
               index={5}
               onClick={this.onAccordionClick}
             >
               <Icon name="dropdown" />
               전기차 보조금
             </Accordion.Title>
-            <Accordion.Content active={this.state.activeIndex === 5}>
+            <Accordion.Content active={this.state.active_index === 5}>
               <Subsidy
                 onGovSubsidyChange={(e, { value }) => {
                   this.setState({
@@ -672,7 +573,9 @@ export default class Price extends Component {
                   });
                 }}
                 gov_subsidy={this.state.gov_subsidy}
+                selected_gov_subsidy={this.state.selected_gov_subsidy}
                 local_subsidy={this.state.local_subsidy}
+                selected_local_subsidy={this.state.selected_local_subsidy}
               />
             </Accordion.Content>
           </Accordion>
@@ -706,9 +609,7 @@ export default class Price extends Component {
                 render: () => (
                   <Loan
                     prepay={this.state.prepay}
-                    annual_loan_interest_rate={
-                      this.state.annual_loan_interest_rate
-                    }
+                    loan_rate={this.state.loan_rate}
                     installment_months={this.state.installment_months}
                     onPrepayChange={(e, { value }) => {
                       if (value.match(/[^\d,]/g)) {
@@ -720,7 +621,7 @@ export default class Price extends Component {
                     }}
                     onLoanRateChange={(e, { value }) => {
                       this.setState({
-                        annual_loan_interest_rate: Number(value)
+                        loan_rate: Number(value)
                       });
                     }}
                     onMonthsChange={(e, { value }) => {
