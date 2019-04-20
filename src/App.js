@@ -28,8 +28,8 @@ const panes = [
   },
   {
     menuItem: {
-      key: "comments",
-      path: "/comments",
+      key: "discussions",
+      path: "/discussions",
       icon: "discussions",
       content: "의견"
     },

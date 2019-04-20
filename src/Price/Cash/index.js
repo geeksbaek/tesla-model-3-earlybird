@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { Button, Divider, Card, List, Popup, Label } from "semantic-ui-react";
+import {
+  Button,
+  Divider,
+  Card,
+  List,
+  Popup,
+  Label,
+  Header
+} from "semantic-ui-react";
 import { Common } from "../Common";
 
 export default class Cash extends Component {
@@ -179,11 +187,13 @@ export default class Cash extends Component {
                 trigger={
                   <List.Content>
                     <List.Header>
-                      {Common.comma(
-                        this.props.calcFuncs["보조금_감면_후_차량가격"]() +
-                          this.props.calcFuncs["취득세"]() +
-                          this.props.calcFuncs["자동차세"]()
-                      ) + " 원"}
+                      <Header size="medium" color="red">
+                        {Common.comma(
+                          this.props.calcFuncs["보조금_감면_후_차량가격"]() +
+                            this.props.calcFuncs["취득세"]() +
+                            this.props.calcFuncs["자동차세"]()
+                        ) + " 원"}
+                      </Header>
                     </List.Header>
                     <List.Description>최종 가격</List.Description>
                   </List.Content>

@@ -7,7 +7,8 @@ import {
   Popup,
   Form,
   Input,
-  Label
+  Label,
+  Header
 } from "semantic-ui-react";
 import { Common } from "../Common";
 
@@ -195,15 +196,17 @@ export default class Loan extends Component {
               <Popup
                 trigger={
                   <List.Content>
-                    <List.Header>
-                      {Common.comma(
-                        this.props.calcFuncs["원리금균등상환_월납입금"](
-                          this.props.calcFuncs["보조금_감면_후_차량가격"]() -
-                            this.props.prepay,
-                          this.props.loan_rate,
-                          this.props.installment_months
-                        )
-                      ) + " 원"}
+                    <List.Header color="red">
+                      <Header size="medium" color="red">
+                        {Common.comma(
+                          this.props.calcFuncs["원리금균등상환_월납입금"](
+                            this.props.calcFuncs["보조금_감면_후_차량가격"]() -
+                              this.props.prepay,
+                            this.props.loan_rate,
+                            this.props.installment_months
+                          )
+                        ) + " 원"}
+                      </Header>
                     </List.Header>
                     <List.Description>월상환금</List.Description>
                   </List.Content>
