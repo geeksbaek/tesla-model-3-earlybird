@@ -5,7 +5,7 @@ import { Menu } from "semantic-ui-react";
 class TabMenu extends Component {
   render() {
     return (
-      <Menu attached="top" tabular pointing secondary>
+      <Menu borderless pointing secondary>
         {this.props.panes.map((v, i) => (
           <Menu.Item
             as={Link}
