@@ -1,13 +1,5 @@
 import React, { Component } from "react";
-import {
-  Button,
-  Divider,
-  Card,
-  List,
-  Popup,
-  Label,
-  Icon
-} from "semantic-ui-react";
+import { Button, Divider, Card, List, Popup, Label } from "semantic-ui-react";
 import { Common } from "../Common";
 
 export default class Cash extends Component {

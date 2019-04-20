@@ -7,8 +7,7 @@ import {
   Popup,
   Form,
   Input,
-  Label,
-  Icon
+  Label
 } from "semantic-ui-react";
 import { Common } from "../Common";
 

@@ -13,7 +13,6 @@ import {
 import axios from "axios";
 import YAML from "yamljs";
 
-import { Common } from "./Common";
 import Trim from "./Trim";
 import Color from "./Color";
 import Wheels from "./Wheels";
@@ -296,6 +295,7 @@ export default class Price extends Component {
                 <a
                   href="https://github.com/geeksbaek/tesla-model-3-korea"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   Github
                 </a>
@@ -305,6 +305,7 @@ export default class Price extends Component {
                 <a
                   href="https://github.com/geeksbaek/tesla-model-3-korea/blob/master/CHANGELOG.md"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   여기
                 </a>
