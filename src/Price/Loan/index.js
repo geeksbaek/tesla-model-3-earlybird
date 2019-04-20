@@ -209,7 +209,7 @@ export default class Loan extends Component {
                     <List.Description>월상환금</List.Description>
                   </List.Content>
                 }
-                content="원리금 균등상환방식 (취득세 별도)"
+                content="원리금 균등상환방식 (취득세, 자동차세 별도)"
                 size="small"
               />
             </List.Item>
