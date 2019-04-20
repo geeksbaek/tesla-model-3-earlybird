@@ -276,14 +276,14 @@ export default class Price extends Component {
             <Divider hidden fitted />
             <Message.Item>
               여기에서 표기되는 모든 가격은 미국 달러에서{" "}
-              <strong>{this.state.exchange_date}</strong> 기준 환율 (1USD=
+              <strong>{this.state.exchange_date}</strong> 기준 환율 (1 USD=
               <strong>
                 {this.state.exchange ? this.state.exchange.toFixed(2) : 0}
-              </strong>
+              </strong>{" "}
               KRW)을 적용하여 원화로 변환된 값입니다.
             </Message.Item>
             <Message.Item>
-              구입에 필요한 최소한의 옵션이 미리 선택되어 있습니다.
+              Model 3 구매에 필요한 최소한의 옵션이 미리 선택되어 있습니다.
             </Message.Item>
             <Message.Item>
               현재 탁송비, 공채 관련 비용, 부대비용 등은 계산하지 않으며, 세금과
