@@ -1,8 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Encode+Sans:700');
-
-.container {
-  padding: 42px 14px;
-}
+@import url("https://fonts.googleapis.com/css?family=Encode+Sans:700");
 
 .title {
   font-family: "Encode Sans", cursive;

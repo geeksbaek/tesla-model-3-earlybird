@@ -1,4 +1,5 @@
 import React from "react";
+import { Grid } from "semantic-ui-react";
 import DisqusThread from "./DisqusThread";
 
 export default class Comments extends React.Component {
