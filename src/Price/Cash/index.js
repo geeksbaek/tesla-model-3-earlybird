@@ -156,7 +156,6 @@ export default class Cash extends Component {
                 size="small"
               />
             </List.Item>
-            <Divider />
             <List.Item>
               <List.Icon name="minus" />
               <List.Content>
@@ -197,7 +196,7 @@ export default class Cash extends Component {
                     <List.Description>최종 가격</List.Description>
                   </List.Content>
                 }
-                content="취득세 포함"
+                content="취득세, 자동차세 포함"
                 size="small"
               />
             </List.Item>
