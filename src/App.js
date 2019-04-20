@@ -30,7 +30,7 @@ const panes = [
     menuItem: {
       key: "comments",
       path: "/comments",
-      icon: "talk",
+      icon: "discussions",
       content: "의견"
     },
     render: () => <Comments />

@@ -399,58 +399,70 @@ export default class Price extends Component {
             </Grid.Column>
             <Grid.Column width={6}>
               <Tab
-                menu={{ secondary: true, pointing: true }}
+                // menu={{ secondary: true, pointing: true }}
                 panes={[
                   {
-                    menuItem: "현금",
+                    menuItem: {
+                      key: "cash",
+                      icon: "money bill alternate outline",
+                      content: "현금"
+                    },
                     render: () => (
-                      <Cash
-                        total_price={this.state.total_price}
-                        gov_subsidy={
-                          this.state.gov_subsidy[
-                            this.state.selected_gov_subsidy
-                          ]
-                        }
-                        local_subsidy={
-                          this.state.local_subsidy[
-                            this.state.selected_local_subsidy
-                          ]
-                        }
-                        calcFuncs={this.calcFuncs}
-                        selectedOptions={this.selectedOptions}
-                        usdTokrw={this.usdTokrw}
-                      />
+                      <Tab.Pane>
+                        <Cash
+                          total_price={this.state.total_price}
+                          gov_subsidy={
+                            this.state.gov_subsidy[
+                              this.state.selected_gov_subsidy
+                            ]
+                          }
+                          local_subsidy={
+                            this.state.local_subsidy[
+                              this.state.selected_local_subsidy
+                            ]
+                          }
+                          calcFuncs={this.calcFuncs}
+                          selectedOptions={this.selectedOptions}
+                          usdTokrw={this.usdTokrw}
+                        />
+                      </Tab.Pane>
                     )
                   },
                   {
-                    menuItem: "할부",
+                    menuItem: {
+                      key: "loan",
+                      icon: "credit card outline",
+                      content: "할부"
+                    },
                     render: () => (
-                      <Loan
-                        prepay={this.state.prepay}
-                        loan_rate={this.state.loan_rate}
-                        installment_months={this.state.installment_months}
-                        onPrepayChange={(e, { value }) => {
-                          if (value.match(/[^\d,]/g)) {
-                            return;
-                          }
-                          this.setState({
-                            prepay: Number(value.replace(/[,.]/g, ""))
-                          });
-                        }}
-                        onLoanRateChange={(e, { value }) => {
-                          this.setState({
-                            loan_rate: Number(value)
-                          });
-                        }}
-                        onMonthsChange={(e, { value }) => {
-                          this.setState({
-                            installment_months: Number(value)
-                          });
-                        }}
-                        calcFuncs={this.calcFuncs}
-                        selectedOptions={this.selectedOptions}
-                        usdTokrw={this.usdTokrw}
-                      />
+                      <Tab.Pane>
+                        <Loan
+                          prepay={this.state.prepay}
+                          loan_rate={this.state.loan_rate}
+                          installment_months={this.state.installment_months}
+                          onPrepayChange={(e, { value }) => {
+                            if (value.match(/[^\d,]/g)) {
+                              return;
+                            }
+                            this.setState({
+                              prepay: Number(value.replace(/[,.]/g, ""))
+                            });
+                          }}
+                          onLoanRateChange={(e, { value }) => {
+                            this.setState({
+                              loan_rate: Number(value)
+                            });
+                          }}
+                          onMonthsChange={(e, { value }) => {
+                            this.setState({
+                              installment_months: Number(value)
+                            });
+                          }}
+                          calcFuncs={this.calcFuncs}
+                          selectedOptions={this.selectedOptions}
+                          usdTokrw={this.usdTokrw}
+                        />
+                      </Tab.Pane>
                     )
                   }
                 ]}
