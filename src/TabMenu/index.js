@@ -15,6 +15,7 @@ class TabMenu extends Component {
             icon={v.menuItem.icon}
             active={this.props.location.pathname === v.menuItem.path}
             onClick={this.handleItemClick}
+            position={i === this.props.panes.length - 1 ? "right" : null}
           />
         ))}
       </Menu>

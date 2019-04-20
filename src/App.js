@@ -31,7 +31,7 @@ const panes = [
       key: "comments",
       path: "/comments",
       icon: "talk",
-      content: "의견"
+      content: ""
     },
     render: () => <Comments />
   }
