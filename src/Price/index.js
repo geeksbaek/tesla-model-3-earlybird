@@ -366,6 +366,7 @@ export default class Price extends Component {
   render() {
     return (
       <Segment
+        basic
         textAlign="left"
         className="SegmentGroup"
         loading={this.state.loadingA && this.state.loadingB}
@@ -421,7 +422,7 @@ export default class Price extends Component {
           basic
           minWidth={Responsive.onlyTablet.minWidth}
         >
-          <Grid columns={2}>
+          <Grid columns={2} verticalAlign="top" centered>
             <Grid.Column width={10}>
               <Form>
                 <Form.Group>
