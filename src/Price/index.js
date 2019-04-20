@@ -621,7 +621,11 @@ export default class Price extends Component {
             menu={{ secondary: true, pointing: true }}
             panes={[
               {
-                menuItem: "현금",
+                menuItem: {
+                  key: "cash",
+                  icon: "money bill alternate outline",
+                  content: "현금"
+                },
                 render: () => (
                   <Cash
                     total_price={total_price}
@@ -634,7 +638,11 @@ export default class Price extends Component {
                 )
               },
               {
-                menuItem: "할부",
+                menuItem: {
+                  key: "loan",
+                  icon: "credit card outline",
+                  content: "할부"
+                },
                 render: () => (
                   <Loan
                     prepay={prepay}
