@@ -10,21 +10,21 @@ import TabMenu from "./TabMenu";
 const panes = [
   {
     menuItem: {
-      key: "feed",
-      path: "/",
-      icon: "newspaper",
-      content: "소식"
-    },
-    render: () => <Feeds />
-  },
-  {
-    menuItem: {
       key: "price",
-      path: "/price",
+      path: "/",
       icon: "calculator",
       content: "가격"
     },
     render: () => <Price />
+  },
+  {
+    menuItem: {
+      key: "news",
+      path: "/news",
+      icon: "newspaper",
+      content: "소식"
+    },
+    render: () => <Feeds />
   },
   {
     menuItem: {
