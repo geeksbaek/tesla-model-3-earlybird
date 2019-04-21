@@ -6,7 +6,7 @@ trims:
     0-60: 5.3
     구동방식: RWD
     승차인원: 5
-    인테리어: 준 프리미엄
+    인테리어: Partial Premium Interior
     가격: 39500
   - 이름: Long Range AWD
     배터리: Long Range
@@ -14,7 +14,7 @@ trims:
     0-60: 4.5
     구동방식: Dual Motor AWD
     승차인원: 5
-    인테리어: 프리미엄
+    인테리어: Premium Interior
     가격: 50500
   - 이름: Performance
     배터리: Long Range
@@ -22,7 +22,7 @@ trims:
     0-60: 3.2
     구동방식: Dual Motor AWD
     승차인원: 5
-    인테리어: 프리미엄
+    인테리어: Premium Interior
     가격: 61500
 options:
   color:

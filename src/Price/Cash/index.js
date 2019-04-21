@@ -6,7 +6,9 @@ import {
   List,
   Popup,
   Label,
-  Header
+  Header,
+  Image,
+  Modal
 } from "semantic-ui-react";
 import { Common } from "../Common";
 
@@ -22,6 +24,16 @@ export default class Cash extends Component {
             <List.Item>
               <List.Content>
                 <List.Description>
+                  <Modal
+                    trigger={<Image as={Button} src={this.props.image} />}
+                    closeIcon
+                    size="fullscreen"
+                  >
+                    <Modal.Content>
+                      <Image src={this.props.image} centered />
+                    </Modal.Content>
+                  </Modal>
+
                   <List>
                     {this.props.selectedOptions().map((v, i) => (
                       <List.Item key={i}>

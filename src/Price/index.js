@@ -21,6 +21,23 @@ import AutoPilot from "./AutoPilot";
 import Subsidy from "./Subsidy";
 import Cash from "./Cash";
 import Loan from "./Loan";
+
+import black_18 from "../assets/img/black_18.png";
+import black_19 from "../assets/img/black_19.png";
+import black_20 from "../assets/img/black_20.png";
+import midnight_18 from "../assets/img/midnight_18.png";
+import midnight_19 from "../assets/img/midnight_19.png";
+import midnight_20 from "../assets/img/midnight_20.png";
+import blue_18 from "../assets/img/blue_18.png";
+import blue_19 from "../assets/img/blue_19.png";
+import blue_20 from "../assets/img/blue_20.png";
+import white_18 from "../assets/img/white_18.png";
+import white_19 from "../assets/img/white_19.png";
+import white_20 from "../assets/img/white_20.png";
+import red_18 from "../assets/img/red_18.png";
+import red_19 from "../assets/img/red_19.png";
+import red_20 from "../assets/img/red_20.png";
+
 import "./index.css";
 
 const EXCHANGE_URL =
@@ -31,6 +48,14 @@ const SALETEX_URL =
   "https://raw.githubusercontent.com/geeksbaek/tesla-model-3-korea/master/data/saletex.yaml";
 const SUBSIDY_URL =
   "https://raw.githubusercontent.com/geeksbaek/tesla-model-3-korea/master/data/subsidy.json";
+
+const MODEL_3_IMAGE = [
+  [black_18, black_19, black_20],
+  [midnight_18, midnight_19, midnight_20],
+  [blue_18, blue_19, blue_20],
+  [white_18, white_19, white_20],
+  [red_18, red_19, red_20]
+];
 
 export default class Price extends Component {
   state = {
@@ -296,6 +321,54 @@ export default class Price extends Component {
       active_index
     } = this.state;
 
+    const message = (
+      <Message info>
+        <Message.List>
+          <Message.Header>먼저 읽어주세요</Message.Header>
+          <Divider hidden fitted />
+          <Divider hidden fitted />
+          <Divider hidden fitted />
+          <Divider hidden fitted />
+          <Message.Item>
+            여기에서 표기되는 가격은 미국 달러에서{" "}
+            <strong>{exchange_date}</strong> 기준 환율 (1 USD=
+            <strong>{exchange ? exchange.toFixed(2) : 0}</strong> KRW)을
+            적용하여 원화로 변환된 값입니다.
+          </Message.Item>
+          <Message.Item>
+            현재 탁송비, 공채비용, 부대비용 등은 계산에 포함되어 있지 않습니다.
+          </Message.Item>
+          <Message.Item>
+            계산된 가격과 실제 가격은 차이가 발생할 수 있으며, 이로 인해
+            발생하는 불이익에 대한 책임은 사용자에게 있습니다.
+          </Message.Item>
+          <Message.Item>
+            이 페이지는{" "}
+            <strong>
+              <a
+                href="https://github.com/geeksbaek/tesla-model-3-korea"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Github
+              </a>
+            </strong>
+            에서 오픈소스로 관리되며, 변경사항은{" "}
+            <strong>
+              <a
+                href="https://github.com/geeksbaek/tesla-model-3-korea/blob/master/CHANGELOG.md"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                여기
+              </a>
+            </strong>
+            에서 확인할 수 있습니다.
+          </Message.Item>
+        </Message.List>
+      </Message>
+    );
+
     return (
       <Segment
         basic
@@ -303,63 +376,10 @@ export default class Price extends Component {
         className="SegmentGroup"
         loading={loading_a && loading_b && loading_c}
       >
-        <Message info>
-          <Message.List>
-            <Message.Header>먼저 읽어주세요</Message.Header>
-            <Divider hidden fitted />
-            <Divider hidden fitted />
-            <Divider hidden fitted />
-            <Divider hidden fitted />
-            <Message.Item>
-              여기에서 표기되는 모든 가격은 미국 달러에서{" "}
-              <strong>{exchange_date}</strong> 기준 환율 (1 USD=
-              <strong>{exchange ? exchange.toFixed(2) : 0}</strong> KRW)을
-              적용하여 원화로 변환된 값입니다.
-            </Message.Item>
-            <Message.Item>
-              Model 3 구매에 필요한 최소한의 옵션이 미리 선택되어 있습니다.
-            </Message.Item>
-            <Message.Item>
-              현재 탁송비, 공채 관련 비용, 부대비용 등은 계산하지 않으며, 세금과
-              보조금만을 계산합니다.
-            </Message.Item>
-            <Message.Item>
-              이 페이지는{" "}
-              <strong>
-                <a
-                  href="https://github.com/geeksbaek/tesla-model-3-korea"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Github
-                </a>
-              </strong>
-              에서 오픈소스로 관리되며, 변경사항은{" "}
-              <strong>
-                <a
-                  href="https://github.com/geeksbaek/tesla-model-3-korea/blob/master/CHANGELOG.md"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  여기
-                </a>
-              </strong>
-              에서 확인할 수 있습니다.
-            </Message.Item>
-            <Message.Item>
-              계산된 가격과 실제 가격은 차이가 발생할 수 있으며 이로 인해
-              발생하는 문제에 대한 책임은 사용자에게 있습니다.
-            </Message.Item>
-          </Message.List>
-        </Message>
-
-        <Responsive
-          as={Segment}
-          basic
-          minWidth={Responsive.onlyTablet.minWidth}
-        >
+        <Responsive minWidth={Responsive.onlyTablet.minWidth}>
           <Grid columns={2} verticalAlign="top" centered>
             <Grid.Column width={10}>
+              {message}
               <Form>
                 <Form.Group>
                   <Trim
@@ -448,6 +468,7 @@ export default class Price extends Component {
                           calcFuncs={this.calcFuncs}
                           selectedOptions={this.selectedOptions}
                           usdTokrw={this.usdTokrw}
+                          image={MODEL_3_IMAGE[color_selected][wheels_selected]}
                         />
                       </Tab.Pane>
                     )
@@ -485,6 +506,7 @@ export default class Price extends Component {
                           calcFuncs={this.calcFuncs}
                           selectedOptions={this.selectedOptions}
                           usdTokrw={this.usdTokrw}
+                          image={MODEL_3_IMAGE[color_selected][wheels_selected]}
                         />
                       </Tab.Pane>
                     )
@@ -496,6 +518,7 @@ export default class Price extends Component {
         </Responsive>
 
         <Responsive {...Responsive.onlyMobile}>
+          {message}
           <Accordion>
             <Accordion.Title
               active={active_index === 0}
@@ -634,6 +657,7 @@ export default class Price extends Component {
                     calcFuncs={this.calcFuncs}
                     selectedOptions={this.selectedOptions}
                     usdTokrw={this.usdTokrw}
+                    image={MODEL_3_IMAGE[color_selected][wheels_selected]}
                   />
                 )
               },
@@ -669,6 +693,7 @@ export default class Price extends Component {
                     calcFuncs={this.calcFuncs}
                     selectedOptions={this.selectedOptions}
                     usdTokrw={this.usdTokrw}
+                    image={MODEL_3_IMAGE[color_selected][wheels_selected]}
                   />
                 )
               }

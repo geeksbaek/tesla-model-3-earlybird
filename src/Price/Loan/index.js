@@ -8,7 +8,9 @@ import {
   Form,
   Input,
   Label,
-  Header
+  Header,
+  Image,
+  Modal
 } from "semantic-ui-react";
 import { Common } from "../Common";
 
@@ -21,6 +23,40 @@ export default class Loan extends Component {
         </Card.Content>
         <Card.Content>
           <List>
+            <List.Item>
+              <List.Content>
+                <List.Description>
+                  <Modal
+                    trigger={<Image as={Button} src={this.props.image} />}
+                    closeIcon
+                    size="fullscreen"
+                  >
+                    <Modal.Content>
+                      <Image src={this.props.image} centered />
+                    </Modal.Content>
+                  </Modal>
+
+                  <List>
+                    {this.props.selectedOptions().map((v, i) => (
+                      <List.Item key={i}>
+                        <Label
+                          as="a"
+                          horizontal
+                          color={v["가격"] > 0 ? "red" : null}
+                        >
+                          {v["이름"]}
+                          <Label.Detail>
+                            {Common.comma(this.props.usdTokrw(v["가격"])) +
+                              "원"}
+                          </Label.Detail>
+                        </Label>
+                      </List.Item>
+                    ))}
+                  </List>
+                </List.Description>
+              </List.Content>
+            </List.Item>
+            <Divider />
             <List.Item>
               <Form>
                 <Form.Group widths="equal">
@@ -62,30 +98,6 @@ export default class Loan extends Component {
                   />
                 </Form.Group>
               </Form>
-            </List.Item>
-            <Divider />
-            <List.Item>
-              <List.Content>
-                <List.Description>
-                  <List>
-                    {this.props.selectedOptions().map((v, i) => (
-                      <List.Item key={i}>
-                        <Label
-                          as="a"
-                          horizontal
-                          color={v["가격"] > 0 ? "red" : null}
-                        >
-                          {v["이름"]}
-                          <Label.Detail>
-                            {Common.comma(this.props.usdTokrw(v["가격"])) +
-                              "원"}
-                          </Label.Detail>
-                        </Label>
-                      </List.Item>
-                    ))}
-                  </List>
-                </List.Description>
-              </List.Content>
             </List.Item>
             <Divider />
             <List.Item>
