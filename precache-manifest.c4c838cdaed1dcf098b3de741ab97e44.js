@@ -4,7 +4,7 @@ self.__precacheManifest = [
     "url": "/tesla-model-3-korea/static/media/blue_18.0a8f98d7.png"
   },
   {
-    "revision": "8278eadae848bab55202",
+    "revision": "57b659c36325d2660e75",
     "url": "/tesla-model-3-korea/static/css/main.0dbea2fa.chunk.css"
   },
   {
@@ -40,8 +40,8 @@ self.__precacheManifest = [
     "url": "/tesla-model-3-korea/static/media/midnight_20.f9017816.png"
   },
   {
-    "revision": "8278eadae848bab55202",
-    "url": "/tesla-model-3-korea/static/js/main.6b6a46f4.chunk.js"
+    "revision": "57b659c36325d2660e75",
+    "url": "/tesla-model-3-korea/static/js/main.77cc4388.chunk.js"
   },
   {
     "revision": "ac08109c9ee2bb11714b6242db746f3b",
@@ -76,7 +76,7 @@ self.__precacheManifest = [
     "url": "/tesla-model-3-korea/static/media/red_20.8f819544.png"
   },
   {
-    "revision": "5655f9a598ac5b35c9cf430e7d7cdd87",
+    "revision": "cf6ca8b80e107f167f17ad0635fb34e6",
     "url": "/tesla-model-3-korea/index.html"
   }
 ];
