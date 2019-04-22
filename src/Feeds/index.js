@@ -3,7 +3,7 @@ import axios from "axios";
 import { Segment, Card, Icon } from "semantic-ui-react";
 
 const newsApi =
-  'https://newsapi.org/v2/everything?q="model 3"&sortBy=popularity&apiKey=e995a927278f46b7b14fea677442fe4e';
+  'https://newsapi.org/v2/everything?q=tesla&pageSize=18&sortBy=publishedAt&apiKey=e995a927278f46b7b14fea677442fe4e';
 const dateOptions = {
   weekday: "long",
   year: "numeric",
