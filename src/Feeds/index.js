@@ -1,16 +1,9 @@
 import React from "react";
 import axios from "axios";
-import { Segment, Grid, Card, Responsive } from "semantic-ui-react";
+import { Segment, Grid, Card } from "semantic-ui-react";
 
 const newsApi =
   "https://asia-northeast1-tesla-238517.cloudfunctions.net/tesla-news";
-
-const dateOptions = {
-  weekday: "long",
-  year: "numeric",
-  month: "long",
-  day: "numeric"
-};
 
 export default class Feeds extends React.Component {
   state = { items: [] };
@@ -61,7 +54,7 @@ export default class Feeds extends React.Component {
         <Grid.Row only="computer tablet">
           <Segment basic>
             <Card.Group centered>
-              {this.state.items.map((v, i) => {
+              {items.map((v, i) => {
                 return <Card key={i}>{v}</Card>;
               })}
             </Card.Group>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Table } from "semantic-ui-react";
+import { Table, Popup, Icon, List } from "semantic-ui-react";
 import { Common } from "../Common";
 export default class Trim extends Component {
   onClick = (i, v) => {
@@ -14,8 +14,23 @@ export default class Trim extends Component {
           <Table.Row>
             <Table.HeaderCell>모델명</Table.HeaderCell>
             <Table.HeaderCell>가격</Table.HeaderCell>
-            <Table.HeaderCell>주행거리(EPA)</Table.HeaderCell>
-            <Table.HeaderCell>0-60mph</Table.HeaderCell>
+
+            <Popup
+              trigger={<Table.HeaderCell>주행거리 (EPA/WLTP)</Table.HeaderCell>}
+              position="top center"
+              size="small"
+            >
+              <Popup.Content>
+                <List as="ul">
+                  <List.Item as="li">EPA: 미국 환경보호청 측정 수치</List.Item>
+                  <List.Item as="li">
+                    WLTP: 세계 표준 자동차 시험방식 측정 수치
+                  </List.Item>
+                </List>
+              </Popup.Content>
+            </Popup>
+
+            <Table.HeaderCell>0-100 km/s</Table.HeaderCell>
             <Table.HeaderCell>구동방식</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
@@ -32,8 +47,10 @@ export default class Trim extends Component {
               <Table.Cell>
                 {Common.comma(this.props.usdTokrw(v["가격"])) + " 원"}
               </Table.Cell>
-              <Table.Cell>{v["주행거리(km)"] + " km"}</Table.Cell>
-              <Table.Cell>{v["0-60"] + " 초"}</Table.Cell>
+              <Table.Cell>{`${v["주행거리EPA(km)"]} km / ${
+                v["주행거리WLTP(km)"]
+              } km`}</Table.Cell>
+              <Table.Cell>{`${v["0-100(km/s)"]} 초`}</Table.Cell>
               <Table.Cell>{v["구동방식"]}</Table.Cell>
             </Table.Row>
           ))}
