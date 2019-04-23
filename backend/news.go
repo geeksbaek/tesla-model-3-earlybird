@@ -8,7 +8,7 @@ import (
 	"os"
 )
 
-var newsAPI = "https://openapi.naver.com/v1/search/news.json?query=%ED%85%8C%EC%8A%AC%EB%9D%BC&sort=date"
+var newsAPI = "https://openapi.naver.com/v1/search/news.json?query=%ED%85%8C%EC%8A%AC%EB%9D%BC&sort=date&display=30"
 
 func TeslaNews(w http.ResponseWriter, r *http.Request) {
 	req, _ := http.NewRequest("GET", newsAPI, nil)
@@ -21,5 +21,6 @@ func TeslaNews(w http.ResponseWriter, r *http.Request) {
 	defer res.Body.Close()
 	body, _ := ioutil.ReadAll(res.Body)
 
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	fmt.Fprint(w, string(body))
 }
