@@ -1,36 +1,41 @@
 import React from "react";
 import axios from "axios";
-import { Segment, Card, Icon } from "semantic-ui-react";
+import { Segment, Grid, Card, Responsive } from "semantic-ui-react";
 
 const newsApi =
-  'https://newsapi.org/v2/everything?q=tesla%20model&pageSize=18&sortBy=publishedAt&apiKey=e995a927278f46b7b14fea677442fe4e';
+  "https://asia-northeast1-tesla-238517.cloudfunctions.net/tesla-news";
+
 const dateOptions = {
   weekday: "long",
   year: "numeric",
   month: "long",
   day: "numeric"
 };
+
 export default class Feeds extends React.Component {
   state = { items: [] };
 
   componentDidMount() {
     axios.get(newsApi).then(res => {
       this.setState({
-        items: res.data.articles.map((v, i) => {
-          return {
-            key: i,
-            header: (
-              <Card.Header as="a" href={v.url} target="_blank">
-                {v.title}
+        items: res.data.items.map((v, i) => {
+          return (
+            <Card.Content>
+              <Card.Header
+                as="a"
+                href={v.link || v.originallink}
+                target="_blank"
+              >
+                <div dangerouslySetInnerHTML={{ __html: v.title }} />
               </Card.Header>
-            ),
-            extra: v.source.name,
-            description: new Date(v.publishedAt).toLocaleDateString(
-              "ko-KR",
-              dateOptions
-            ),
-            image: v.urlToImage
-          };
+              <Card.Meta>{`${parseInt(
+                Math.abs(new Date(v.pubDate) - new Date()) / 36e5
+              )}시간 전`}</Card.Meta>
+              <Card.Description>
+                <div dangerouslySetInnerHTML={{ __html: v.description }} />
+              </Card.Description>
+            </Card.Content>
+          );
         })
       });
     });
@@ -39,9 +44,30 @@ export default class Feeds extends React.Component {
   render() {
     const { items } = this.state;
     return (
-      <Segment basic>
-        <Card.Group centered items={items} />
-      </Segment>
+      <Grid>
+        <Grid.Row only="mobile">
+          <Segment basic>
+            <Card.Group centered>
+              {this.state.items.map((v, i) => {
+                return (
+                  <Card key={i} fluid>
+                    {v}
+                  </Card>
+                );
+              })}
+            </Card.Group>
+          </Segment>
+        </Grid.Row>
+        <Grid.Row only="computer tablet">
+          <Segment basic>
+            <Card.Group centered>
+              {this.state.items.map((v, i) => {
+                return <Card key={i}>{v}</Card>;
+              })}
+            </Card.Group>
+          </Segment>
+        </Grid.Row>
+      </Grid>
     );
   }
 }

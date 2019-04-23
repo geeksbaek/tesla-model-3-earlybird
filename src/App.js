@@ -13,7 +13,7 @@ const panes = [
       key: "price",
       path: "/",
       icon: "calculator",
-      content: "가격"
+      content: "Model 3 가격"
     },
     render: () => <Price />
   },
@@ -22,7 +22,7 @@ const panes = [
       key: "news",
       path: "/news",
       icon: "newspaper",
-      content: "소식"
+      content: "Tesla 소식"
     },
     render: () => <Feeds />
   },

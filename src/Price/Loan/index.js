@@ -203,8 +203,9 @@ export default class Loan extends Component {
                 size="small"
               />
             </List.Item>
+            <Divider />
             <List.Item>
-              <List.Icon name="calculator" />
+              <List.Icon name="calculator" size="large" />
               <Popup
                 trigger={
                   <List.Content>

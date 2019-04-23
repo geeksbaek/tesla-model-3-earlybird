@@ -336,7 +336,7 @@ export default class Price extends Component {
             적용하여 원화로 변환된 값입니다.
           </Message.Item>
           <Message.Item>
-            현재 탁송비, 공채비용, 부대비용 등은 계산에 포함되어 있지 않습니다.
+            탁송비, 공채비용, 부대비용 등은 계산에 포함되어 있지 않습니다.
           </Message.Item>
           <Message.Item>
             계산된 가격과 실제 가격은 차이가 발생할 수 있으며, 이로 인해
