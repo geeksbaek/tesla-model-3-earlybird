@@ -12,6 +12,8 @@ export default class Feeds extends React.Component {
     axios.get(newsApi).then(res => {
       this.setState({
         items: res.data.items.map((v, i) => {
+          let ago = parseInt(Math.abs(new Date(v.pubDate) - new Date()) / 36e5);
+
           return (
             <Card.Content>
               <Card.Header
@@ -21,9 +23,7 @@ export default class Feeds extends React.Component {
               >
                 <div dangerouslySetInnerHTML={{ __html: v.title }} />
               </Card.Header>
-              <Card.Meta>{`${parseInt(
-                Math.abs(new Date(v.pubDate) - new Date()) / 36e5
-              )}시간 전`}</Card.Meta>
+              <Card.Meta>{ago === 0 ? "방금" : `${ago}시간 전`}</Card.Meta>
               <Card.Description>
                 <div dangerouslySetInnerHTML={{ __html: v.description }} />
               </Card.Description>
@@ -54,9 +54,9 @@ export default class Feeds extends React.Component {
         <Grid.Row only="computer tablet">
           <Segment basic>
             <Card.Group centered>
-              {items.map((v, i) => {
-                return <Card key={i}>{v}</Card>;
-              })}
+              {items.map((v, i) => (
+                <Card key={i}>{v}</Card>
+              ))}
             </Card.Group>
           </Segment>
         </Grid.Row>
