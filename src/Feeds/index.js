@@ -1,16 +1,17 @@
 import React from "react";
 import axios from "axios";
-import { Segment, Grid, Card } from "semantic-ui-react";
+import { Segment, Grid, Card, Loader, Dimmer } from "semantic-ui-react";
 
 const newsApi =
   "https://asia-northeast1-tesla-238517.cloudfunctions.net/tesla-news";
 
 export default class Feeds extends React.Component {
-  state = { items: [] };
+  state = { items: [], loading: true };
 
   componentDidMount() {
     axios.get(newsApi).then(res => {
       this.setState({
+        loading: false,
         items: res.data.items.map((v, i) => {
           let ago = parseInt(Math.abs(new Date(v.pubDate) - new Date()) / 36e5);
 
@@ -35,11 +36,14 @@ export default class Feeds extends React.Component {
   }
 
   render() {
-    const { items } = this.state;
+    const { items, loading } = this.state;
     return (
       <Grid>
         <Grid.Row only="mobile">
-          <Segment basic>
+          <Dimmer active={loading} inverted>
+            <Loader inverted active={loading} inline="centered" />
+          </Dimmer>
+          <Segment basic style={{ margin: "0" }}>
             <Card.Group centered>
               {this.state.items.map((v, i) => {
                 return (
@@ -52,7 +56,10 @@ export default class Feeds extends React.Component {
           </Segment>
         </Grid.Row>
         <Grid.Row only="computer tablet">
-          <Segment basic>
+          <Dimmer active={loading} inverted>
+            <Loader inverted active={loading} inline="centered" />
+          </Dimmer>
+          <Segment basic style={{ margin: "0" }}>
             <Card.Group centered>
               {items.map((v, i) => (
                 <Card key={i}>{v}</Card>

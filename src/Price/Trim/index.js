@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Table, Popup, Icon, List } from "semantic-ui-react";
+import { Table, Popup, List } from "semantic-ui-react";
 import { Common } from "../Common";
 export default class Trim extends Component {
   onClick = (i, v) => {
