@@ -2,24 +2,27 @@
 trims:
   - 이름: Standard Plus
     배터리: Standard Plus
-    주행거리(km): 386
-    0-60: 5.3
+    주행거리EPA(km): 386
+    주행거리WLTP(km): 415
+    0-100(km/s): 5.6
     구동방식: RWD
     승차인원: 5
     인테리어: Partial Premium Interior
     가격: 39500
   - 이름: Long Range AWD
     배터리: Long Range
-    주행거리(km): 499
-    0-60: 4.5
+    주행거리EPA(km): 499
+    주행거리WLTP(km): 541
+    0-100(km/s): 4.6
     구동방식: Dual Motor AWD
     승차인원: 5
     인테리어: Premium Interior
     가격: 50500
   - 이름: Performance
     배터리: Long Range
-    주행거리(km): 499
-    0-60: 3.2
+    주행거리EPA(km): 499
+    주행거리WLTP(km): 530
+    0-100(km/s): 3.4
     구동방식: Dual Motor AWD
     승차인원: 5
     인테리어: Premium Interior
