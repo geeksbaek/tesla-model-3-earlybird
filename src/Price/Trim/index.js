@@ -50,7 +50,7 @@ export default class Trim extends Component {
               <Table.Cell>{`${v["주행거리EPA(km)"]} km / ${
                 v["주행거리WLTP(km)"]
               } km`}</Table.Cell>
-              <Table.Cell>{`${v["0-100(km/s)"]} 초`}</Table.Cell>
+              <Table.Cell>{`${v["0-100(km/h)"]} 초`}</Table.Cell>
               <Table.Cell>{v["구동방식"]}</Table.Cell>
             </Table.Row>
           ))}
