@@ -56,164 +56,149 @@ export default class Cash extends Component {
             </List.Item>
             <Divider />
             <List.Item>
-              <List.Icon name="car" />
-              <List.Content>
-                <List.Header style={{ color: "grey" }}>
+              <List.Content floated="right">
+                <List.Header>
                   {Common.comma(this.props.total_price) + " 원"}
                 </List.Header>
-                <List.Description>차량 공장도 가격</List.Description>
+              </List.Content>
+              <List.Content>
+                <List.Icon name="car" />
+                차량 공장도 가격
               </List.Content>
             </List.Item>
             <Divider />
             <List.Item>
-              <List.Icon name="plus" />
-              <List.Content>
+              <List.Content floated="right">
                 <List.Header style={{ color: "orange" }}>
                   {Common.comma(this.props.calcFuncs["부가가치세"]()) + " 원"}
                 </List.Header>
-                <List.Description>부가가치세</List.Description>
               </List.Content>
+              <List.Content>부가가치세</List.Content>
             </List.Item>
-            <List.Item>
-              <List.Icon name="plus" />
-              <Popup
-                trigger={
-                  <List.Content>
-                    <List.Header
-                      style={
-                        this.props.calcFuncs["개별소비세"]() > 0
-                          ? { color: "orange" }
-                          : { color: "green" }
-                      }
-                    >
+            <Popup
+              trigger={
+                <List.Item>
+                  <List.Content floated="right">
+                    <List.Header style={{ color: "orange" }}>
                       {Common.comma(this.props.calcFuncs["개별소비세"]()) +
                         " 원"}
                     </List.Header>
-                    <List.Description>개별소비세</List.Description>{" "}
                   </List.Content>
-                }
-                content={
-                  Common.comma(this.props.calcFuncs["개별소비세_과세"]()) +
-                  "원 중 " +
-                  Common.comma(this.props.calcFuncs["개별소비세_감면"]()) +
-                  "원 감면됨"
-                }
-                size="small"
-              />
-            </List.Item>
-            <List.Item>
-              <List.Icon name="plus" />
-              <Popup
-                trigger={
-                  <List.Content>
-                    <List.Header
-                      style={
-                        this.props.calcFuncs["교육세"]() > 0
-                          ? { color: "orange" }
-                          : { color: "green" }
-                      }
-                    >
+                  <List.Content>개별소비세</List.Content>
+                </List.Item>
+              }
+              content={
+                Common.comma(this.props.calcFuncs["개별소비세_과세"]()) +
+                "원 중 " +
+                Common.comma(this.props.calcFuncs["개별소비세_감면"]()) +
+                "원 감면됨"
+              }
+              size="small"
+              position="top right"
+            />
+            <Popup
+              trigger={
+                <List.Item>
+                  <List.Content floated="right">
+                    <List.Header style={{ color: "orange" }}>
                       {Common.comma(this.props.calcFuncs["교육세"]()) + " 원"}
                     </List.Header>
-                    <List.Description>교육세</List.Description>
                   </List.Content>
-                }
-                content={
-                  Common.comma(this.props.calcFuncs["교육세_과세"]()) +
-                  "원 중 " +
-                  Common.comma(this.props.calcFuncs["교육세_감면"]()) +
-                  "원 감면됨"
-                }
-                size="small"
-              />
-            </List.Item>
-            <List.Item>
-              <List.Icon name="plus" />
-              <Popup
-                trigger={
-                  <List.Content>
-                    <List.Header
-                      style={
-                        this.props.calcFuncs["취득세"]() > 0
-                          ? { color: "orange" }
-                          : { color: "green" }
-                      }
-                    >
+                  <List.Content>교육세</List.Content>
+                </List.Item>
+              }
+              content={
+                Common.comma(this.props.calcFuncs["교육세_과세"]()) +
+                "원 중 " +
+                Common.comma(this.props.calcFuncs["교육세_감면"]()) +
+                "원 감면됨"
+              }
+              size="small"
+              position="top right"
+            />
+            <Popup
+              trigger={
+                <List.Item>
+                  <List.Content floated="right">
+                    <List.Header style={{ color: "orange" }}>
                       {Common.comma(this.props.calcFuncs["취득세"]()) + " 원"}
                     </List.Header>
-                    <List.Description>취득세</List.Description>
                   </List.Content>
-                }
-                content={
-                  Common.comma(this.props.calcFuncs["취득세_과세"]()) +
-                  "원 중 " +
-                  Common.comma(this.props.calcFuncs["취득세_감면"]()) +
-                  "원 감면됨"
-                }
-                size="small"
-              />
-            </List.Item>
-            <List.Item>
-              <List.Icon name="plus" />
-              <Popup
-                trigger={
-                  <List.Content>
+                  <List.Content>취득세</List.Content>
+                </List.Item>
+              }
+              content={
+                Common.comma(this.props.calcFuncs["취득세_과세"]()) +
+                "원 중 " +
+                Common.comma(this.props.calcFuncs["취득세_감면"]()) +
+                "원 감면됨"
+              }
+              size="small"
+              position="top right"
+            />
+            <Popup
+              trigger={
+                <List.Item>
+                  <List.Content floated="right">
                     <List.Header style={{ color: "orange" }}>
                       {Common.comma(this.props.calcFuncs["자동차세"]()) + " 원"}
                     </List.Header>
-                    <List.Description>자동차세</List.Description>
                   </List.Content>
-                }
-                content="비영업용 기준"
-                size="small"
-              />
-            </List.Item>
+                  <List.Content>자동차세</List.Content>
+                </List.Item>
+              }
+              content="비영업용 기준"
+              size="small"
+              position="top right"
+            />
+            <Divider />
             <List.Item>
-              <List.Icon name="minus" />
-              <List.Content>
+              <List.Content floated="right">
                 <List.Header style={{ color: "green" }}>
+                  -{" "}
                   {Common.comma(
                     this.props.gov_subsidy ? this.props.gov_subsidy.subsidy : 0
                   ) + " 원"}
                 </List.Header>
-                <List.Description>정부 보조금</List.Description>
               </List.Content>
+              <List.Content>정부 보조금</List.Content>
             </List.Item>
             <List.Item>
-              <List.Icon name="minus" />
-              <List.Content>
+              <List.Content floated="right">
                 <List.Header style={{ color: "green" }}>
+                  -{" "}
                   {Common.comma(
                     this.props.local_subsidy
                       ? this.props.local_subsidy.subsidy
                       : 0
                   ) + " 원"}
                 </List.Header>
-                <List.Description>지방자치단체 보조금</List.Description>
               </List.Content>
+              <List.Content>지방자치단체 보조금</List.Content>
             </List.Item>
             <Divider />
-            <List.Item>
-              <List.Icon name="calculator" size="large" />
-              <Popup
-                trigger={
-                  <List.Content>
-                    <List.Header>
-                      <Header size="medium" color="red">
-                        {Common.comma(
-                          this.props.calcFuncs["보조금_감면_후_차량가격"]() +
-                            this.props.calcFuncs["취득세"]() +
-                            this.props.calcFuncs["자동차세"]()
-                        ) + " 원"}
-                      </Header>
-                    </List.Header>
-                    <List.Description>최종 가격</List.Description>
+            <Popup
+              trigger={
+                <List.Item>
+                  <List.Content floated="right">
+                    <Header size="medium" color="red">
+                      {Common.comma(
+                        this.props.calcFuncs["보조금_감면_후_차량가격"]() +
+                          this.props.calcFuncs["취득세"]() +
+                          this.props.calcFuncs["자동차세"]()
+                      ) + " 원"}
+                    </Header>
                   </List.Content>
-                }
-                content="취득세, 자동차세 포함"
-                size="small"
-              />
-            </List.Item>
+                  <List.Content>
+                    <List.Icon name="won sign" />
+                    최종 가격
+                  </List.Content>
+                </List.Item>
+              }
+              content="취득세, 자동차세 포함"
+              size="small"
+              position="top right"
+            />
           </List>
         </Card.Content>
         <Card.Content extra textAlign="right">
