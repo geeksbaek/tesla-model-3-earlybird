@@ -30,7 +30,7 @@ export default class Trim extends Component {
               </Popup.Content>
             </Popup>
 
-            <Table.HeaderCell>0-100 km/s</Table.HeaderCell>
+            <Table.HeaderCell>0-100 km/h</Table.HeaderCell>
             <Table.HeaderCell>구동방식</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
