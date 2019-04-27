@@ -10,6 +10,7 @@ import {
   Label,
   Header,
   Image,
+  Responsive,
   Modal
 } from "semantic-ui-react";
 import { Common } from "../Common";
@@ -58,7 +59,7 @@ export default class Loan extends Component {
             </List.Item>
             <Divider />
             <List.Item>
-              <Form>
+              <Form unstackable size="small">
                 <Form.Group widths="equal">
                   <Form.Field
                     width={1}
@@ -77,6 +78,12 @@ export default class Loan extends Component {
                     onChange={this.props.onPrepayChange}
                   />
                 </Form.Group>
+                <Responsive {...Responsive.onlyMobile}>
+                  <Divider hidden fitted />
+                  <Divider hidden fitted />
+                  <Divider hidden fitted />
+                  <Divider hidden fitted />
+                </Responsive>
                 <Form.Group widths="equal">
                   <Form.Field
                     width={1}
