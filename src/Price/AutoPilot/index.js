@@ -33,11 +33,22 @@ export default class AutoPilot extends Component {
                   position="top center"
                 >
                   <Popup.Content>
-                    <List as="ul">
+                    <List>
                       {v["설명"].split("\n").map((v, i) => {
                         return (
-                          <List.Item as="li" key={i}>
-                            {v}
+                          <List.Item key={i}>
+                            <List.Content>
+                              <List.Header>
+                                {v.includes(":")
+                                  ? v.substring(0, v.indexOf(":"))
+                                  : null}
+                              </List.Header>
+                              <List.Description>
+                                {v.includes(":")
+                                  ? v.substring(v.indexOf(":") + 2, v.length)
+                                  : v}
+                              </List.Description>
+                            </List.Content>
                           </List.Item>
                         );
                       })}

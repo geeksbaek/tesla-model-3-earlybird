@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Table, Popup, List } from "semantic-ui-react";
+import { Table, Popup, List, Icon } from "semantic-ui-react";
 import { Common } from "../Common";
 export default class Trim extends Component {
   onClick = (i, v) => {
@@ -16,15 +16,31 @@ export default class Trim extends Component {
             <Table.HeaderCell>가격</Table.HeaderCell>
 
             <Popup
-              trigger={<Table.HeaderCell>주행거리 (EPA/WLTP)</Table.HeaderCell>}
+              trigger={
+                <Table.HeaderCell>
+                  주행거리 <Icon name="question circle outline" />
+                </Table.HeaderCell>
+              }
               position="top center"
               size="small"
             >
               <Popup.Content>
-                <List as="ul">
-                  <List.Item as="li">EPA: 미국 환경보호청 측정 수치</List.Item>
-                  <List.Item as="li">
-                    WLTP: 세계 표준 자동차 시험방식 측정 수치
+                <List>
+                  <List.Item>
+                    <List.Content>
+                      <List.Header>EPA (좌측 수치)</List.Header>
+                      <List.Description>
+                        미국 환경보호청 측정 수치
+                      </List.Description>
+                    </List.Content>
+                  </List.Item>
+                  <List.Item>
+                    <List.Content>
+                      <List.Header>WLTP (우측 수치)</List.Header>
+                      <List.Description>
+                        세계 표준 자동차 시험방식 측정 수치
+                      </List.Description>
+                    </List.Content>
                   </List.Item>
                 </List>
               </Popup.Content>

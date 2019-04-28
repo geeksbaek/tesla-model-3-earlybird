@@ -38,6 +38,22 @@ import red_18 from "../assets/img/red_18.png";
 import red_19 from "../assets/img/red_19.png";
 import red_20 from "../assets/img/red_20.png";
 
+import black_white_18 from "../assets/img/black_white_18.png";
+import black_white_19 from "../assets/img/black_white_19.png";
+import black_white_20 from "../assets/img/black_white_20.png";
+import midnight_white_18 from "../assets/img/midnight_white_18.png";
+import midnight_white_19 from "../assets/img/midnight_white_19.png";
+import midnight_white_20 from "../assets/img/midnight_white_20.png";
+import blue_white_18 from "../assets/img/blue_white_18.png";
+import blue_white_19 from "../assets/img/blue_white_19.png";
+import blue_white_20 from "../assets/img/blue_white_20.png";
+import white_white_18 from "../assets/img/white_white_18.png";
+import white_white_19 from "../assets/img/white_white_19.png";
+import white_white_20 from "../assets/img/white_white_20.png";
+import red_white_18 from "../assets/img/red_white_18.png";
+import red_white_19 from "../assets/img/red_white_19.png";
+import red_white_20 from "../assets/img/red_white_20.png";
+
 import "./index.css";
 
 const EXCHANGE_URL =
@@ -50,11 +66,27 @@ const SUBSIDY_URL =
   "https://raw.githubusercontent.com/geeksbaek/tesla-model-3-korea/master/data/subsidy.json";
 
 const MODEL_3_IMAGE = [
-  [black_18, black_19, black_20],
-  [midnight_18, midnight_19, midnight_20],
-  [blue_18, blue_19, blue_20],
-  [white_18, white_19, white_20],
-  [red_18, red_19, red_20]
+  [
+    [black_18, black_white_18],
+    [black_19, black_white_19],
+    [black_20, black_white_20]
+  ],
+  [
+    [midnight_18, midnight_white_18],
+    [midnight_19, midnight_white_19],
+    [midnight_20, midnight_white_20]
+  ],
+  [
+    [blue_18, blue_white_18],
+    [blue_19, blue_white_19],
+    [blue_20, blue_white_20]
+  ],
+  [
+    [white_18, white_white_18],
+    [white_19, white_white_19],
+    [white_20, white_white_20]
+  ],
+  [[red_18, red_white_18], [red_19, red_white_19], [red_20, red_white_20]]
 ];
 
 export default class Price extends Component {
@@ -468,7 +500,11 @@ export default class Price extends Component {
                           calcFuncs={this.calcFuncs}
                           selectedOptions={this.selectedOptions}
                           usdTokrw={this.usdTokrw}
-                          image={MODEL_3_IMAGE[color_selected][wheels_selected]}
+                          image={
+                            MODEL_3_IMAGE[color_selected][wheels_selected][
+                              interior_selected
+                            ]
+                          }
                         />
                       </Tab.Pane>
                     )
@@ -506,7 +542,11 @@ export default class Price extends Component {
                           calcFuncs={this.calcFuncs}
                           selectedOptions={this.selectedOptions}
                           usdTokrw={this.usdTokrw}
-                          image={MODEL_3_IMAGE[color_selected][wheels_selected]}
+                          image={
+                            MODEL_3_IMAGE[color_selected][wheels_selected][
+                              interior_selected
+                            ]
+                          }
                         />
                       </Tab.Pane>
                     )
@@ -657,7 +697,11 @@ export default class Price extends Component {
                     calcFuncs={this.calcFuncs}
                     selectedOptions={this.selectedOptions}
                     usdTokrw={this.usdTokrw}
-                    image={MODEL_3_IMAGE[color_selected][wheels_selected]}
+                    image={
+                      MODEL_3_IMAGE[color_selected][wheels_selected][
+                        interior_selected
+                      ]
+                    }
                   />
                 )
               },
@@ -693,7 +737,11 @@ export default class Price extends Component {
                     calcFuncs={this.calcFuncs}
                     selectedOptions={this.selectedOptions}
                     usdTokrw={this.usdTokrw}
-                    image={MODEL_3_IMAGE[color_selected][wheels_selected]}
+                    image={
+                      MODEL_3_IMAGE[color_selected][wheels_selected][
+                        interior_selected
+                      ]
+                    }
                   />
                 )
               }
