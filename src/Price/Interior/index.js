@@ -10,7 +10,15 @@ export default class Interior extends Component {
 
   render() {
     return (
-      <Table compact="very" singleLine size="small" celled selectable fixed>
+      <Table
+        compact="very"
+        singleLine
+        size="small"
+        celled
+        selectable
+        fixed
+        unstackable
+      >
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>인테리어</Table.HeaderCell>
