@@ -44,6 +44,7 @@ options:
       가격: 0
     - 이름: Black & White Interior
       가격: 1000
+      설명: "Black and White interior includes our most premium materials, maximizing comfort and aesthetics while maintaining our rigorous standards for durability and stain resistance."
   wheels:
     - 이름: 18" Aero Wheels
       가격: 0
