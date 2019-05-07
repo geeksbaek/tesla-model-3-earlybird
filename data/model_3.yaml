@@ -1,6 +1,7 @@
 ---
 trims:
-  - 이름: Standard Plus
+  - index: 0
+    이름: Standard Plus
     배터리: Standard Plus
     주행거리EPA(km): 386
     주행거리WLTP(km): 415
@@ -9,7 +10,8 @@ trims:
     승차인원: 5
     인테리어: Partial Premium Interior
     가격: 39500
-  - 이름: Long Range AWD
+  - index: 1
+    이름: Long Range AWD
     배터리: Long Range
     주행거리EPA(km): 499
     주행거리WLTP(km): 541
@@ -18,7 +20,8 @@ trims:
     승차인원: 5
     인테리어: Premium Interior
     가격: 50500
-  - 이름: Performance
+  - index: 2
+    이름: Performance
     배터리: Long Range
     주행거리EPA(km): 499
     주행거리WLTP(km): 530
@@ -29,36 +32,48 @@ trims:
     가격: 61500
 options:
   color:
-    - 이름: Solid Black
+    - index: 0
+      이름: Solid Black
       가격: 0
-    - 이름: Midnight Silver Metallic
+    - index: 1
+      이름: Midnight Silver Metallic
       가격: 1500
-    - 이름: Deep Blue Metallic
+    - index: 2
+      이름: Deep Blue Metallic
       가격: 1500
-    - 이름: Pearl White Multi-Coat
+    - index: 3
+      이름: Pearl White Multi-Coat
       가격: 2000
-    - 이름: Red Multi-Coat
+    - index: 4
+      이름: Red Multi-Coat
       가격: 2500
   interior:
-    - 이름: Black Interior
+    - index: 0
+      이름: Black Interior
       가격: 0
-    - 이름: Black & White Interior
+    - index: 1
+      이름: Black & White Interior
       가격: 1000
       설명: "Black and White interior includes our most premium materials, maximizing comfort and aesthetics while maintaining our rigorous standards for durability and stain resistance."
   wheels:
-    - 이름: 18" Aero Wheels
+    - index: 0
+      이름: 18" Aero Wheels
       가격: 0
       _only: "!Performance"
-    - 이름: 19" Sport Wheels
+    - index: 1
+      이름: 19" Sport Wheels
       가격: 1500
       _only: "!Performance"
-    - 이름: 20" Performance Wheels
+    - index: 2
+      이름: 20" Performance Wheels
       가격: 0
       _only: Performance
   autopilot:
-    - 이름: Autopilot Included
+    - index: 0
+      이름: Autopilot Included
       설명: "Autopilot Included: Enables your car to steer, accelerate and brake automatically for other vehicles and pedestrians within its lane."
       가격: 0
-    - 이름: Full Self-Driving Capability
+    - index: 1
+      이름: Full Self-Driving Capability
       설명: "Navigate on Autopilot: automatic driving from highway on-ramp to off-ramp including interchanges and overtaking slower cars.\nAuto lane Change: automatic lane changes while driving on the highway.\nAutopark: both parallel and perpendicular spaces.\nSummon: your parked car will come find you anywhere in a parking lot. Really.\n(Coming later this year) Recognize and respond to traffic lights and stop signs.\n(Coming later this year) Automatic driving on city streets."
       가격: 6000
