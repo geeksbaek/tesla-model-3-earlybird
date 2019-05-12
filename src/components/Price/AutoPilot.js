@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Table, Popup, Icon, List } from "semantic-ui-react";
-import { Common } from "../Common";
+import { Common } from "./Common";
 
 export default class AutoPilot extends Component {
   onClick = (v, checked) => {

@@ -2,10 +2,13 @@ import React, { Component } from "react";
 import "./App.css";
 import { HashRouter, Route } from "react-router-dom";
 import { Container } from "semantic-ui-react";
-import Feeds from "./Feeds";
-import Price from "./Price";
-import Comments from "./Comments";
-import TabMenu from "./TabMenu";
+import Price from "./components/Price";
+import Feeds from "./components/Feeds";
+import Diff from "./components/Diff";
+import Comments from "./components/Comments";
+import TabMenu from "./components/TabMenu";
+
+import { FirebaseProvider } from "./api/Context";
 
 const panes = [
   {
@@ -26,6 +29,15 @@ const panes = [
     },
     render: () => <Feeds />
   },
+  // {
+  //   menuItem: {
+  //     key: "diff",
+  //     path: "/diff",
+  //     icon: "paragraph",
+  //     content: "Diff"
+  //   },
+  //   render: () => <Diff />
+  // },
   {
     menuItem: {
       key: "discussions",
@@ -38,30 +50,18 @@ const panes = [
 ];
 
 class App extends Component {
-  // state = {
-  //   activeItem: panes[0].menuItem.content
-  // };
-
-  // componentDidMount() {
-  //   console.log(window.history.location);
-  // }
-
-  // handleItemClick = (e, { name, to }) => {
-  //   this.setState({
-  //     activeItem: name
-  //   });
-  // };
-
   render() {
     return (
-      <Container style={{ padding: "10px 0" }}>
-        <HashRouter>
-          <TabMenu panes={panes} />
-          {panes.map((v, i) => (
-            <Route key={i} exact path={v.menuItem.path} render={v.render} />
-          ))}
-        </HashRouter>
-      </Container>
+      <FirebaseProvider>
+        <Container style={{ padding: "10px 0" }}>
+          <HashRouter>
+            <TabMenu panes={panes} />
+            {panes.map((v, i) => (
+              <Route key={i} exact path={v.menuItem.path} render={v.render} />
+            ))}
+          </HashRouter>
+        </Container>
+      </FirebaseProvider>
     );
   }
 }

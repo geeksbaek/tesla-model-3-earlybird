@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Header, Dropdown, Divider, Form } from "semantic-ui-react";
-import { Common } from "../Common";
+import { Common } from "./Common";
 
 export default class Subsidy extends Component {
   render() {
@@ -8,14 +8,16 @@ export default class Subsidy extends Component {
       return {
         key: i,
         value: i,
-        text: `${v.name} (${Common.comma(v.subsidy)}원)`
+        text: `${v.name} (${Common.comma(v.subsidy)}원)`,
+        data: v
       };
     });
     let localOpt = this.props.local_subsidy.map((v, i) => {
       return {
         key: i,
         value: i,
-        text: `${v.name} (${Common.comma(v.subsidy)}원)`
+        text: `${v.name} (${Common.comma(v.subsidy)}원)`,
+        data: v
       };
     });
     return (

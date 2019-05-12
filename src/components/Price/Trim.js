@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Table, Popup, List, Icon } from "semantic-ui-react";
-import { Common } from "../Common";
+import { Common } from "./Common";
 export default class Trim extends Component {
   onClick = (i, v) => {
     this.props.onChange(i, v);

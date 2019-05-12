@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Table } from "semantic-ui-react";
-import { Common } from "../Common";
+import { Common } from "./Common";
 
-export default class Color extends Component {
+export default class Wheels extends Component {
   onClick = (i, v) => {
     this.props.onChange(i, v);
     this.props.calcTotalPrice();
@@ -21,16 +21,20 @@ export default class Color extends Component {
       >
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell>색상</Table.HeaderCell>
+            <Table.HeaderCell>휠</Table.HeaderCell>
             <Table.HeaderCell>가격</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
 
         <Table.Body>
-          {this.props.options["color"].map((v, i) => (
+          {this.props.options["wheels"].map((v, i) => (
             <Table.Row
               key={i}
-              active={this.props.color_selected === i}
+              active={this.props.wheels_selected === i}
+              disabled={
+                (!this.props.performance && v["_only"] === "Performance") ||
+                (this.props.performance && v["_only"] === "!Performance")
+              }
               onClick={() => this.onClick(i, v)}
               style={{ cursor: "pointer" }}
             >
