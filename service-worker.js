@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/tesla-model-3-earlybird/precache-manifest.cfed738eff5dc96f36e6027db4644903.js"
+  "/tesla-model-3-earlybird/precache-manifest.b4860ea4422f4ec0e54faf603dc818cf.js"
 );
 
 workbox.clientsClaim();
