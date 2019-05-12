@@ -4,7 +4,7 @@ self.__precacheManifest = [
     "url": "/tesla-model-3-earlybird/static/media/red_19.98d0758b.png"
   },
   {
-    "revision": "d53524b9c91836639f2b",
+    "revision": "1062fa4b5b7b7b3aed5e",
     "url": "/tesla-model-3-earlybird/static/css/main.e079d80a.chunk.css"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = [
     "url": "/tesla-model-3-earlybird/static/js/runtime~main.69be7bb1.js"
   },
   {
-    "revision": "2d78605afa1e648fdec8",
-    "url": "/tesla-model-3-earlybird/static/js/2.a7005928.chunk.js"
+    "revision": "c5635e360ddbfe278a6c",
+    "url": "/tesla-model-3-earlybird/static/js/2.1f3351ba.chunk.js"
   },
   {
     "revision": "afc8dec94536ce9a2183e5e3e39fe3f8",
@@ -68,8 +68,8 @@ self.__precacheManifest = [
     "url": "/tesla-model-3-earlybird/static/media/red_18.80fd3363.png"
   },
   {
-    "revision": "d53524b9c91836639f2b",
-    "url": "/tesla-model-3-earlybird/static/js/main.2b7cf220.chunk.js"
+    "revision": "1062fa4b5b7b7b3aed5e",
+    "url": "/tesla-model-3-earlybird/static/js/main.c135ff8d.chunk.js"
   },
   {
     "revision": "8f8195444109c018fed77bf743e45ec3",
@@ -136,7 +136,7 @@ self.__precacheManifest = [
     "url": "/tesla-model-3-earlybird/static/media/red_white_20.ac4daa2d.png"
   },
   {
-    "revision": "1aade0d53674c9834e253a88e42240b7",
+    "revision": "de337a4eb614d67200ea85fedb525cc4",
     "url": "/tesla-model-3-earlybird/index.html"
   }
 ];
