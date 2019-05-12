@@ -60,9 +60,9 @@ const _receiptList = ({ prepay, loan_rate, installment_months }) => {
       price: Tex.취득세,
       color: "orange",
       popup: true,
-      popupContent: `${Common.comma(Tex.취득세_과세)} 원 중 ${Common.comma(
+      popupContent: `₩ ${Common.comma(Tex.취득세_과세)} 중 ₩ ${Common.comma(
         Tex.취득세_감면
-      )} 원 감면됨`
+      )} 감면됨`
     },
     {
       subject: "자동차세",
