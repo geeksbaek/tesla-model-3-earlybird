@@ -16,17 +16,11 @@ const ExtraContent = props => {
 
   return (
     <Card.Content extra textAlign="center">
-      <Button icon labelPosition="left" primary>
-        <Icon name="save" />
-        견적 저장
-      </Button>
       <Button
-        icon
-        labelPosition="right"
+        fluid
         href="https://www.tesla.com/ko_KR/model3/reserve"
         target="_blank"
       >
-        <Icon name="shop" />
         사전 예약
       </Button>
     </Card.Content>
