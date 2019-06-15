@@ -52,7 +52,6 @@ export default class Price extends Component {
       취득세: { 과세: 0, 감면: 0 },
       자동차세: { 과세: 0, 감면: 0 }
     },
-    subsidy: { gov: [], local: [] },
     exchange: { krw: 1 },
 
     loading_a: true,
@@ -116,6 +115,28 @@ export default class Price extends Component {
   onAutoPilotChange = (i, v) =>
     this.setState({
       selected: { ...this.state.selected, autopilot: v }
+    });
+
+  onGovSubsidyChange = (i, v) =>
+    this.setState({
+      selected: {
+        ...this.state.selected,
+        subsidy: {
+          ...this.state.selected.subsidy,
+          gov: v
+        }
+      }
+    });
+
+  onLocalSubsidyChange = (i, v) =>
+    this.setState({
+      selected: {
+        ...this.state.selected,
+        subsidy: {
+          ...this.state.selected.subsidy,
+          local: v
+        }
+      }
     });
 
   usdTokrw = usd => (usd * this.state.exchange.krw).toFixed(0);
@@ -198,7 +219,10 @@ export default class Price extends Component {
         this.setState({
           selected: {
             ...this.state.selected,
-            subsidy: { gov: res.data.gov[1], local: res.data.local[1] }
+            subsidy: {
+              gov: res.data.gov[this.state.selected_gov_subsidy],
+              local: res.data.local[this.state.selected_local_subsidy]
+            }
           },
           gov_subsidy: res.data.gov,
           local_subsidy: res.data.local,
@@ -223,15 +247,13 @@ export default class Price extends Component {
       selected_local_subsidy,
       exchange,
       performance_index,
-      total_price,
-      prepay,
-      loan_rate,
-      installment_months,
       active_index
     } = this.state;
 
     return (
-      <PriceContext.Provider value={{ selected: selected, saletex: saletex }}>
+      <PriceContext.Provider
+        value={{ selected: this.state.selected, saletex: this.state.saletex }}
+      >
         <Segment
           basic
           textAlign="left"
@@ -293,16 +315,9 @@ export default class Price extends Component {
                   <Divider hidden />
                   <Form.Group>
                     <Subsidy
-                      onGovSubsidyChange={(e, { value }) => {
-                        this.setState({
-                          selected_gov_subsidy: value
-                        });
-                      }}
-                      onLocalSubsidyChange={(e, { value }) => {
-                        this.setState({
-                          selected_local_subsidy: value
-                        });
-                      }}
+                      onGovSubsidyChange={this.onGovSubsidyChange}
+                      onLocalSubsidyChange={this.onLocalSubsidyChange}
+                      calcTotalPrice={this.calcTotalPrice}
                       gov_subsidy={gov_subsidy}
                       selected_gov_subsidy={selected_gov_subsidy}
                       local_subsidy={local_subsidy}
@@ -448,16 +463,9 @@ export default class Price extends Component {
               </Accordion.Title>
               <Accordion.Content active={active_index === 5}>
                 <Subsidy
-                  onGovSubsidyChange={(e, { value }) => {
-                    this.setState({
-                      selected_gov_subsidy: value
-                    });
-                  }}
-                  onLocalSubsidyChange={(e, { value }) => {
-                    this.setState({
-                      selected_local_subsidy: value
-                    });
-                  }}
+                  onGovSubsidyChange={this.onGovSubsidyChange}
+                  onLocalSubsidyChange={this.onLocalSubsidyChange}
+                  calcTotalPrice={this.calcTotalPrice}
                   gov_subsidy={gov_subsidy}
                   selected_gov_subsidy={selected_gov_subsidy}
                   local_subsidy={local_subsidy}

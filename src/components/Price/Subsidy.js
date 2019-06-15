@@ -3,6 +3,17 @@ import { Header, Dropdown, Divider, Form } from "semantic-ui-react";
 import { Common } from "./Common";
 
 export default class Subsidy extends Component {
+  onGovSubsidyChange = (v, { value }) => {
+    console.log(value);
+    this.props.onGovSubsidyChange(v, this.props.gov_subsidy[value]);
+    this.props.calcTotalPrice();
+  };
+
+  onLocalSubsidyChange = (v, { value }) => {
+    this.props.onLocalSubsidyChange(v,this.props.local_subsidy[value]);
+    this.props.calcTotalPrice();
+  };
+
   render() {
     let govOpt = this.props.gov_subsidy.map((v, i) => {
       return {
@@ -34,7 +45,7 @@ export default class Subsidy extends Component {
               options={govOpt}
               selection
               search
-              onChange={this.props.onGovSubsidyChange}
+              onChange={this.onGovSubsidyChange}
             />
           </Form.Field>
           <Divider hidden fitted />
@@ -57,7 +68,7 @@ export default class Subsidy extends Component {
               placeholder="거주지를 선택하세요"
               selection
               search
-              onChange={this.props.onLocalSubsidyChange}
+              onChange={this.onLocalSubsidyChange}
             />
           </Form.Field>
         </Form.Group>
