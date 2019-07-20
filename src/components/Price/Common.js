@@ -32,6 +32,11 @@ import red_white_20 from "../../assets/img/red_white_20.png";
 
 const _images = [
   [
+    [white_18, white_white_18],
+    [white_19, white_white_19],
+    [white_20, white_white_20]
+  ],
+  [
     [black_18, black_white_18],
     [black_19, black_white_19],
     [black_20, black_white_20]
@@ -45,11 +50,6 @@ const _images = [
     [blue_18, blue_white_18],
     [blue_19, blue_white_19],
     [blue_20, blue_white_20]
-  ],
-  [
-    [white_18, white_white_18],
-    [white_19, white_white_19],
-    [white_20, white_white_20]
   ],
   [[red_18, red_white_18], [red_19, red_white_19], [red_20, red_white_20]]
 ];
