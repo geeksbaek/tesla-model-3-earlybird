@@ -33,17 +33,17 @@ trims:
 options:
   color:
     - index: 0
-      이름: Solid Black
-      가격: 750
-    - index: 1
-      이름: Midnight Silver Metallic
-      가격: 1000
-    - index: 2
-      이름: Deep Blue Metallic
-      가격: 1000
-    - index: 3
       이름: Pearl White Multi-Coat
       가격: 0
+    - index: 1
+      이름: Solid Black
+      가격: 750
+    - index: 2
+      이름: Midnight Silver Metallic
+      가격: 1000
+    - index: 3
+      이름: Deep Blue Metallic
+      가격: 1000
     - index: 4
       이름: Red Multi-Coat
       가격: 2000
