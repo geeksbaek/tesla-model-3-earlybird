@@ -9,7 +9,7 @@ trims:
     구동방식: RWD
     승차인원: 5
     인테리어: Partial Premium Interior
-    가격: 39500
+    가격: 38990
   - index: 1
     이름: Long Range AWD
     배터리: Long Range
@@ -19,7 +19,7 @@ trims:
     구동방식: Dual Motor AWD
     승차인원: 5
     인테리어: Premium Interior
-    가격: 50500
+    가격: 47990
   - index: 2
     이름: Performance
     배터리: Long Range
@@ -29,24 +29,24 @@ trims:
     구동방식: Dual Motor AWD
     승차인원: 5
     인테리어: Premium Interior
-    가격: 61500
+    가격: 54990
 options:
   color:
     - index: 0
       이름: Solid Black
-      가격: 0
+      가격: 750
     - index: 1
       이름: Midnight Silver Metallic
-      가격: 1500
+      가격: 1000
     - index: 2
       이름: Deep Blue Metallic
-      가격: 1500
+      가격: 1000
     - index: 3
       이름: Pearl White Multi-Coat
-      가격: 2000
+      가격: 0
     - index: 4
       이름: Red Multi-Coat
-      가격: 2500
+      가격: 2000
   interior:
     - index: 0
       이름: Black Interior
